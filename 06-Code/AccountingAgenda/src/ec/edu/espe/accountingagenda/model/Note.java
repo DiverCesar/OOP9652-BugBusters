@@ -23,7 +23,29 @@ public class Note {
 
         System.out.println("-- Nota creada --");
     }
+    
+    public void editNote() {
+    Scanner scanner = new Scanner(System.in);
 
+    System.out.println("Ingrese el nuevo título de la nota: ");
+    String newTitle = scanner.nextLine();
+
+    System.out.println("Ingrese el nuevo contenido de la nota: ");
+    String newContent = scanner.nextLine();
+
+    setTitle(newTitle);
+    setContent(newContent);
+
+    System.out.println("-- Nota editada --");
+}
+
+    public void readNote() {
+        System.out.println("Título: " + getTitle());
+        System.out.println("Contenido: " + getContent());
+    }
+    
+    
+    
     public String getTitle() {
         return title;
     }

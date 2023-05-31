@@ -13,7 +13,8 @@ public class Menu {
     public void showMenu() {
         Scanner scanner = new Scanner(System.in);
         int option;
-
+          Note note = new Note();
+        
         do {
             System.out.println("---------- MENU ----------");
             System.out.println("1. Crear Nota");
@@ -28,14 +29,14 @@ public class Menu {
 
             switch (option) {
                 case 1:
-                    Note note = new Note();
+                    
                     note.createNote();
                     break;
                 case 2:
-                    // Editar Nota
+                    note.editNote();
                     break;
                 case 3:
-                    // Ver Nota 
+                    note.readNote();
                     break;
                 case 4:
                     // Buscar Nota 
