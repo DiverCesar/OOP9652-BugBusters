@@ -8,6 +8,7 @@ package ec.edu.espe.accountingagenda.view;
 
 public class AccountingAgenda {
     public static void main(String[] args) {
-        
+        Menu menu = new Menu();
+        menu.showMenu();
     }
 }
