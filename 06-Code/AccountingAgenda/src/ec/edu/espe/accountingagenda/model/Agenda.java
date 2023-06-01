@@ -12,7 +12,7 @@ public class Agenda {
 
     @Override
     public String toString() {
-        return "\nTítulo: " + title + "\nContenido: " + content;
+        return "\n-- Título: " + title + "\n   Contenido: " + content;
     }
     
     public Agenda(String title, String content) {

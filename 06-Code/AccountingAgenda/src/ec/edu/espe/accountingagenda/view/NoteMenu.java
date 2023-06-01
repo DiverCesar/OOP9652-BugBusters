@@ -38,10 +38,10 @@ public class NoteMenu {
                     note.readNote();
                 break;
                 case 4:
-                    // Buscar Nota 
+                    note.searchNote(); 
                 break;
                 case 5:
-                    // Borrar Nota 
+                    note.deleteNote(); 
                 break;
                 case 6:
                 return;

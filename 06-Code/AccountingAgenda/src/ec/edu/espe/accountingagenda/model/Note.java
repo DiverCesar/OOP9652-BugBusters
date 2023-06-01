@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- *
- * @author Bug Busters, DCCO-ESPE
- * @version V0.1
+ * Author: Bug Busters, DCCO-ESPE
+ * Version: 0.1
  */
 
 public class Note {
     private String title;
     private String content;
-    Agenda agenda;
-    
-    ArrayList<Agenda> notes = new ArrayList<>();
-    
+    private ArrayList<Agenda> notes = new ArrayList<>();
+
     public void createNote() {
         Scanner scanner = new Scanner(System.in);
 
@@ -24,34 +21,91 @@ public class Note {
 
         System.out.println("Ingrese el contenido de la nota: ");
         content = scanner.nextLine();
-        
-        agenda = new Agenda(title,content);
+
+        Agenda agenda = new Agenda(title, content);
         notes.add(agenda);
-        
+
         System.out.println("-- Nota creada --");
     }
-    
+
     public void editNote() {
-    Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-    System.out.println("Ingrese el nuevo título de la nota: ");
-    String newTitle = scanner.nextLine();
+        System.out.println("-- Notas Disponibles --");
+        for (int i = 0; i < notes.size(); i++) {
+            System.out.println((i + 1) + ". " + notes.get(i).getTitle());
+        }
 
-    System.out.println("Ingrese el nuevo contenido de la nota: ");
-    String newContent = scanner.nextLine();
+        System.out.print("Ingrese el número de la nota que desea editar: ");
+        int noteNumber = scanner.nextInt();
+        scanner.nextLine();
 
-    setTitle(newTitle);
-    setContent(newContent);
+        if (noteNumber >= 1 && noteNumber <= notes.size()) {
+            System.out.println("Ingrese el nuevo título de la nota: ");
+            String newTitle = scanner.nextLine();
 
-    System.out.println("-- Nota editada --");
-}
+            System.out.println("Ingrese el nuevo contenido de la nota: ");
+            String newContent = scanner.nextLine();
+
+            notes.get(noteNumber - 1).setTitle(newTitle);
+            notes.get(noteNumber - 1).setContent(newContent);
+
+            System.out.println("-- Nota editada --");
+        } else {
+            System.out.println("Número de nota inválido");
+        }
+    }
 
     public void readNote() {
-        System.out.println("Notas:" + notes);
+        System.out.println("\n *** NOTAS DISPONIBLES ***");
+        for (Agenda agenda : notes) {
+            System.out.println(agenda.toString());
+        }
     }
     
-    
-    
+    public void searchNote() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Ingrese el texto a buscar: ");
+        String searchText = scanner.nextLine();
+
+        ArrayList<Agenda> matchingNotes = new ArrayList<>();
+        for (Agenda agenda : notes) {
+            if (agenda.getTitle().contains(searchText) || agenda.getContent().contains(searchText)) {
+                matchingNotes.add(agenda);
+            }
+        }
+
+        if (!matchingNotes.isEmpty()) {
+            System.out.println("\nCoincidencias encontradas:");
+            for (Agenda agenda : matchingNotes) {
+                System.out.println(agenda.toString());
+            }
+        } else {
+            System.out.println("\nNo se encontraron coincidencias.");
+        }
+    }
+
+    public void deleteNote() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("-- Notas Disponibles --");
+        for (int i = 0; i < notes.size(); i++) {
+            System.out.println((i + 1) + ". " + notes.get(i).getTitle());
+        }
+
+        System.out.print("Ingrese el número de la nota que desea eliminar: ");
+        int noteNumber = scanner.nextInt();
+        scanner.nextLine();
+
+        if (noteNumber >= 1 && noteNumber <= notes.size()) {
+            notes.remove(noteNumber - 1);
+            System.out.println("-- Nota eliminada --");
+        } else {
+            System.out.println("Número de nota inválido");
+        }
+    }
+
     public String getTitle() {
         return title;
     }
@@ -67,5 +121,4 @@ public class Note {
     public void setContent(String content) {
         this.content = content;
     }
-    
 }
