@@ -33,7 +33,8 @@ public class PrincipalMenu {
                         noteMenu.showNoteMenu();
                         break;
                     case 2:
-                        // Pendientes
+                        CalendarMenu calendarMenu = new CalendarMenu();
+                        calendarMenu.showCalendarMenu();
                         break;
                     case 3:
                         // Generar archivo JSON
