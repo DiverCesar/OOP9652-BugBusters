@@ -17,12 +17,43 @@ public class Note {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Ingrese el título de la nota: ");
-        title = scanner.nextLine();
+        String title = scanner.nextLine();
 
         System.out.println("Ingrese el contenido de la nota: ");
-        content = scanner.nextLine();
+        String content = scanner.nextLine();
 
-        Agenda agenda = new Agenda(title, content);
+        System.out.println("Seleccione la categoría de la nota:");
+        System.out.println("1. Personal");
+        System.out.println("2. Trabajo");
+        System.out.println("3. Estudio");
+        System.out.println("4. Otro");
+
+        int categoryOption = scanner.nextInt();
+        scanner.nextLine();
+
+        String category;
+
+        switch (categoryOption) {
+            case 1:
+                category = "Personal";
+            break;
+            case 2:
+                category = "Trabajo";
+            break;
+            case 3:
+                category = "Estudio";
+            break;
+            case 4:
+                System.out.println("Ingrese la categoría personalizada:");
+                category = scanner.nextLine();
+            break;
+            default:
+                System.out.println("Opción inválida, se asignará la categoría 'Otro'.");
+                category = "Otro";
+            break;
+        }
+
+        Agenda agenda = new Agenda(title, content, category);
         notes.add(agenda);
 
         System.out.println("-- Nota creada --");
