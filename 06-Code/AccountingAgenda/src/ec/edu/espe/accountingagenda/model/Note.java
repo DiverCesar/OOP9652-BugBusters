@@ -1,5 +1,6 @@
 package ec.edu.espe.accountingagenda.model;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -11,7 +12,10 @@ import java.util.Scanner;
 public class Note {
     private String title;
     private String content;
-
+    Agenda agenda;
+    
+    ArrayList<Agenda> notes = new ArrayList<>();
+    
     public void createNote() {
         Scanner scanner = new Scanner(System.in);
 
@@ -20,7 +24,10 @@ public class Note {
 
         System.out.println("Ingrese el contenido de la nota: ");
         content = scanner.nextLine();
-
+        
+        agenda = new Agenda(title,content);
+        notes.add(agenda);
+        
         System.out.println("-- Nota creada --");
     }
     
@@ -40,8 +47,7 @@ public class Note {
 }
 
     public void readNote() {
-        System.out.println("Título: " + getTitle());
-        System.out.println("Contenido: " + getContent());
+        System.out.println("Notas:" + notes);
     }
     
     
