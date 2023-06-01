@@ -1,5 +1,6 @@
 package ec.edu.espe.accountingagenda.view;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -14,6 +15,7 @@ public class PrincipalMenu {
         int option;
 
         do {
+            
             System.out.println("---------- MENU PRINCIPAL ----------");
             System.out.println("1. Notas");
             System.out.println("2. Pendientes");
@@ -22,7 +24,9 @@ public class PrincipalMenu {
             System.out.print("Ingrese la opción que desea visualizar: ");
             option = scanner.nextInt();
             scanner.nextLine();
-
+            
+            try{
+            
             switch (option) {
                 case 1:
                     NoteMenu noteMenu = new NoteMenu();
@@ -41,9 +45,18 @@ public class PrincipalMenu {
                     System.out.println("Opción inválida, ingrese de nuevo: ");
                     break;
             }
-
+            
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: La entrada debe ser un número válido.");
+                }catch (InputMismatchException e) {
+                    System.out.println("Error: Opción inválida. Debe ingresar un número.");
+                    scanner.nextLine();
+                }catch (IllegalArgumentException e) {
+                    System.out.println("Error de argumento: " + e.getMessage());
+                }catch(Exception e){
+                    System.out.println("Error: " + e.getMessage());
+                }
             System.out.println();
         } while (option != 4);
     }
 }
-

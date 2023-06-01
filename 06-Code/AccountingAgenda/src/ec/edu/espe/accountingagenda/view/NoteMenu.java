@@ -1,6 +1,7 @@
 package ec.edu.espe.accountingagenda.view;
 
 import ec.edu.espe.accountingagenda.model.Note;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -25,10 +26,10 @@ public class NoteMenu {
             System.out.print("Ingrese la opción que desea visualizar: ");
             option = scanner.nextInt();
             scanner.nextLine(); 
-
+            
+            try{
             switch (option) {
-                case 1:
-                    
+                case 1: 
                     note.createNote();
                 break;
                 case 2:
@@ -49,6 +50,17 @@ public class NoteMenu {
                     System.out.println("Opción inválida, ingrese de nuevo: ");
                     break;
             }
+            
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: La entrada debe ser un número válido.");
+                }catch (InputMismatchException e) {
+                    System.out.println("Error: Opción inválida. Debe ingresar un número.");
+                    scanner.nextLine();
+                }catch (IllegalArgumentException e) {
+                    System.out.println("Error de argumento: " + e.getMessage());
+                }catch(Exception e){
+                    System.out.println("Error: " + e.getMessage());
+                }
 
             System.out.println();
         } while (option != 6);
