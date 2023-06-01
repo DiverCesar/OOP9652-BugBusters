@@ -64,7 +64,7 @@ public class PrincipalMenu {
         System.out.println();
     } while (option != 4);
 
-    scanner.close(); // Cerrar el scanner al finalizar
+    scanner.close(); 
 }
     
 }
