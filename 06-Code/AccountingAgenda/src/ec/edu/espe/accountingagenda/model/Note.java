@@ -13,52 +13,127 @@ public class Note {
     private String content;
     private ArrayList<Agenda> notes = new ArrayList<>();
 
-    public void createNote() {
-        Scanner scanner = new Scanner(System.in);
+public void createNote() {
+    Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Ingrese el título de la nota: ");
-        String title = scanner.nextLine();
+    System.out.println("Ingrese el título de la nota: ");
+    String title = scanner.nextLine();
 
-        System.out.println("Ingrese el contenido de la nota: ");
-        String content = scanner.nextLine();
+    System.out.println("Ingrese el contenido de la nota: ");
+    String content = scanner.nextLine();
 
-        System.out.println("Seleccione la categoría de la nota:");
-        System.out.println("1. Personal");
-        System.out.println("2. Trabajo");
-        System.out.println("3. Estudio");
-        System.out.println("4. Otro");
+    System.out.println("Seleccione la categoría de la nota:");
+    System.out.println("1. Personal");
+    System.out.println("2. Trabajo");
+    System.out.println("3. Estudio");
+    System.out.println("4. Otro");
 
-        int categoryOption = scanner.nextInt();
-        scanner.nextLine();
+    int categoryOption = scanner.nextInt();
+    scanner.nextLine();
 
-        String category;
+    String category;
 
-        switch (categoryOption) {
-            case 1:
-                category = "Personal";
+    switch (categoryOption) {
+        case 1:
+            category = "Personal";
             break;
-            case 2:
-                category = "Trabajo";
+        case 2:
+            category = "Trabajo";
             break;
-            case 3:
-                category = "Estudio";
+        case 3:
+            category = "Estudio";
             break;
-            case 4:
-                System.out.println("Ingrese la categoría personalizada:");
-                category = scanner.nextLine();
+        case 4:
+            System.out.println("Ingrese la categoría personalizada:");
+            category = scanner.nextLine();
             break;
-            default:
-                System.out.println("Opción inválida, se asignará la categoría 'Otro'.");
-                category = "Otro";
+        default:
+            System.out.println("Opción inválida, se asignará la categoría 'Otro'.");
+            category = "Otro";
             break;
-        }
-
-        Agenda agenda = new Agenda(title, content, category);
-        notes.add(agenda);
-
-        System.out.println("-- Nota creada --");
     }
 
+    System.out.println("Seleccione el grupo al que desea agregar la nota:");
+    System.out.println("1. Administración");
+    System.out.println("2. Contabilidad");
+    int groupOption = scanner.nextInt();
+    scanner.nextLine();
+
+    String group;
+
+    switch (groupOption) {
+        case 1:
+            group = "Administración";
+            addNoteToGroup(title, content, category, group);
+            break;
+        case 2:
+            group = "Contabilidad";
+            performOperations();
+            break;
+        default:
+            System.out.println("Opción inválida, se asignará el grupo 'Administración'.");
+            group = "Administración";
+            addNoteToGroup(title, content, category, group);
+            break;
+    }
+
+    System.out.println("-- Nota creada --");
+}
+
+ 
+    private void addNoteToGroup(String title, String content, String category, String group) {
+    Agenda agenda = new Agenda(title, content, category, group);
+    notes.add(agenda);
+    }
+    
+    private void performOperations() {
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.println("Ingrese el primer número: ");
+    double num1 = scanner.nextDouble();
+
+    System.out.println("Ingrese el segundo número: ");
+    double num2 = scanner.nextDouble();
+
+    System.out.println("Seleccione la operación que desea realizar:");
+    System.out.println("1. Suma");
+    System.out.println("2. Resta");
+    System.out.println("3. Multiplicación");
+    System.out.println("4. División");
+    int operationOption = scanner.nextInt();
+    scanner.nextLine();
+
+    double result = 0;
+
+    switch (operationOption) {
+        case 1:
+            result = num1 + num2;
+            System.out.println("El resultado de la suma es: " + result);
+            break;
+        case 2:
+            result = num1 - num2;
+            System.out.println("El resultado de la resta es: " + result);
+            break;
+        case 3:
+            result = num1 * num2;
+            System.out.println("El resultado de la multiplicación es: " + result);
+            break;
+        case 4:
+            if (num2 != 0) {
+                result = num1 / num2;
+                System.out.println("El resultado de la división es: " + result);
+            } else {
+                System.out.println("No se puede dividir por cero.");
+            }
+            break;
+        default:
+            System.out.println("Opción inválida.");
+            break;
+    }
+}
+    
+    
+    
     public void editNote() {
         Scanner scanner = new Scanner(System.in);
 
