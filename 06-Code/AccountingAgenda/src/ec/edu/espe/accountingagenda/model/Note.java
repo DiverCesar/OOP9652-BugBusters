@@ -33,6 +33,7 @@ public void createNote() {
 
     String category;
 
+    try {
     switch (categoryOption) {
         case 1:
             category = "Personal";
@@ -52,23 +53,33 @@ public void createNote() {
             category = "Otro";
             break;
     }
+    } catch (NumberFormatException e) {
+    System.out.println("Opción inválida, se asignará la categoría 'Otro'.");
+    category = "Otro";
+}
 
     System.out.println("Seleccione el grupo al que desea agregar la nota:");
     System.out.println("1. Administración");
-    System.out.println("2. Contabilidad");
+    System.out.println("2. Operaciones");
+    System.out.println("3. Contabilidad(Presupuesto)");
     int groupOption = scanner.nextInt();
     scanner.nextLine();
 
     String group;
-
+    Budget budget = new Budget();
+    try{
     switch (groupOption) {
         case 1:
             group = "Administración";
             addNoteToGroup(title, content, category, group);
             break;
         case 2:
-            group = "Contabilidad";
+            group = "Operaciones";
             performOperations();
+            break;
+        case 3:
+            group = "Contabilidad(Presupuesto)";
+            budget.calculateBudget();
             break;
         default:
             System.out.println("Opción inválida, se asignará el grupo 'Administración'.");
@@ -76,7 +87,12 @@ public void createNote() {
             addNoteToGroup(title, content, category, group);
             break;
     }
-
+} catch (NumberFormatException e) {
+    System.out.println("Opción inválida, se asignará la categoría 'Otro'.");
+    category = "Otro";
+}
+    
+    
     System.out.println("-- Nota creada --");
 }
 
@@ -212,6 +228,11 @@ public void createNote() {
         }
     }
 
+    
+    
+    
+    
+    
     public String getTitle() {
         return title;
     }

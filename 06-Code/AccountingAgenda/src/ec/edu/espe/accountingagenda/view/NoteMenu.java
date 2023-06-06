@@ -23,7 +23,7 @@ public class NoteMenu {
             System.out.println("1. Crear Nota");
             System.out.println("2. Editar Nota");
             System.out.println("3. Ver Nota");
-            System.out.println("4. Buscar Nota");
+        System.out.println("4. Buscar Nota");
             System.out.println("5. Borrar Nota");
             System.out.println("6. Volver al Menú Principal");
             System.out.print("Ingrese la opción que desea visualizar: ");
