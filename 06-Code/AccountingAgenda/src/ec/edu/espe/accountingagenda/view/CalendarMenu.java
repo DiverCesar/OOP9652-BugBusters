@@ -6,8 +6,6 @@ import ec.edu.espe.accountingagenda.model.Task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CalendarMenu {
@@ -22,10 +20,9 @@ public class CalendarMenu {
     }
 
     public void showCalendarMenu() {
-        int option = 0;
+        int option;
 
         do {
-            try{
             System.out.println("---------- MENU DE CALENDARIO ----------");
             System.out.println("1. Añadir Tarea");
             System.out.println("2. Añadir Evento");
@@ -34,7 +31,7 @@ public class CalendarMenu {
             System.out.print("Ingrese la opción que desea visualizar: ");
             option = scanner.nextInt();
             scanner.nextLine();
-            if (scanner.hasNextInt()) {
+
             switch (option) {
                 case 1:
                     addTask();
@@ -51,22 +48,6 @@ public class CalendarMenu {
                     System.out.println("Opción inválida, ingrese de nuevo: ");
                     break;
             }
-            } else {
-                String input = scanner.nextLine();
-                System.out.println("Error: La entrada '" + input + "' no es un número válido.");
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Error: Opción inválida. Debe ingresar un número.");
-            scanner.nextLine();
-        } catch (NumberFormatException e) {
-            System.out.println("Error: La entrada debe ser un número válido.");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error de argumento: " + e.getMessage());
-        } catch (DateTimeParseException e) {
-            System.out.println("Error: Formato de fecha inválido. Debe ser yyyy-MM-dd.");
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
 
             System.out.println();
         } while (option != 4);

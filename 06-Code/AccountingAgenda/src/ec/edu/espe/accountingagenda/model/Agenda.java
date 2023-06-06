@@ -14,21 +14,11 @@ public class Agenda {
     private LocalDateTime creationDate;
     private LocalDateTime lastModifiedDate;
     private String category;
-    private String group;
 
     public Agenda(String title, String content, String category) {
         this.title = title;
         this.content = content;
         this.category = category;
-        this.creationDate = LocalDateTime.now();
-        this.lastModifiedDate = LocalDateTime.now();
-    }
-
-    Agenda(String title, String content, String category, String group) {
-        this.title = title;
-        this.content = content;
-        this.category = category;
-        this.group = group;
         this.creationDate = LocalDateTime.now();
         this.lastModifiedDate = LocalDateTime.now();
     }
