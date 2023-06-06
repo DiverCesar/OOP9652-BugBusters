@@ -56,9 +56,95 @@ public class Note {
         Agenda agenda = new Agenda(title, content, category);
         notes.add(agenda);
 
+            System.out.println("Seleccione el grupo al que desea agregar la nota:");
+    System.out.println("1. Administración");
+    System.out.println("2. Operaciones");
+    System.out.println("3. Contabilidad(Presupuesto)");
+    int groupOption = scanner.nextInt();
+    scanner.nextLine();
+
+    String group;
+    Budget budget = new Budget();
+    try{
+    switch (groupOption) {
+        case 1:
+            group = "Administración";
+            addNoteToGroup(title, content, category, group);
+            break;
+        case 2:
+            group = "Operaciones";
+            performOperations();
+            break;
+        case 3:
+            group = "Contabilidad(Presupuesto)";
+            budget.calculateBudget();
+            break;
+        default:
+            System.out.println("Opción inválida, se asignará el grupo 'Administración'.");
+            group = "Administración";
+            addNoteToGroup(title, content, category, group);
+            break;
+    }
+} catch (NumberFormatException e) {
+    System.out.println("Opción inválida, se asignará la categoría 'Otro'.");
+    category = "Otro";
+}
         System.out.println("-- Nota creada --");
     }
+    
+    private void performOperations() {
+    Scanner scanner = new Scanner(System.in);
 
+    System.out.println("Ingrese el primer número: ");
+    double num1 = scanner.nextDouble();
+
+    System.out.println("Ingrese el segundo número: ");
+    double num2 = scanner.nextDouble();
+
+    System.out.println("Seleccione la operación que desea realizar:");
+    System.out.println("1. Suma");
+    System.out.println("2. Resta");
+    System.out.println("3. Multiplicación");
+    System.out.println("4. División");
+    int operationOption = scanner.nextInt();
+    scanner.nextLine();
+
+    double result = 0;
+
+    switch (operationOption) {
+        case 1:
+            result = num1 + num2;
+            System.out.println("El resultado de la suma es: " + result);
+            break;
+        case 2:
+            result = num1 - num2;
+            System.out.println("El resultado de la resta es: " + result);
+            break;
+        case 3:
+            result = num1 * num2;
+            System.out.println("El resultado de la multiplicación es: " + result);
+            break;
+        case 4:
+            if (num2 != 0) {
+                result = num1 / num2;
+                System.out.println("El resultado de la división es: " + result);
+            } else {
+                System.out.println("No se puede dividir por cero.");
+            }
+            break;
+        default:
+            System.out.println("Opción inválida.");
+            break;
+    }
+}
+
+    private void addNoteToGroup(String title, String content, String category, String group) {
+    Agenda agenda = new Agenda(title, content, category, group);
+    notes.add(agenda);
+    }
+    
+    
+    
     public void editNote() {
         Scanner scanner = new Scanner(System.in);
 

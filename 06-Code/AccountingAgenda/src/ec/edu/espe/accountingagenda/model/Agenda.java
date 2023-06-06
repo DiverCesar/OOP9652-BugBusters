@@ -23,6 +23,10 @@ public class Agenda {
         this.lastModifiedDate = LocalDateTime.now();
     }
 
+    Agenda(String title, String content, String category, String group) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public String getTitle() {
         return title;
     }
