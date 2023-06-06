@@ -24,7 +24,7 @@ public class Agenda {
     }
 
     Agenda(String title, String content, String category, String group) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Sin errores"); 
     }
 
     public String getTitle() {
