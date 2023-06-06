@@ -95,12 +95,6 @@ public class Note {
     private void performOperations() {
     Scanner scanner = new Scanner(System.in);
 
-    System.out.println("Ingrese el primer número: ");
-    double num1 = scanner.nextDouble();
-
-    System.out.println("Ingrese el segundo número: ");
-    double num2 = scanner.nextDouble();
-
     System.out.println("Seleccione la operación que desea realizar:");
     System.out.println("1. Suma");
     System.out.println("2. Resta");
@@ -109,6 +103,12 @@ public class Note {
     int operationOption = scanner.nextInt();
     scanner.nextLine();
 
+    System.out.println("Ingrese el primer número: ");
+    double num1 = scanner.nextDouble();
+
+    System.out.println("Ingrese el segundo número: ");
+    double num2 = scanner.nextDouble();
+    
     double result = 0;
 
     switch (operationOption) {
