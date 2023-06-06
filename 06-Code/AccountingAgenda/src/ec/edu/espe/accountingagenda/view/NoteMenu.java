@@ -25,8 +25,8 @@ public class NoteMenu {
             System.out.println("3. Ver Nota");
             System.out.println("4. Buscar Nota");
             System.out.println("5. Borrar Nota");
-            System.out.println("6. Volver al MenÃº Principal");
-            System.out.print("Ingrese la opciÃ³n que desea visualizar: ");
+            System.out.println("6. Volver al Menú Principal");
+            System.out.print("Ingrese la opción que desea visualizar: ");
 
             if (scanner.hasNextInt()) {
                 option = scanner.nextInt();
@@ -51,17 +51,17 @@ public class NoteMenu {
                     case 6:
                         return;
                     default:
-                        System.out.println("OpciÃ³n invÃ¡lida, ingrese de nuevo: ");
+                        System.out.println("Opción inválida, ingrese de nuevo: ");
                         break;
                 }
             } else {
                 String input = scanner.nextLine();
-                System.out.println("Error: La entrada '" + input + "' no es un nÃºmero vÃ¡lido.");
+                System.out.println("Error: La entrada '" + input + "' no es un número válido.");
             }
 
             System.out.println();
         } catch (InputMismatchException e) {
-            System.out.println("Error: La entrada debe ser un nÃºmero vÃ¡lido.");
+            System.out.println("Error: La entrada debe ser un número válido.");
             scanner.nextLine();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

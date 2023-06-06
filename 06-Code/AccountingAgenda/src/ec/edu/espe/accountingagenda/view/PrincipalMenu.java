@@ -18,7 +18,7 @@ public class PrincipalMenu {
                 System.out.println("2. Pendientes");
                 System.out.println("3. Generar archivo JSON");
                 System.out.println("4. Salir");
-                System.out.print("Ingrese la opci√≥n que desea visualizar: ");
+                System.out.print("Ingrese la opciÛn que desea visualizar: ");
 
                 if (scanner.hasNextInt()) {
                     option = scanner.nextInt();
@@ -37,21 +37,21 @@ public class PrincipalMenu {
                             JsonGenerator.generateJson(calendar);
                             break;
                         case 4:
-                            System.out.println("Sali√≥ del programa exitosamente");
+                            System.out.println("SaliÛ del programa exitosamente");
                             break;
                         default:
-                            System.out.println("Opci√≥n inv√°lida, ingrese de nuevo: ");
+                            System.out.println("OpciÛn inv·lida, ingrese de nuevo: ");
                             break;
                     }
                 } else {
                     String input = scanner.nextLine();
-                    System.out.println("Error: La entrada '" + input + "' no es un n√∫mero v√°lido.");
+                    System.out.println("Error: La entrada '" + input + "' no es un n˙mero v·lido.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Error: Opci√≥n inv√°lida. Debe ingresar un n√∫mero.");
+                System.out.println("Error: OpciÛn inv·lida. Debe ingresar un n˙mero.");
                 scanner.nextLine();
             } catch (NumberFormatException e) {
-                System.out.println("Error: La entrada debe ser un n√∫mero v√°lido.");
+                System.out.println("Error: La entrada debe ser un n˙mero v·lido.");
             } catch (IllegalArgumentException e) {
                 System.out.println("Error de argumento: " + e.getMessage());
             } catch (Exception e) {

@@ -50,8 +50,8 @@ public class Budget {
 
         boolean validEntry = false;
         while (!validEntry) {
-            System.out.println("Â¿Desea aÃ±adir otra actividad?");
-            System.out.println("1. SÃ­");
+            System.out.println("¿Desea añadir otra actividad?");
+            System.out.println("1. Sí");
             System.out.println("2. No");
             String opcion = scanner.nextLine();
 
@@ -63,10 +63,10 @@ public class Budget {
                 } else if (opcionNum == 1) {
                     validEntry = true;
                 } else {
-                    System.out.println("OpciÃ³n invÃ¡lida. Por favor, ingrese 1 o 2.");
+                    System.out.println("Opción inválida. Por favor, ingrese 1 o 2.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Entrada invÃ¡lida. Por favor, ingrese 1 o 2.");
+                System.out.println("Entrada inválida. Por favor, ingrese 1 o 2.");
             }
         }
     } while (go);
@@ -74,8 +74,6 @@ public class Budget {
     System.out.println("\nEl costo total del presupuesto es: " + totalCost);
 }
 
-
-    
     public String getActivity() {
         return activity;
     }
@@ -107,9 +105,5 @@ public class Budget {
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
-    
-    
-
-    
 }
 

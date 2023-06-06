@@ -16,13 +16,13 @@ public class Note {
     public void createNote() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Ingrese el tÃ­tulo de la nota: ");
+        System.out.println("Ingrese el título de la nota: ");
         String title = scanner.nextLine();
 
         System.out.println("Ingrese el contenido de la nota: ");
         String content = scanner.nextLine();
 
-        System.out.println("Seleccione la categorÃ­a de la nota:");
+        System.out.println("Seleccione la categoría de la nota:");
         System.out.println("1. Personal");
         System.out.println("2. Trabajo");
         System.out.println("3. Estudio");
@@ -44,11 +44,11 @@ public class Note {
                 category = "Estudio";
             break;
             case 4:
-                System.out.println("Ingrese la categorÃ­a personalizada:");
+                System.out.println("Ingrese la categoría personalizada:");
                 category = scanner.nextLine();
             break;
             default:
-                System.out.println("OpciÃ³n invÃ¡lida, se asignarÃ¡ la categorÃ­a 'Otro'.");
+                System.out.println("Opción inválida, se asignará la categoría 'Otro'.");
                 category = "Otro";
             break;
         }
@@ -57,9 +57,9 @@ public class Note {
         notes.add(agenda);
 
             System.out.println("Seleccione el grupo al que desea agregar la nota:");
-    System.out.println("1. AdministraciÃ³n");
+    System.out.println("1. Administración");
     System.out.println("2. Operaciones");
-    System.out.println("3. Contabilidad(Presupuesto)");
+    System.out.println("3. Contabilidad (Presupuesto)");
     int groupOption = scanner.nextInt();
     scanner.nextLine();
 
@@ -68,7 +68,7 @@ public class Note {
     try{
     switch (groupOption) {
         case 1:
-            group = "AdministraciÃ³n";
+            group = "Administración";
             addNoteToGroup(title, content, category, group);
             break;
         case 2:
@@ -76,17 +76,17 @@ public class Note {
             performOperations();
             break;
         case 3:
-            group = "Contabilidad(Presupuesto)";
+            group = "Contabilidad (Presupuesto)";
             budget.calculateBudget();
             break;
         default:
-            System.out.println("OpciÃ³n invÃ¡lida, se asignarÃ¡ el grupo 'AdministraciÃ³n'.");
-            group = "AdministraciÃ³n";
+            System.out.println("Opción inválida, se asignará el grupo 'Administración'.");
+            group = "Administración";
             addNoteToGroup(title, content, category, group);
             break;
     }
 } catch (NumberFormatException e) {
-    System.out.println("OpciÃ³n invÃ¡lida, se asignarÃ¡ la categorÃ­a 'Otro'.");
+    System.out.println("Opción inválida, se asignará la categoría 'Otro'.");
     category = "Otro";
 }
         System.out.println("-- Nota creada --");
@@ -95,18 +95,18 @@ public class Note {
     private void performOperations() {
     Scanner scanner = new Scanner(System.in);
 
-    System.out.println("Seleccione la operaciÃ³n que desea realizar:");
+    System.out.println("Seleccione la operación que desea realizar:");
     System.out.println("1. Suma");
     System.out.println("2. Resta");
-    System.out.println("3. MultiplicaciÃ³n");
-    System.out.println("4. DivisiÃ³n");
+    System.out.println("3. Multiplicación");
+    System.out.println("4. División");
     int operationOption = scanner.nextInt();
     scanner.nextLine();
 
-    System.out.println("Ingrese el primer nÃºmero: ");
+    System.out.println("Ingrese el primer número: ");
     double num1 = scanner.nextDouble();
 
-    System.out.println("Ingrese el segundo nÃºmero: ");
+    System.out.println("Ingrese el segundo número: ");
     double num2 = scanner.nextDouble();
     
     double result = 0;
@@ -122,18 +122,18 @@ public class Note {
             break;
         case 3:
             result = num1 * num2;
-            System.out.println("El resultado de la multiplicaciÃ³n es: " + result);
+            System.out.println("El resultado de la multiplicación es: " + result);
             break;
         case 4:
             if (num2 != 0) {
                 result = num1 / num2;
-                System.out.println("El resultado de la divisiÃ³n es: " + result);
+                System.out.println("El resultado de la división es: " + result);
             } else {
                 System.out.println("No se puede dividir por cero.");
             }
             break;
         default:
-            System.out.println("OpciÃ³n invÃ¡lida.");
+            System.out.println("Opción inválida.");
             break;
     }
 }
@@ -153,12 +153,12 @@ public class Note {
             System.out.println((i + 1) + ". " + notes.get(i).getTitle());
         }
 
-        System.out.print("Ingrese el nÃºmero de la nota que desea editar: ");
+        System.out.print("Ingrese el número de la nota que desea editar: ");
         int noteNumber = scanner.nextInt();
         scanner.nextLine();
 
         if (noteNumber >= 1 && noteNumber <= notes.size()) {
-            System.out.println("Ingrese el nuevo tÃ­tulo de la nota: ");
+            System.out.println("Ingrese el nuevo título de la nota: ");
             String newTitle = scanner.nextLine();
 
             System.out.println("Ingrese el nuevo contenido de la nota: ");
@@ -169,7 +169,7 @@ public class Note {
 
             System.out.println("-- Nota editada --");
         } else {
-            System.out.println("NÃºmero de nota invÃ¡lido");
+            System.out.println("Número de nota inválido");
         }
     }
 
@@ -211,7 +211,7 @@ public class Note {
             System.out.println((i + 1) + ". " + notes.get(i).getTitle());
         }
 
-        System.out.print("Ingrese el nÃºmero de la nota que desea eliminar: ");
+        System.out.print("Ingrese el número de la nota que desea eliminar: ");
         int noteNumber = scanner.nextInt();
         scanner.nextLine();
 
@@ -219,7 +219,7 @@ public class Note {
             notes.remove(noteNumber - 1);
             System.out.println("-- Nota eliminada --");
         } else {
-            System.out.println("NÃºmero de nota invÃ¡lido");
+            System.out.println("Número de nota inválido");
         }
     }
 

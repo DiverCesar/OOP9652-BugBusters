@@ -24,11 +24,11 @@ public class CalendarMenu {
 
         do {
             System.out.println("---------- MENU DE CALENDARIO ----------");
-            System.out.println("1. AÃ±adir Tarea");
-            System.out.println("2. AÃ±adir Evento");
+            System.out.println("1. Añadir Tarea");
+            System.out.println("2. Añadir Evento");
             System.out.println("3. Mostrar Pendientes");
-            System.out.println("4. Volver al MenÃº Principal");
-            System.out.print("Ingrese la opciÃ³n que desea visualizar: ");
+            System.out.println("4. Volver al Menú Principal");
+            System.out.print("Ingrese la opción que desea visualizar: ");
             option = scanner.nextInt();
             scanner.nextLine();
 
@@ -45,7 +45,7 @@ public class CalendarMenu {
                 case 4:
                     return;
                 default:
-                    System.out.println("OpciÃ³n invÃ¡lida, ingrese de nuevo: ");
+                    System.out.println("Opción inválida, ingrese de nuevo: ");
                     break;
             }
 
@@ -55,34 +55,34 @@ public class CalendarMenu {
 
     private void addTask() {
         System.out.println("Ingrese los datos de la tarea:");
-        System.out.print("TÃ­tulo: ");
+        System.out.print("Título: ");
         String title = scanner.nextLine();
-        System.out.print("DescripciÃ³n: ");
+        System.out.print("Descripción: ");
         String description = scanner.nextLine();
-        System.out.print("Fecha de Vencimiento (yyyy-MM-dd): ");
+        System.out.print("Fecha de Vencimiento (yyyy-mm-dd): ");
         String dueDateStr = scanner.nextLine();
 
         LocalDate dueDate = LocalDate.parse(dueDateStr, formatter);
 
         Task task = new Task(title, description, dueDate);
         calendar.addTask(task);
-        System.out.println("Tarea aÃ±adida");
+        System.out.println("Tarea añadida");
     }
 
     private void addEvent() {
         System.out.println("Ingrese los datos del evento:");
         System.out.print("Nombre del Evento: ");
         String eventName = scanner.nextLine();
-        System.out.print("DescripciÃ³n del Evento: ");
+        System.out.print("Descripción del Evento: ");
         String eventDescription = scanner.nextLine();
-        System.out.print("Fecha del Evento (yyyy-MM-dd): ");
+        System.out.print("Fecha del Evento (yyyy-mm-dd): ");
         String eventDateStr = scanner.nextLine();
 
         LocalDate eventDate = LocalDate.parse(eventDateStr, formatter);
 
         Event event = new Event(eventName, eventDate, eventDescription);
         calendar.addEvent(event);
-        System.out.println("Evento aÃ±adido");
+        System.out.println("Evento añadido");
     }
 
     private void showPending() {
@@ -96,8 +96,8 @@ public class CalendarMenu {
             boolean hasPendingTasks = false;
             for (Task task : calendar.getTasks()) {
                 if (task.getDueDate().isAfter(currentDate)) {
-                    System.out.println("-- TÃ­tulo: " + task.getTitle());
-                    System.out.println("   DescripciÃ³n: " + task.getDescription());
+                    System.out.println("-- Título: " + task.getTitle());
+                    System.out.println("   Descripción: " + task.getDescription());
                     System.out.println("   Fecha de Vencimiento: " + task.getDueDate().format(formatter));
                     System.out.println();
                     hasPendingTasks = true;
@@ -114,7 +114,7 @@ public class CalendarMenu {
         } else {
             for (Event event : calendar.getEvents()) {
                 System.out.println("-- Nombre: " + event.getEventName());
-                System.out.println("   DescripciÃ³n: " + event.getEventDescription());
+                System.out.println("   Descripción: " + event.getEventDescription());
                 System.out.println("   Fecha: " + event.getEventDate().format(formatter));
                 System.out.println();
             }

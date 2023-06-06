@@ -64,11 +64,11 @@ public class Agenda {
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return "\nTÃ­tulo: " + title + "\nContenido: " + content +
-                "\nCategorÃ­a: " + category +
-                "\nFecha de CreaciÃ³n: " + creationDate.format(formatter) +
-                "\nFecha de Ãšltima ModificaciÃ³n: " + lastModifiedDate.format(formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd HH:mm:ss");
+        return "\nTítulo: " + title + "\nContenido: " + content +
+                "\nCategoría: " + category +
+                "\nFecha de Creación: " + creationDate.format(formatter) +
+                "\nFecha de Última Modificación: " + lastModifiedDate.format(formatter);
     }
 }
 
