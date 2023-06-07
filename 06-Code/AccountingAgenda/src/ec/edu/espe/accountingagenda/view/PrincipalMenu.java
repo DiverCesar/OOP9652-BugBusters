@@ -1,7 +1,5 @@
 package ec.edu.espe.accountingagenda.view;
 
-import ec.edu.espe.accountingagenda.model.Calendar;
-import ec.edu.espe.accountingagenda.model.JsonGenerator;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,15 +7,14 @@ public class PrincipalMenu {
     public void showPrincipalMenu() {
         Scanner scanner = new Scanner(System.in);
         int option = 0;
-        Calendar calendar = new Calendar(); // Instancia de la clase Calendar
+     //   Calendar calendar = new Calendar(); // Instancia de la clase Calendar
 
         do {
             try {
                 System.out.println("---------- MENU PRINCIPAL ----------");
                 System.out.println("1. Notas");
                 System.out.println("2. Pendientes");
-                System.out.println("3. Generar archivo JSON");
-                System.out.println("4. Salir");
+                System.out.println("3. Salir");
                 System.out.print("Ingrese la opción que desea visualizar: ");
 
                 if (scanner.hasNextInt()) {
@@ -34,9 +31,6 @@ public class PrincipalMenu {
                             calendarMenu.showCalendarMenu();
                             break;
                         case 3:
-                            JsonGenerator.generateJson(calendar);
-                            break;
-                        case 4:
                             System.out.println("Salió del programa exitosamente");
                             break;
                         default:
@@ -59,7 +53,7 @@ public class PrincipalMenu {
             }
 
             System.out.println();
-        } while (option != 4);
+        } while (option != 3);
 
         scanner.close(); 
     }

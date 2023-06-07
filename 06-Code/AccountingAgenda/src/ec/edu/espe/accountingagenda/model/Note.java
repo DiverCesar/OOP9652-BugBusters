@@ -1,4 +1,5 @@
 package ec.edu.espe.accountingagenda.model;
+import ec.edu.espe.accountingagenda.model.Calendar;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,6 +15,7 @@ public class Note {
     private ArrayList<Agenda> notes = new ArrayList<>();
 
     public void createNote() {
+        Calendar calendar = new Calendar();
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Ingrese el título de la nota: ");
@@ -89,6 +91,7 @@ public class Note {
     System.out.println("Opción inválida, se asignará la categoría 'Otro'.");
     category = "Otro";
 }
+    
         System.out.println("-- Nota creada --");
     }
     
