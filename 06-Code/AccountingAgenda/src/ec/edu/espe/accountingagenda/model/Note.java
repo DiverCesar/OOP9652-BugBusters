@@ -39,8 +39,6 @@ public class Note {
             int categoryOption = scanner.nextInt();
             scanner.nextLine();
 
-
-
             switch (categoryOption) {
                 case 1:
                     category = "Personal";
@@ -66,7 +64,6 @@ public class Note {
             }catch(InputMismatchException e){
                 String input = scanner.nextLine();
                 System.out.println("Error: La entrada '" + input + "' no es un número válido.");
-
             }
         
         }while(!isValidOption);
@@ -120,49 +117,77 @@ public class Note {
     }
     
     private void performOperations() {
-    Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
+        boolean isTrueOption = false;
+        
+        do {
+            System.out.println("Seleccione la operación que desea realizar:");
+            System.out.println("1. Suma");
+            System.out.println("2. Resta");
+            System.out.println("3. Multiplicación");
+            System.out.println("4. División");
+            try {
+                int operationOption = scanner.nextInt();
+                scanner.nextLine();
 
-    System.out.println("Seleccione la operación que desea realizar:");
-    System.out.println("1. Suma");
-    System.out.println("2. Resta");
-    System.out.println("3. Multiplicación");
-    System.out.println("4. División");
-    int operationOption = scanner.nextInt();
-    scanner.nextLine();
-
-    System.out.println("Ingrese el primer número: ");
-    double num1 = scanner.nextDouble();
-
-    System.out.println("Ingrese el segundo número: ");
-    double num2 = scanner.nextDouble();
-    
-    double result = 0;
-
-    switch (operationOption) {
-        case 1:
-            result = num1 + num2;
-            System.out.println("El resultado de la suma es: " + result);
-            break;
-        case 2:
-            result = num1 - num2;
-            System.out.println("El resultado de la resta es: " + result);
-            break;
-        case 3:
-            result = num1 * num2;
-            System.out.println("El resultado de la multiplicación es: " + result);
-            break;
-        case 4:
-            if (num2 != 0) {
-                result = num1 / num2;
-                System.out.println("El resultado de la división es: " + result);
-            } else {
-                System.out.println("No se puede dividir por cero.");
+                double num1 = 0;
+                double result = 0;
+                double num2 = 0;
+                
+                switch (operationOption) {
+                    case 1:
+                        System.out.println("Ingrese el primer número: ");
+                        num1 = scanner.nextDouble();
+                        System.out.println("Ingrese el segundo número: ");
+                        num2 = scanner.nextDouble();
+                        
+                        result = num1 + num2;
+                        System.out.println("El resultado de la suma es: " + result);
+                        isTrueOption = true;
+                        break;
+                    case 2:
+                        System.out.println("Ingrese el primer número: ");
+                        num1 = scanner.nextDouble();
+                        System.out.println("Ingrese el segundo número: ");
+                        num2 = scanner.nextDouble();
+                        
+                        result = num1 - num2;
+                        System.out.println("El resultado de la resta es: " + result);
+                        isTrueOption = true;
+                        break;
+                    case 3:
+                        System.out.println("Ingrese el primer número: ");
+                        num1 = scanner.nextDouble();
+                        System.out.println("Ingrese el segundo número: ");
+                        num2 = scanner.nextDouble();
+                        
+                        result = num1 * num2;
+                        System.out.println("El resultado de la multiplicación es: " + result);
+                        isTrueOption = true;
+                        break;
+                    case 4:
+                        System.out.println("Ingrese el primer número: ");
+                        num1 = scanner.nextDouble();
+                        System.out.println("Ingrese el segundo número: ");
+                        num2 = scanner.nextDouble();
+                        
+                        if (num2 != 0) {
+                            result = num1 / num2;
+                            System.out.println("El resultado de la división es: " + result);
+                        } else {
+                            System.out.println("No se puede dividir por cero.");
+                        }
+                        isTrueOption = true;
+                        break;
+                    default:
+                        System.out.println("Opción inválida, ingrese de nuevo: ");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: La entrada no es un número válido.");
+                scanner.nextLine(); 
             }
-            break;
-        default:
-            System.out.println("Opción inválida.");
-            break;
-    }
+        } while (!isTrueOption);
 }
 
     private void addNoteToGroup(String title, String content, String category, String group) {
