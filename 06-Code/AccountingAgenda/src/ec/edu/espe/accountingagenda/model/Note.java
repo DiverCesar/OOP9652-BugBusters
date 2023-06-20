@@ -1,7 +1,7 @@
 package ec.edu.espe.accountingagenda.model;
-import ec.edu.espe.accountingagenda.model.Calendar;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -15,84 +15,108 @@ public class Note {
     private ArrayList<Agenda> notes = new ArrayList<>();
 
     public void createNote() {
+        
         Calendar calendar = new Calendar();
         Scanner scanner = new Scanner(System.in);
-
+        boolean isValidOption = false;
+        String category = "" ;
+        
         System.out.println("Ingrese el título de la nota: ");
         String title = scanner.nextLine();
 
         System.out.println("Ingrese el contenido de la nota: ");
         String content = scanner.nextLine();
 
+        do{
+        
         System.out.println("Seleccione la categoría de la nota:");
         System.out.println("1. Personal");
         System.out.println("2. Trabajo");
         System.out.println("3. Estudio");
         System.out.println("4. Otro");
+        
+            try{
+            int categoryOption = scanner.nextInt();
+            scanner.nextLine();
 
-        int categoryOption = scanner.nextInt();
-        scanner.nextLine();
 
-        String category;
 
-        switch (categoryOption) {
-            case 1:
-                category = "Personal";
-            break;
-            case 2:
-                category = "Trabajo";
-            break;
-            case 3:
-                category = "Estudio";
-            break;
-            case 4:
-                System.out.println("Ingrese la categoría personalizada:");
-                category = scanner.nextLine();
-            break;
-            default:
-                System.out.println("Opción inválida, se asignará la categoría 'Otro'.");
-                category = "Otro";
-            break;
-        }
+            switch (categoryOption) {
+                case 1:
+                    category = "Personal";
+                    isValidOption = true;
+                break;
+                case 2:
+                    category = "Trabajo";
+                    isValidOption = true;
+                break;
+                case 3:
+                    category = "Estudio";
+                    isValidOption = true;
+                break;
+                case 4:
+                    System.out.println("Ingrese la categoría personalizada:");
+                    category = scanner.nextLine();
+                    isValidOption = true;
+                break;
+                default:
+                    System.out.println("Error: Por favor, ingrese una opción válida..");
+                break;
+            }
+            }catch(InputMismatchException e){
+                String input = scanner.nextLine();
+                System.out.println("Error: La entrada '" + input + "' no es un número válido.");
+
+            }
+        
+        }while(!isValidOption);
 
         Agenda agenda = new Agenda(title, content, category);
         notes.add(agenda);
 
-            System.out.println("Seleccione el grupo al que desea agregar la nota:");
-    System.out.println("1. Administración");
-    System.out.println("2. Operaciones");
-    System.out.println("3. Contabilidad (Presupuesto)");
-    int groupOption = scanner.nextInt();
-    scanner.nextLine();
+        String group;
+        Budget budget = new Budget();
+        boolean isOptionValid = false;
 
-    String group;
-    Budget budget = new Budget();
-    try{
-    switch (groupOption) {
-        case 1:
-            group = "Administración";
-            addNoteToGroup(title, content, category, group);
-            break;
-        case 2:
-            group = "Operaciones";
-            performOperations();
-            break;
-        case 3:
-            group = "Contabilidad (Presupuesto)";
-            budget.calculateBudget();
-            break;
-        default:
-            System.out.println("Opción inválida, se asignará el grupo 'Administración'.");
-            group = "Administración";
-            addNoteToGroup(title, content, category, group);
-            break;
-    }
-} catch (NumberFormatException e) {
-    System.out.println("Opción inválida, se asignará la categoría 'Otro'.");
-    category = "Otro";
-}
+        do {
+            System.out.println("Seleccione el grupo al que desea agregar la nota:");
+            System.out.println("1. Administración");
+            System.out.println("2. Operaciones");
+            System.out.println("3. Contabilidad (Presupuesto)");
+
+            try {
+                int groupOption = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (groupOption) {
+                    case 1:
+                        group = "Administración";
+                        addNoteToGroup(title, content, category, group);
+                        isOptionValid = true;
+                        break;
+                    case 2:
+                        group = "Operaciones";
+                        performOperations();
+                        isOptionValid = true;
+                        break;
+                    case 3:
+                        group = "Contabilidad (Presupuesto)";
+                        budget.calculateBudget();
+                        isOptionValid = true;
+                        break;
+                    default:
+                        System.out.println("Opción inválida, ingrese de nuevo: ");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: La entrada no es un número válido.");
+                scanner.nextLine(); 
+            }
+        } while (!isOptionValid);
+
     
         System.out.println("-- Nota creada --");
+    
     }
     
     private void performOperations() {

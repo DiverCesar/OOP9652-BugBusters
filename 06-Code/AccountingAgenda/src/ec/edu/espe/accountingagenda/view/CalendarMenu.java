@@ -6,6 +6,7 @@ import ec.edu.espe.accountingagenda.model.Task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CalendarMenu {
@@ -20,15 +21,17 @@ public class CalendarMenu {
     }
 
     public void showCalendarMenu() {
-        int option;
+    int option = 0;
 
-        do {
-            System.out.println("---------- MENU DE CALENDARIO ----------");
-            System.out.println("1. Añadir Tarea");
-            System.out.println("2. Añadir Evento");
-            System.out.println("3. Mostrar Pendientes");
-            System.out.println("4. Volver al Menú Principal");
-            System.out.print("Ingrese la opción que desea visualizar: ");
+    do {
+        System.out.println("---------- MENU DE CALENDARIO ----------");
+        System.out.println("1. Añadir Tarea");
+        System.out.println("2. Añadir Evento");
+        System.out.println("3. Mostrar Pendientes");
+        System.out.println("4. Volver al Menú Principal");
+        System.out.print("Ingrese la opción que desea visualizar: ");
+
+        try {
             option = scanner.nextInt();
             scanner.nextLine();
 
@@ -48,9 +51,13 @@ public class CalendarMenu {
                     System.out.println("Opción inválida, ingrese de nuevo: ");
                     break;
             }
+        } catch (InputMismatchException e) {
+            String input = scanner.nextLine();
+            System.out.println("Error: La entrada '" + input + "' no es un número válido.");
+        }
 
-            System.out.println();
-        } while (option != 4);
+        System.out.println();
+    } while (option != 4);
     }
 
     private void addTask() {
