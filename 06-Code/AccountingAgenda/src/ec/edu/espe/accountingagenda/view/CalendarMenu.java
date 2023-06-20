@@ -6,6 +6,7 @@ import ec.edu.espe.accountingagenda.model.Task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -66,32 +67,52 @@ public class CalendarMenu {
         String title = scanner.nextLine();
         System.out.print("Descripción: ");
         String description = scanner.nextLine();
-        System.out.print("Fecha de Vencimiento (yyyy-mm-dd): ");
-        String dueDateStr = scanner.nextLine();
 
-        LocalDate dueDate = LocalDate.parse(dueDateStr, formatter);
+        LocalDate dueDate = null;
+        boolean validFormat = false;
+
+        while (!validFormat) {
+            try {
+                System.out.print("Fecha de Vencimiento (yyyy-mm-dd): ");
+                String dueDateStr = scanner.nextLine();
+                dueDate = LocalDate.parse(dueDateStr);
+                validFormat = true; 
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de fecha incorrecto. Igrese de nuevo.");
+            }
+        }
 
         Task task = new Task(title, description, dueDate);
         calendar.addTask(task);
         System.out.println("Tarea añadida");
     }
-
+    
     private void addEvent() {
         System.out.println("Ingrese los datos del evento:");
         System.out.print("Nombre del Evento: ");
         String eventName = scanner.nextLine();
         System.out.print("Descripción del Evento: ");
         String eventDescription = scanner.nextLine();
-        System.out.print("Fecha del Evento (yyyy-mm-dd): ");
-        String eventDateStr = scanner.nextLine();
 
-        LocalDate eventDate = LocalDate.parse(eventDateStr, formatter);
+        LocalDate eventDate = null;
+        boolean validFormat = false;
+
+        while (!validFormat) {
+            try {
+                System.out.print("Fecha del Evento (yyyy-mm-dd): ");
+                String eventDateStr = scanner.nextLine();
+                eventDate = LocalDate.parse(eventDateStr);
+                validFormat = true; 
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de fecha incorrecto. Igrese de nuevo.");
+            }
+        }
 
         Event event = new Event(eventName, eventDate, eventDescription);
         calendar.addEvent(event);
         System.out.println("Evento añadido");
     }
-
+    
     private void showPending() {
         System.out.println("----- PENDIENTES -----");
 
