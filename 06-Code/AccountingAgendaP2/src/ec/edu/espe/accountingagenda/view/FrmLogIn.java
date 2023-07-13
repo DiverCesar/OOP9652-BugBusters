@@ -1,13 +1,18 @@
 package ec.edu.espe.accountingagenda.view;
 
+import com.mongodb.MongoClient;
+import com.mongodb.MongoException;
+import ec.edu.espe.accountingagenda.controller.Conection;
 import ec.edu.espe.accountingagenda.controller.Password;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Alison Miranda, Bug Busters, DCCO-ESPE
  */
 public class FrmLogIn extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form LogIn
      */
@@ -122,6 +127,8 @@ public class FrmLogIn extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
+        Conection logInConection = new Conection();
+        logInConection.createConection();
         FrmPrincipalMenu frmPrincipalMenu = new FrmPrincipalMenu();
         frmPrincipalMenu.setVisible(true);
         dispose();
