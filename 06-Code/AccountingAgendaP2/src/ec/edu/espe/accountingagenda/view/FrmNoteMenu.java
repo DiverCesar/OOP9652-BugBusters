@@ -12,15 +12,13 @@ import javax.swing.JOptionPane;
  * @author Alison Miranda, Bug Busters, DCCO-ESPE
  */
 public class FrmNoteMenu extends javax.swing.JFrame {
-
-    private ArrayList<Object[]> savedData;
-    
+   
     /**
      * Creates new form FrmNotes
      */
     public FrmNoteMenu() {
         initComponents();
-        this.savedData = savedData;
+
     }
 
     FrmNoteMenu(ArrayList<Object[]> savedData) {
@@ -149,28 +147,7 @@ public class FrmNoteMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchNoteActionPerformed
-     StringBuilder informacion = new StringBuilder();
-    
-    for (int i = 0; i < savedData.size(); i++) {
-        Object[] rowData = savedData.get(i);
-        String material = rowData[0].toString();
-        String quantity = rowData[1].toString();
-        String unitPrice = rowData[2].toString();
-        String total = rowData[3].toString();
 
-        informacion.append("Guardado ").append(i + 1).append(":\n");
-        informacion.append("Material: ").append(material).append("\n");
-        informacion.append("Cantidad: ").append(quantity).append("\n");
-        informacion.append("Precio Unitario: ").append(unitPrice).append("\n");
-        informacion.append("Total: ").append(total).append("\n");
-        informacion.append("---------------------\n");
-    }
-
-    if (informacion.length() > 0) {
-        JOptionPane.showMessageDialog(this, informacion.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        JOptionPane.showMessageDialog(this, "No hay información guardada.", "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
-    }
     }//GEN-LAST:event_btnSearchNoteActionPerformed
 
     /**

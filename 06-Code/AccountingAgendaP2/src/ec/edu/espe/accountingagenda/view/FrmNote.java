@@ -183,7 +183,7 @@ public class FrmNote extends javax.swing.JFrame {
                                 .addComponent(btnAdd)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave)
                         .addGap(13, 13, 13)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,40 +293,7 @@ public class FrmNote extends javax.swing.JFrame {
         txtUnitPrice.setText("");
         txtTotal.setText("");
     }
-    private void computeTotal() {
-        try {
-            double quantity = Double.parseDouble(txtQuantity.getText());
-            double unitPrice = Double.parseDouble(txtUnitPrice.getText());
-            double total = quantity * unitPrice;
-            txtTotal.setText(Double.toString(total));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos en los campos de cantidad y precio unitario.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    void showInformationSaved() {
-        StringBuilder informacion = new StringBuilder();
-    for (int i = 0; i < savedData.size(); i++) {
-        Object[] rowData = savedData.get(i);
-        String material = rowData[0].toString();
-        String quantity = rowData[1].toString();
-        String unitPrice = rowData[2].toString();
-        String total = rowData[3].toString();
-
-        informacion.append("Guardado ").append(i + 1).append(":\n");
-        informacion.append("Material: ").append(material).append("\n");
-        informacion.append("Cantidad: ").append(quantity).append("\n");
-        informacion.append("Precio Unitario: ").append(unitPrice).append("\n");
-        informacion.append("Total: ").append(total).append("\n");
-        informacion.append("---------------------\n");
-    }
-
-    if (informacion.length() > 0) {
-        JOptionPane.showMessageDialog(this, informacion.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        JOptionPane.showMessageDialog(this, "No hay información guardada.", "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
-    }
-}
+   
     
     /**
      * @param args the command line arguments
