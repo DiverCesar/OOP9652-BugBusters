@@ -122,7 +122,7 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCalendarMenuActionPerformed
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
-        FrmLogIn frmLogIn = new FrmLogIn();
+        FrmLogInAdministrator frmLogIn = new FrmLogInAdministrator();
         frmLogIn.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnLogOutActionPerformed

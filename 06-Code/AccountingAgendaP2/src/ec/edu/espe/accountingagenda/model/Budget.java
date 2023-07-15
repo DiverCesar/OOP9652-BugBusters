@@ -1,5 +1,5 @@
 
-package ec.edu.espe.accountingagenda.controller;
+package ec.edu.espe.accountingagenda.model;
 
 /**
  *

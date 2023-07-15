@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ec.edu.espe.accountingagenda.view;
 
 /**
@@ -106,14 +102,14 @@ public class FrmCalendarMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEventActionPerformed
-        FrmAddEvent frmAddEvent = new FrmAddEvent();
-        frmAddEvent.setVisible(true);
+        FrmEvent frmEvent = new FrmEvent();
+        frmEvent.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnAddEventActionPerformed
 
     private void btnAddTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTaskActionPerformed
-        FrmAddTask frmAddTask = new FrmAddTask();
-        frmAddTask.setVisible(true);
+        FrmTask frmTask = new FrmTask();
+        frmTask.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnAddTaskActionPerformed
 
@@ -148,6 +144,7 @@ public class FrmCalendarMenu extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmCalendarMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
