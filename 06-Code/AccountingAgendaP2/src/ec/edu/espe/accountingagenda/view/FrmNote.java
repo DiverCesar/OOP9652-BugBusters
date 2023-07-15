@@ -1,14 +1,31 @@
 
 package ec.edu.espe.accountingagenda.view;
 
-import java.awt.List;
+import java.awt.Color;
+import javax.swing.text.Document;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 /**
  *
- * @author LENOVO
+ * @author Edison Ludeña, BugBuster, DCCO-ESPE
  */
 public class FrmNote extends javax.swing.JFrame {
     private ArrayList<Object[]> savedData;
@@ -18,7 +35,10 @@ public class FrmNote extends javax.swing.JFrame {
      */
     public FrmNote() {
         initComponents();
+        setupFontComboBox();
+        setupFontSizeChangeListener();
         savedData = new ArrayList<>();
+
     }
 
     /**
@@ -30,13 +50,10 @@ public class FrmNote extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jProgressBar1 = new javax.swing.JProgressBar();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTitle = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -51,6 +68,16 @@ public class FrmNote extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
+        jToolBar1 = new javax.swing.JToolBar();
+        btnNegrita = new javax.swing.JButton();
+        btnColor = new javax.swing.JButton();
+        btnItalica = new javax.swing.JButton();
+        btnSubrayar = new javax.swing.JButton();
+        btnFontSize = new javax.swing.JSpinner();
+        BtnFontComboBox = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txpDescription = new javax.swing.JTextPane();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,17 +86,13 @@ public class FrmNote extends javax.swing.JFrame {
 
         jLabel2.setText("Titulo:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtTitleActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Descripción:");
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jLabel3.setText("Contenido:");
 
         jLabel4.setText("Total:");
 
@@ -140,15 +163,105 @@ public class FrmNote extends javax.swing.JFrame {
             }
         });
 
+        jToolBar1.setRollover(true);
+
+        btnNegrita.setText("Negrita");
+        btnNegrita.setFocusable(false);
+        btnNegrita.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnNegrita.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnNegrita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNegritaActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnNegrita);
+
+        btnColor.setText("Color");
+        btnColor.setFocusable(false);
+        btnColor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnColor.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnColorActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnColor);
+
+        btnItalica.setText("Italica");
+        btnItalica.setFocusable(false);
+        btnItalica.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnItalica.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnItalica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnItalicaActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnItalica);
+
+        btnSubrayar.setText("Subrayar");
+        btnSubrayar.setFocusable(false);
+        btnSubrayar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSubrayar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSubrayar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubrayarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnSubrayar);
+        jToolBar1.add(btnFontSize);
+
+        BtnFontComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        BtnFontComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnFontComboBoxActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(BtnFontComboBox);
+
+        jScrollPane1.setViewportView(txpDescription);
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnSave)
+                        .addGap(141, 141, 141)
+                        .addComponent(btnCancel)
+                        .addGap(150, 150, 150))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnAdd)
+                                    .addComponent(jLabel4))))
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDelete))
+                        .addGap(39, 39, 39)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,41 +269,13 @@ public class FrmNote extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
-                                .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAdd)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSave)
-                        .addGap(13, 13, 13)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnCancel)
-                        .addGap(150, 150, 150))))
+                        .addGap(262, 262, 262)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,13 +284,22 @@ public class FrmNote extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
+                .addGap(14, 14, 14)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCancel)
+                            .addComponent(btnSave))
+                        .addGap(15, 15, 15))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -223,22 +317,20 @@ public class FrmNote extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(btnAdd)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancel)
-                    .addComponent(btnSave))
-                .addGap(15, 15, 15))
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAdd)
+                            .addComponent(btnDelete))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTitleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtTitleActionPerformed
 
     private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
         // TODO add your handling code here:
@@ -270,10 +362,80 @@ public class FrmNote extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        FrmNoteMenu frmNoteMenu = new FrmNoteMenu(savedData);
-        frmNoteMenu.setVisible(true);
-        dispose();
+        
+        displaySavedData();
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnNegritaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNegritaActionPerformed
+    StyledDocument doc = txpDescription.getStyledDocument();
+    int start = txpDescription.getSelectionStart();
+    int end = txpDescription.getSelectionEnd();
+
+    if (start != end) {
+        StyleContext styleContext = StyleContext.getDefaultStyleContext();
+        AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, true);
+        doc.setCharacterAttributes(start, end - start, attrs, false);
+    }
+    }//GEN-LAST:event_btnNegritaActionPerformed
+
+    private void btnSubrayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubrayarActionPerformed
+            StyledDocument doc = txpDescription.getStyledDocument();
+    StyleContext sc = StyleContext.getDefaultStyleContext();
+    AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, true);
+    int start = txpDescription.getSelectionStart();
+    int end = txpDescription.getSelectionEnd();
+    doc.setCharacterAttributes(start, end - start, attrs, false);
+    }//GEN-LAST:event_btnSubrayarActionPerformed
+
+    private void btnColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColorActionPerformed
+    Color selectedColor = JColorChooser.showDialog(this, "Seleccionar color de fuente", Color.BLACK);
+    if (selectedColor != null) {
+        StyledDocument doc = txpDescription.getStyledDocument();
+        StyleContext sc = StyleContext.getDefaultStyleContext();
+        AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, selectedColor);
+        int start = txpDescription.getSelectionStart();
+        int end = txpDescription.getSelectionEnd();
+        doc.setCharacterAttributes(start, end - start, attrs, false);
+    }
+    }//GEN-LAST:event_btnColorActionPerformed
+
+    private void btnItalicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnItalicaActionPerformed
+        StyledDocument doc = txpDescription.getStyledDocument();
+        StyleContext sc = StyleContext.getDefaultStyleContext();
+        AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, true);
+        int start = txpDescription.getSelectionStart();
+        int end = txpDescription.getSelectionEnd();
+        doc.setCharacterAttributes(start, end - start, attrs, false);
+    }//GEN-LAST:event_btnItalicaActionPerformed
+
+    private void BtnFontComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFontComboBoxActionPerformed
+        JComboBox<String> comboBox = (JComboBox<String>) evt.getSource();
+        String selectedFont = (String) comboBox.getSelectedItem();
+        Font currentFont = txpDescription.getFont();
+        Font newFont = new Font(selectedFont, currentFont.getStyle(), currentFont.getSize());
+        txpDescription.setFont(newFont);
+    }//GEN-LAST:event_BtnFontComboBoxActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+    DefaultTableModel model = (DefaultTableModel) tableBudget.getModel();
+    int selectedRow = tableBudget.getSelectedRow();
+
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int rowCount = model.getRowCount();
+    if (rowCount == 0) {
+        JOptionPane.showMessageDialog(this, "No hay información para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+    if (confirm == JOptionPane.YES_OPTION) {
+        model.removeRow(selectedRow);
+    }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     
     
@@ -282,18 +444,61 @@ public class FrmNote extends javax.swing.JFrame {
         String quantity = txtQuantity.getText();
         String UnitPrice = txtUnitPrice.getText();
         String total = txtTotal.getText();
-        // Agregar una nueva fila a la tabla con los datos del presupuesto
+        
         Object[] rowData = {material, quantity, UnitPrice, total};
         savedData.add(rowData);
         ((DefaultTableModel) tableBudget.getModel()).addRow(rowData);
-        // Limpiar los campos de entrada
-        
+
         txtMaterial.setText("");
         txtQuantity.setText("");
         txtUnitPrice.setText("");
         txtTotal.setText("");
     }
+    
+    private void displaySavedData() {
+    StringBuilder message = new StringBuilder();
+    message.append("Título: ").append(txtTitle.getText()).append("\n");
+    message.append("Descripción: ").append(txpDescription.getText()).append("\n");
+    message.append("Presupuesto:\n");
+
+    DefaultTableModel model = (DefaultTableModel) tableBudget.getModel();
+
+    // Obtener nombres de las columnas
+    for (int col = 0; col < model.getColumnCount(); col++) {
+        message.append(model.getColumnName(col)).append("\t \t");
+    }
+    message.append("\n");
+
+    // Obtener valores de las filas
+    for (int row = 0; row < model.getRowCount(); row++) {
+        for (int col = 0; col < model.getColumnCount(); col++) {
+            message.append(model.getValueAt(row, col)).append("\t \t");
+        }
+        message.append("\n");
+    }
+
+    JOptionPane.showMessageDialog(this, message.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+}
    
+        private void setupFontSizeChangeListener() {
+        SpinnerNumberModel fontSizeModel = new SpinnerNumberModel(12, 6, 72, 1);
+        btnFontSize.setModel(fontSizeModel);
+        btnFontSize.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                int fontSize = (int) btnFontSize.getValue();
+                Font currentFont = txpDescription.getFont();
+                Font newFont = currentFont.deriveFont((float) fontSize);
+                txpDescription.setFont(newFont);
+            }
+        });
+        
+    }
+        
+     private void setupFontComboBox() {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        String[] fontNames = ge.getAvailableFontFamilyNames();
+        BtnFontComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(fontNames));
+    }
     
     /**
      * @param args the command line arguments
@@ -322,6 +527,8 @@ public class FrmNote extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -332,9 +539,16 @@ public class FrmNote extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> BtnFontComboBox;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnColor;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JSpinner btnFontSize;
+    private javax.swing.JButton btnItalica;
+    private javax.swing.JButton btnNegrita;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSubrayar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -343,14 +557,14 @@ public class FrmNote extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable tableBudget;
+    private javax.swing.JTextPane txpDescription;
     private javax.swing.JTextField txtMaterial;
     private javax.swing.JTextField txtQuantity;
+    private javax.swing.JTextField txtTitle;
     private javax.swing.JTextField txtTotal;
     private javax.swing.JTextField txtUnitPrice;
     // End of variables declaration//GEN-END:variables
