@@ -10,7 +10,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -41,9 +41,9 @@
                               </Group>
                               <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtEventName" min="-2" pref="212" max="-2" attributes="0"/>
                                   <Component id="txtEventDate" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
                                   <Component id="txtEventDescription" alignment="0" min="-2" pref="476" max="-2" attributes="0"/>
+                                  <Component id="txtEventName" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="jScrollPane2" alignment="0" min="-2" pref="658" max="-2" attributes="0"/>
@@ -125,11 +125,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Fecha del evento"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtEventName">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEventNameActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtEventDescription">
       <Events>
@@ -214,6 +209,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtEventName">
     </Component>
   </SubComponents>
 </Form>

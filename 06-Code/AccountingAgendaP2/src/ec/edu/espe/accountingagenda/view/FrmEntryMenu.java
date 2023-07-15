@@ -38,7 +38,9 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         mniEntryGuest = new javax.swing.JMenu();
         mniEntryGuest1 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        mniInformation = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        mniInstructions = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -83,10 +85,28 @@ public class FrmEntryMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu1.setText("Sobre el programa");
+        jMenu1.setText("Acerca de");
+
+        mniInformation.setText("Información ");
+        mniInformation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniInformationActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mniInformation);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Ayuda");
+
+        mniInstructions.setText("Instrucciones");
+        mniInstructions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniInstructionsActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mniInstructions);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -96,25 +116,26 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(140, 140, 140)
+                .addGap(136, 136, 136)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addComponent(jLabel3)))
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(115, 115, 115)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addGap(24, 24, 24))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mniEntryAdministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniEntryAdministratorActionPerformed
@@ -128,6 +149,14 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         frmLogIn.setVisible(true);
         dispose();
     }//GEN-LAST:event_mniEntryGuest1ActionPerformed
+
+    private void mniInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniInformationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mniInformationActionPerformed
+
+    private void mniInstructionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniInstructionsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mniInstructionsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,5 +208,7 @@ public class FrmEntryMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem mniEntryAdministrator;
     private javax.swing.JMenu mniEntryGuest;
     private javax.swing.JMenuItem mniEntryGuest1;
+    private javax.swing.JMenuItem mniInformation;
+    private javax.swing.JMenuItem mniInstructions;
     // End of variables declaration//GEN-END:variables
 }

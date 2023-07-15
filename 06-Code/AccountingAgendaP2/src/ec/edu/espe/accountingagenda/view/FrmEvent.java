@@ -32,7 +32,6 @@ public class FrmEvent extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtEventName = new javax.swing.JTextField();
         txtEventDescription = new javax.swing.JTextField();
         txtEventDate = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -41,6 +40,7 @@ public class FrmEvent extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
+        txtEventName = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,12 +52,6 @@ public class FrmEvent extends javax.swing.JFrame {
         jLabel6.setText("Descripcion del evento");
 
         jLabel7.setText("Fecha del evento");
-
-        txtEventName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEventNameActionPerformed(evt);
-            }
-        });
 
         txtEventDescription.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,9 +124,9 @@ public class FrmEvent extends javax.swing.JFrame {
                                     .addComponent(jLabel7))
                                 .addGap(48, 48, 48)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtEventName, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtEventDate, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEventDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtEventDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEventName, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(257, 257, 257)
@@ -177,6 +171,7 @@ public class FrmEvent extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtEventDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEventDescriptionActionPerformed
@@ -202,13 +197,7 @@ public class FrmEvent extends javax.swing.JFrame {
         frmCalendarMenu.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void txtEventNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEventNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEventNameActionPerformed
-
-    
-    
+        
     private void addEvent() {
         String eventName = txtEventName.getText();
         String eventDescription = txtEventDescription.getText();

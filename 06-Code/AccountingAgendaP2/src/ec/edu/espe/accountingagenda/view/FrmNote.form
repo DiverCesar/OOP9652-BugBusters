@@ -6,7 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -290,7 +290,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnColorActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnItalica">
+        <Component class="javax.swing.JButton" name="btnItalic">
           <Properties>
             <Property name="text" type="java.lang.String" value="Italica"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -298,10 +298,10 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnItalicaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnItalicActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnSubrayar">
+        <Component class="javax.swing.JButton" name="btnUnderline">
           <Properties>
             <Property name="text" type="java.lang.String" value="Subrayar"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -309,7 +309,7 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubrayarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUnderlineActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSpinner" name="btnFontSize">
@@ -341,7 +341,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="txpDescription">
+        <Component class="javax.swing.JTextPane" name="txaContent">
         </Component>
       </SubComponents>
     </Container>

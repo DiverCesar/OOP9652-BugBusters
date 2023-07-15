@@ -1,13 +1,13 @@
 package ec.edu.espe.accountingagenda.controller;
 
-import com.mongodb.ConnectionString;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoException;
-import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.bson.Document;
 
 /**
  *
@@ -20,11 +20,13 @@ public class Conection {
         
         try {
             mongo = new MongoClient(new MongoClientURI(uri));
+            MongoDatabase database = mongo.getDatabase("dbAccountingAgenda");
+            MongoCollection<Document> collection = database.getCollection("logIn");
             List<String> dataBaseNames = mongo.getDatabaseNames();
-            JOptionPane.showMessageDialog(null, "Se conecto correctamente a MongoDb"+"\nLista de base de datos disponibles: "+dataBaseNames);
+            JOptionPane.showMessageDialog(null, "Se ha iniciado correctamente sesión en "+database.getName());
             
         } catch (MongoException e) {
-            JOptionPane.showMessageDialog(null, "Error en la conexión a MongoDb"+"\nTipo de error: "+e.toString());
+            JOptionPane.showMessageDialog(null, "Error en la conexión"+"\nTipo de error: "+e.toString());
         }
     }
 }

@@ -4,6 +4,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 import ec.edu.espe.accountingagenda.controller.Conection;
 import ec.edu.espe.accountingagenda.controller.Password;
+import ec.edu.espe.accountingagenda.model.TextPrompt;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,8 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
      */
     public FrmLogInAdministrator() {
         initComponents();
+        TextPrompt placeHolderUsername = new TextPrompt("Ingrese su nombre usuario",txtUsername);
+        TextPrompt placeHolderPassword = new TextPrompt("Ingrese su contraseña",jPasswordField);
     }
 
     /**
@@ -34,9 +37,9 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
         btnLogIn = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        jPasswordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,14 +51,9 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
 
         jLabel4.setText("CONTRASEÑA :");
 
-        txtUsername.setText("Ingrese su nombre de usuario");
-        txtUsername.setToolTipText("Ingrese su nombre de usuario");
-
-        txtPassword.setText("Ingrese su contraseña");
-        txtPassword.setToolTipText("Ingrese su contraseña");
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
+        txtUsername.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtUsernameFocusGained(evt);
             }
         });
 
@@ -73,21 +71,18 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
             }
         });
 
+        jPasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                            .addComponent(txtPassword)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(131, 131, 131)
                         .addComponent(jLabel2))
@@ -98,7 +93,16 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
                         .addGap(68, 68, 68)
                         .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPasswordField)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -115,8 +119,8 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                    .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -124,25 +128,38 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
+        String usrcomparative = this.txtUsername.getText();
+        String pswcomparative = this.jPasswordField.getText();
+        if(usrcomparative.equals("Hernan") && pswcomparative.equals("Hernan")){
         Conection logInConection = new Conection();
         logInConection.createConection();
         FrmPrincipalMenu frmPrincipalMenu = new FrmPrincipalMenu();
         frmPrincipalMenu.setVisible(true);
         dispose();
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Usuario "+this.txtUsername.getText()+" sin registrar");
+            this.txtUsername.setText("");
+            this.jPasswordField.setText("");
+            }
     }//GEN-LAST:event_btnLogInActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        String password = txtPassword.getText(); 
-        String encryptedPassword = Password.encrypt(password);
-    }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         dispose();
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void txtUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusGained
+        
+    }//GEN-LAST:event_txtUsernameFocusGained
+
+    private void jPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldActionPerformed
+        String password = jPasswordField.getText();
+        String encryptedPassword = Password.encrypt(password);
+    }//GEN-LAST:event_jPasswordFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,7 +206,7 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

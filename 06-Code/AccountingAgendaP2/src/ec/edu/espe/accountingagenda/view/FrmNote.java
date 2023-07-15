@@ -2,11 +2,8 @@
 package ec.edu.espe.accountingagenda.view;
 
 import java.awt.Color;
-import javax.swing.text.Document;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
@@ -16,9 +13,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AttributeSet;
-import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
@@ -71,12 +66,12 @@ public class FrmNote extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         btnNegrita = new javax.swing.JButton();
         btnColor = new javax.swing.JButton();
-        btnItalica = new javax.swing.JButton();
-        btnSubrayar = new javax.swing.JButton();
+        btnItalic = new javax.swing.JButton();
+        btnUnderline = new javax.swing.JButton();
         btnFontSize = new javax.swing.JSpinner();
         BtnFontComboBox = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txpDescription = new javax.swing.JTextPane();
+        txaContent = new javax.swing.JTextPane();
         btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -187,27 +182,27 @@ public class FrmNote extends javax.swing.JFrame {
         });
         jToolBar1.add(btnColor);
 
-        btnItalica.setText("Italica");
-        btnItalica.setFocusable(false);
-        btnItalica.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnItalica.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnItalica.addActionListener(new java.awt.event.ActionListener() {
+        btnItalic.setText("Italica");
+        btnItalic.setFocusable(false);
+        btnItalic.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnItalic.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnItalic.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnItalicaActionPerformed(evt);
+                btnItalicActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnItalica);
+        jToolBar1.add(btnItalic);
 
-        btnSubrayar.setText("Subrayar");
-        btnSubrayar.setFocusable(false);
-        btnSubrayar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSubrayar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSubrayar.addActionListener(new java.awt.event.ActionListener() {
+        btnUnderline.setText("Subrayar");
+        btnUnderline.setFocusable(false);
+        btnUnderline.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnUnderline.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnUnderline.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubrayarActionPerformed(evt);
+                btnUnderlineActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnSubrayar);
+        jToolBar1.add(btnUnderline);
         jToolBar1.add(btnFontSize);
 
         BtnFontComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -218,7 +213,7 @@ public class FrmNote extends javax.swing.JFrame {
         });
         jToolBar1.add(BtnFontComboBox);
 
-        jScrollPane1.setViewportView(txpDescription);
+        jScrollPane1.setViewportView(txaContent);
 
         btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -326,6 +321,7 @@ public class FrmNote extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTitleActionPerformed
@@ -366,54 +362,90 @@ public class FrmNote extends javax.swing.JFrame {
         displaySavedData();
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private boolean isBold = false;
+    
     private void btnNegritaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNegritaActionPerformed
-    StyledDocument doc = txpDescription.getStyledDocument();
-    int start = txpDescription.getSelectionStart();
-    int end = txpDescription.getSelectionEnd();
+    StyledDocument doc = txaContent.getStyledDocument();
+    int start = txaContent.getSelectionStart();
+    int end = txaContent.getSelectionEnd();
 
     if (start != end) {
-        StyleContext styleContext = StyleContext.getDefaultStyleContext();
-        AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, true);
-        doc.setCharacterAttributes(start, end - start, attrs, false);
+        if (!isBold) {
+            StyleContext styleContext = StyleContext.getDefaultStyleContext();
+            AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, true);
+            doc.setCharacterAttributes(start, end - start, attrs, false);
+            isBold = true;
+        } else {
+            StyleContext styleContext = StyleContext.getDefaultStyleContext();
+            AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, false);
+            doc.setCharacterAttributes(start, end - start, attrs, true);
+            isBold = false;
+        }
     }
     }//GEN-LAST:event_btnNegritaActionPerformed
+    
+    private boolean isUnderline = false;
+    
+    private void btnUnderlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnderlineActionPerformed
+            StyledDocument doc = txaContent.getStyledDocument();
+    int start = txaContent.getSelectionStart();
+    int end = txaContent.getSelectionEnd();
 
-    private void btnSubrayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubrayarActionPerformed
-            StyledDocument doc = txpDescription.getStyledDocument();
-    StyleContext sc = StyleContext.getDefaultStyleContext();
-    AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, true);
-    int start = txpDescription.getSelectionStart();
-    int end = txpDescription.getSelectionEnd();
-    doc.setCharacterAttributes(start, end - start, attrs, false);
-    }//GEN-LAST:event_btnSubrayarActionPerformed
+    if (start != end) {
+        if (!isUnderline) {
+            StyleContext sc = StyleContext.getDefaultStyleContext();
+            AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, true);
+            doc.setCharacterAttributes(start, end - start, attrs, false);
+            isUnderline = true;
+        } else {
+            StyleContext sc = StyleContext.getDefaultStyleContext();
+            AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, false);
+            doc.setCharacterAttributes(start, end - start, attrs, true);
+            isUnderline = false;
+        }
+    }
+    }//GEN-LAST:event_btnUnderlineActionPerformed
 
     private void btnColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColorActionPerformed
     Color selectedColor = JColorChooser.showDialog(this, "Seleccionar color de fuente", Color.BLACK);
     if (selectedColor != null) {
-        StyledDocument doc = txpDescription.getStyledDocument();
+        StyledDocument doc = txaContent.getStyledDocument();
         StyleContext sc = StyleContext.getDefaultStyleContext();
         AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, selectedColor);
-        int start = txpDescription.getSelectionStart();
-        int end = txpDescription.getSelectionEnd();
+        int start = txaContent.getSelectionStart();
+        int end = txaContent.getSelectionEnd();
         doc.setCharacterAttributes(start, end - start, attrs, false);
     }
     }//GEN-LAST:event_btnColorActionPerformed
 
-    private void btnItalicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnItalicaActionPerformed
-        StyledDocument doc = txpDescription.getStyledDocument();
-        StyleContext sc = StyleContext.getDefaultStyleContext();
-        AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, true);
-        int start = txpDescription.getSelectionStart();
-        int end = txpDescription.getSelectionEnd();
-        doc.setCharacterAttributes(start, end - start, attrs, false);
-    }//GEN-LAST:event_btnItalicaActionPerformed
+    private boolean isItalic = false;
+    
+    private void btnItalicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnItalicActionPerformed
+        StyledDocument doc = txaContent.getStyledDocument();
+    int start = txaContent.getSelectionStart();
+    int end = txaContent.getSelectionEnd();
+
+    if (start != end) {
+        if (!isItalic) {
+            StyleContext sc = StyleContext.getDefaultStyleContext();
+            AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, true);
+            doc.setCharacterAttributes(start, end - start, attrs, false);
+            isItalic = true;
+        } else {
+            StyleContext sc = StyleContext.getDefaultStyleContext();
+            AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, false);
+            doc.setCharacterAttributes(start, end - start, attrs, true);
+            isItalic = false;
+        }
+    }
+    }//GEN-LAST:event_btnItalicActionPerformed
 
     private void BtnFontComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFontComboBoxActionPerformed
         JComboBox<String> comboBox = (JComboBox<String>) evt.getSource();
         String selectedFont = (String) comboBox.getSelectedItem();
-        Font currentFont = txpDescription.getFont();
+        Font currentFont = txaContent.getFont();
         Font newFont = new Font(selectedFont, currentFont.getStyle(), currentFont.getSize());
-        txpDescription.setFont(newFont);
+        txaContent.setFont(newFont);
     }//GEN-LAST:event_BtnFontComboBoxActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -458,25 +490,23 @@ public class FrmNote extends javax.swing.JFrame {
     private void displaySavedData() {
     StringBuilder message = new StringBuilder();
     message.append("Título: ").append(txtTitle.getText()).append("\n");
-    message.append("Descripción: ").append(txpDescription.getText()).append("\n");
-    message.append("Presupuesto:\n");
+    //message.append("Descripción: ").append(txpDescription.getText()).append("\n");
+    /*message.append("--Presupuesto--\n");
 
     DefaultTableModel model = (DefaultTableModel) tableBudget.getModel();
 
-    // Obtener nombres de las columnas
     for (int col = 0; col < model.getColumnCount(); col++) {
-        message.append(model.getColumnName(col)).append("\t \t");
+        message.append(model.getColumnName(col)).append("\n  \t");
     }
     message.append("\n");
-
-    // Obtener valores de las filas
+    
     for (int row = 0; row < model.getRowCount(); row++) {
         for (int col = 0; col < model.getColumnCount(); col++) {
-            message.append(model.getValueAt(row, col)).append("\t \t");
+            message.append(model.getValueAt(row, col)).append("\n \t");
         }
         message.append("\n");
     }
-
+    */
     JOptionPane.showMessageDialog(this, message.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
 }
    
@@ -486,9 +516,15 @@ public class FrmNote extends javax.swing.JFrame {
         btnFontSize.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
                 int fontSize = (int) btnFontSize.getValue();
-                Font currentFont = txpDescription.getFont();
-                Font newFont = currentFont.deriveFont((float) fontSize);
-                txpDescription.setFont(newFont);
+                StyledDocument doc = txaContent.getStyledDocument();
+                int start = txaContent.getSelectionStart();
+                int end = txaContent.getSelectionEnd();
+            
+                if (start != end) {
+                    StyleContext styleContext = StyleContext.getDefaultStyleContext();
+                    AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.FontSize, fontSize);
+                    doc.setCharacterAttributes(start, end - start, attrs, false);
+                }
             }
         });
         
@@ -545,10 +581,10 @@ public class FrmNote extends javax.swing.JFrame {
     private javax.swing.JButton btnColor;
     private javax.swing.JButton btnDelete;
     private javax.swing.JSpinner btnFontSize;
-    private javax.swing.JButton btnItalica;
+    private javax.swing.JButton btnItalic;
     private javax.swing.JButton btnNegrita;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnSubrayar;
+    private javax.swing.JButton btnUnderline;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -561,7 +597,7 @@ public class FrmNote extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable tableBudget;
-    private javax.swing.JTextPane txpDescription;
+    private javax.swing.JTextPane txaContent;
     private javax.swing.JTextField txtMaterial;
     private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtTitle;
