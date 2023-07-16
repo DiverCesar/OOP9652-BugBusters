@@ -61,7 +61,7 @@ public class FrmLogInGuest extends javax.swing.JFrame {
             }
         });
 
-        btnExit.setText("SALIR");
+        btnExit.setText("REGRESAR");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExitActionPerformed(evt);
@@ -137,8 +137,9 @@ public class FrmLogInGuest extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        FrmEntryMenu frmEntryMenu = new FrmEntryMenu();
+        frmEntryMenu.setVisible(true);
         dispose();
-        System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void jPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldActionPerformed

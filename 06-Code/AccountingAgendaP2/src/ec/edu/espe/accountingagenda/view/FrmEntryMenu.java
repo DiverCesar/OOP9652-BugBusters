@@ -29,18 +29,21 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jLabel2 = new javax.swing.JLabel();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu5 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        mniEntryAdministrator = new javax.swing.JMenuItem();
-        mniEntryGuest = new javax.swing.JMenu();
-        mniEntryGuest1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         mniInformation = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         mniInstructions = new javax.swing.JMenuItem();
+        mniExit = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -48,6 +51,12 @@ public class FrmEntryMenu extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel2.setText("\"MI AGENDA CONTABLE\"");
+
+        jMenu5.setText("File");
+        jMenuBar2.add(jMenu5);
+
+        jMenu6.setText("Edit");
+        jMenuBar2.add(jMenu6);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,31 +66,23 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel3.setText("BIENVENIDO");
 
-        jMenu3.setText("Usuarios");
+        jMenu3.setText("Iniciar Sesión");
 
-        jMenu4.setText("Administrador");
-
-        mniEntryAdministrator.setText("Entrar");
-        mniEntryAdministrator.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem3.setText("Administrador");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mniEntryAdministratorActionPerformed(evt);
+                jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu4.add(mniEntryAdministrator);
+        jMenu3.add(jMenuItem3);
 
-        jMenu3.add(jMenu4);
-
-        mniEntryGuest.setText("Invitado");
-
-        mniEntryGuest1.setText("Entrar");
-        mniEntryGuest1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem5.setText("Invitado");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mniEntryGuest1ActionPerformed(evt);
+                jMenuItem5ActionPerformed(evt);
             }
         });
-        mniEntryGuest.add(mniEntryGuest1);
-
-        jMenu3.add(mniEntryGuest);
+        jMenu3.add(jMenuItem5);
 
         jMenuBar1.add(jMenu3);
 
@@ -109,6 +110,18 @@ public class FrmEntryMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        mniExit.setText("Salir");
+
+        jMenuItem2.setText("Abandonar programa");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        mniExit.add(jMenuItem2);
+
+        jMenuBar1.add(mniExit);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,24 +144,12 @@ public class FrmEntryMenu extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void mniEntryAdministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniEntryAdministratorActionPerformed
-        FrmLogInAdministrator frmLogIn = new FrmLogInAdministrator();
-        frmLogIn.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_mniEntryAdministratorActionPerformed
-
-    private void mniEntryGuest1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniEntryGuest1ActionPerformed
-        FrmLogInGuest frmLogIn = new FrmLogInGuest();
-        frmLogIn.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_mniEntryGuest1ActionPerformed
 
     private void mniInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniInformationActionPerformed
         // TODO add your handling code here:
@@ -157,6 +158,23 @@ public class FrmEntryMenu extends javax.swing.JFrame {
     private void mniInstructionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniInstructionsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mniInstructionsActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        dispose();
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        FrmLogInAdministrator frmLogIn = new FrmLogInAdministrator();
+        frmLogIn.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        FrmLogInGuest frmLogIn = new FrmLogInGuest();
+        frmLogIn.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,13 +219,16 @@ public class FrmEntryMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem mniEntryAdministrator;
-    private javax.swing.JMenu mniEntryGuest;
-    private javax.swing.JMenuItem mniEntryGuest1;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenu mniExit;
     private javax.swing.JMenuItem mniInformation;
     private javax.swing.JMenuItem mniInstructions;
     // End of variables declaration//GEN-END:variables
