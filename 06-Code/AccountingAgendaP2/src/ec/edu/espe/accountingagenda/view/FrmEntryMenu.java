@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ec.edu.espe.accountingagenda.view;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -100,7 +102,7 @@ public class FrmEntryMenu extends javax.swing.JFrame {
 
         jMenu2.setText("Ayuda");
 
-        mniInstructions.setText("Instrucciones");
+        mniInstructions.setText("Contacto");
         mniInstructions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniInstructionsActionPerformed(evt);
@@ -152,11 +154,27 @@ public class FrmEntryMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mniInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniInformationActionPerformed
-        // TODO add your handling code here:
+        String appName = "Mi Agenda Contable";
+        String appVersion = "2.0.0";
+        String appDescription = "Aplicación de agenda para generar notas, registrar tareas y eventos, entre otras fucionalidades.";
+        String developedBy = "BugBusters";
+        String team = "\n- Galarza Cesar \n- Ludeña Edison \n- Miranda Alison";
+        String copyright = "© 2023 BugBusters. Todos los derechos reservados.";
+
+        String aboutMessage = "Nombre de la Aplicación: " + appName + "\n"
+                + "Versión: " + appVersion + "\n"
+                + "Descripción: " + appDescription + "\n"
+                + "Desarrollado por: " + developedBy + "\n"
+                + "Integrantes: " + team + "\n\n"
+                + copyright;
+
+        JOptionPane.showMessageDialog(null, aboutMessage, "Acerca de", JOptionPane.INFORMATION_MESSAGE);
+
     }//GEN-LAST:event_mniInformationActionPerformed
 
     private void mniInstructionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniInstructionsActionPerformed
-        // TODO add your handling code here:
+        String message = "En caso de necesitar ayuda no dude en contactarnos.\nCorreo electrónico: bugbusters@espe.edu.ec";
+        JOptionPane.showMessageDialog(null, message, "Ayuda", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_mniInstructionsActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed

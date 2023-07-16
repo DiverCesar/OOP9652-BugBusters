@@ -67,7 +67,7 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="39" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -133,7 +133,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Fecha de entrega"/>
+        <Property name="text" type="java.lang.String" value="Fecha de entrega (aaaa-mm-dd)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtTaskName">
@@ -233,10 +233,13 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Fecha de inicio de la tarea"/>
+        <Property name="text" type="java.lang.String" value="Fecha de inicio de la tarea (aaaa-mm-dd)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtTaskBeginDate">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTaskBeginDateActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDelete">
       <Properties>

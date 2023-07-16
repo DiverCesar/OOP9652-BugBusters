@@ -191,7 +191,7 @@ public class FrmEvent extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEventDescriptionActionPerformed
 
     private void txtEventDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEventDateActionPerformed
-        // TODO add your handling code here:
+ 
     }//GEN-LAST:event_txtEventDateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -205,6 +205,8 @@ public class FrmEvent extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        dispose();
+        JOptionPane.showMessageDialog(null, "El evento se ha guardado exitosamente", "Evento guardado", JOptionPane.INFORMATION_MESSAGE);
         FrmCalendarMenu frmCalendarMenu = new FrmCalendarMenu();
         frmCalendarMenu.setVisible(true);
         dispose();
@@ -236,18 +238,25 @@ public class FrmEvent extends javax.swing.JFrame {
         String eventDescription = txtEventDescription.getText();
         String eventDate = txtEventDate.getText();
 
+        if (!validateDateFormat(eventDate)) {
+            JOptionPane.showMessageDialog(null, "Ingrese la fecha en formato aaaa-mm-dd", "Formato de fecha incorrecto", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         Object[] rowData = {eventName, eventDescription, eventDate};
         savedData.add(rowData);
         ((DefaultTableModel) tblEvent.getModel()).addRow(rowData);
-        
+
         txtEventName.setText("");
         txtEventDescription.setText("");
         txtEventDate.setText("");
-        
-        MongoData mongoData = new MongoData();
-        mongoData.createData();
     }
       
+    private boolean validateDateFormat(String date) {
+        String regex = "\\d{4}-\\d{2}-\\d{2}";
+        return date.matches(regex);
+    }
+    
     void showInformationSaved() {
         StringBuilder informacion = new StringBuilder();
     for (int i = 0; i < savedData.size(); i++) {

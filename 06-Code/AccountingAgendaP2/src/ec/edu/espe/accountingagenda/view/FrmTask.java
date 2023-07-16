@@ -3,6 +3,7 @@ package ec.edu.espe.accountingagenda.view;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -53,7 +54,7 @@ public class FrmTask extends javax.swing.JFrame {
 
         jLabel6.setText("Descripcion de la tarea");
 
-        jLabel7.setText("Fecha de entrega");
+        jLabel7.setText("Fecha de entrega (aaaa-mm-dd)");
 
         txtTaskName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,7 +116,13 @@ public class FrmTask extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Fecha de inicio de la tarea");
+        jLabel2.setText("Fecha de inicio de la tarea (aaaa-mm-dd)");
+
+        txtTaskBeginDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTaskBeginDateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Eliminar tarea");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -159,7 +166,7 @@ public class FrmTask extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(257, 257, 257)
                         .addComponent(jLabel1)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +211,7 @@ public class FrmTask extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTaskDescriptionActionPerformed
 
     private void txtTaskDueDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaskDueDateActionPerformed
-        // TODO add your handling code here:
+  
     }//GEN-LAST:event_txtTaskDueDateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -218,6 +225,8 @@ public class FrmTask extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        dispose();
+        JOptionPane.showMessageDialog(null, "La tarea se ha guardado exitosamente", "Tarea guardada", JOptionPane.INFORMATION_MESSAGE);
         FrmCalendarMenu frmCalendarMenu = new FrmCalendarMenu();
         frmCalendarMenu.setVisible(true);
         dispose();
@@ -248,6 +257,14 @@ public class FrmTask extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void txtTaskBeginDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaskBeginDateActionPerformed
+   
+    }//GEN-LAST:event_txtTaskBeginDateActionPerformed
+    
+    private boolean validateDateFormat(String date) {
+        String regex = "\\d{4}-\\d{2}-\\d{2}";
+        return date.matches(regex);
+    }
     
     private void addTask() {
         String taskName = txtTaskName.getText();
@@ -255,15 +272,42 @@ public class FrmTask extends javax.swing.JFrame {
         String taskBeginDate = txtTaskBeginDate.getText();
         String taskDueDate = txtTaskDueDate.getText();
 
+        boolean isBeginDateValid = validateDateFormat(taskBeginDate);
+        boolean isDueDateValid = validateDateFormat(taskDueDate);
+
+        boolean isValid = true; // Variable para almacenar el resultado de la validación
+
+        if (!isBeginDateValid) {
+            txtTaskBeginDate.setName("   Fecha de inicio   "); // Asignar nombre al campo de texto
+            displayDateFormatError(txtTaskBeginDate.getName());
+            isValid = false;
+        }
+
+        if (!isDueDateValid) {
+            txtTaskDueDate.setName("   Fecha de entrega   "); // Asignar nombre al campo de texto
+            displayDateFormatError(txtTaskDueDate.getName());
+            isValid = false;
+        }
+
+        if (!isValid) {
+            return;
+        }
+
         Object[] rowData = {taskName, taskDescription, taskBeginDate, taskDueDate};
         savedData.add(rowData);
         ((DefaultTableModel) tblTask.getModel()).addRow(rowData);
-        
+
         txtTaskName.setText("");
         txtTaskDescription.setText("");
-        txtTaskBeginDate.setText(""); 
+        txtTaskBeginDate.setText("");
         txtTaskDueDate.setText("");
     }
+    
+    private void displayDateFormatError(String fieldName) {
+        JOptionPane.showMessageDialog(null, "Ingrese la fecha en formato aaaa-mm-dd en el campo " + fieldName, "Formato de fecha incorrecto", JOptionPane.ERROR_MESSAGE);
+    }
+        
+   
       
     void showInformationSaved() {
         StringBuilder informacion = new StringBuilder();
