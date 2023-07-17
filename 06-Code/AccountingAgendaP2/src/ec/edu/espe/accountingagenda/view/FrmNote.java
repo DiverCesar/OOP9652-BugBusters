@@ -343,7 +343,7 @@ private void displaySavedData() {
     }
     savedNotes.add(note);
 
-    JOptionPane.showMessageDialog(this, note.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+    JOptionPane.showMessageDialog(rootPane, note.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
 
     txtTitle.setText("");
     txaContent.setText("");
