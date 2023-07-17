@@ -1,7 +1,7 @@
-
 package ec.edu.espe.accountingagenda.view;
 
-import ec.edu.espe.accountingagenda.model.TextPrompt;
+import ec.edu.espe.accountingagenda.controller.Print;
+import ec.edu.espe.accountingagenda.model.Note;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -23,20 +22,25 @@ import javax.swing.text.StyledDocument;
  *
  * @author Edison Ludeña, BugBuster, DCCO-ESPE
  */
+
 public class FrmNote extends javax.swing.JFrame {
-    private ArrayList<Object[]> savedData;
+
+    private ArrayList<Note> savedNotes;
     
     /**
      * Creates new form FrmNota
      */
     public FrmNote() {
         initComponents();
-        TextPrompt placeHolderTotal = new TextPrompt("Presione enter para calcular",txtTotal);
         setupFontComboBox();
         setupFontSizeChangeListener();
-        savedData = new ArrayList<>();
-
     }
+    
+    public FrmNote(ArrayList<Note> savedNotes) {
+        initComponents();
+        this.savedNotes = savedNotes;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,18 +55,6 @@ public class FrmNote extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtTitle = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtTotal = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txtMaterial = new javax.swing.JTextField();
-        txtQuantity = new javax.swing.JTextField();
-        txtUnitPrice = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tableBudget = new javax.swing.JTable();
-        btnAdd = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
@@ -74,9 +66,9 @@ public class FrmNote extends javax.swing.JFrame {
         BtnFontComboBox = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         txaContent = new javax.swing.JTextPane();
-        btnDelete = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        txtUnit = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        mniPrint = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,61 +84,6 @@ public class FrmNote extends javax.swing.JFrame {
         });
 
         jLabel3.setText("Contenido:");
-
-        jLabel4.setText("Total:");
-
-        txtTotal.setEditable(false);
-        txtTotal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTotalActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("Descripción");
-
-        jLabel6.setText("Cantidad");
-
-        jLabel7.setText("Precio Unitario");
-
-        txtQuantity.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtQuantityActionPerformed(evt);
-            }
-        });
-
-        txtUnitPrice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUnitPriceActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
-        jLabel8.setText("Presupuesto");
-
-        tableBudget.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Material", "Cantidad", "Unidad", "PrecioUnitario", "Total"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(tableBudget);
-
-        btnAdd.setText("Añadir");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
 
         btnCancel.setText("Regresar");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -219,14 +156,19 @@ public class FrmNote extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(txaContent);
 
-        btnDelete.setText("Eliminar");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        jMenu1.setText("Imprimir nota");
+
+        mniPrint.setText("Imprimir");
+        mniPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
+                mniPrintActionPerformed(evt);
             }
         });
+        jMenu1.add(mniPrint);
 
-        jLabel9.setText("Unidad");
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -243,42 +185,15 @@ public class FrmNote extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 794, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel8)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(3, 3, 3)
-                                            .addComponent(jLabel4))
-                                        .addComponent(jLabel9))
-                                    .addGap(20, 20, 20)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addGap(0, 0, Short.MAX_VALUE)
-                                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(59, 59, 59)
-                                            .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(61, 61, 61))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                                                .addComponent(txtMaterial)
-                                                .addComponent(txtQuantity)
-                                                .addComponent(txtUnit)
-                                                .addComponent(txtUnitPrice)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 794, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(371, 371, 371)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(208, 208, 208)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(102, 102, 102)
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -295,45 +210,12 @@ public class FrmNote extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(txtMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9)
-                                .addGap(9, 9, 9))
-                            .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(57, 57, 57))))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
@@ -344,29 +226,6 @@ public class FrmNote extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTitleActionPerformed
 
-    private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtQuantityActionPerformed
-
-    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
-        try {
-            double quantity = Double.parseDouble(txtQuantity.getText());
-            double unitPrice = Double.parseDouble(txtUnitPrice.getText());
-            double total = quantity * unitPrice;
-            txtTotal.setText(Double.toString(total));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos en los campos de cantidad y precio unitario.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    }//GEN-LAST:event_txtTotalActionPerformed
-
-    private void txtUnitPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUnitPriceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUnitPriceActionPerformed
-
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        addBudget();
-    }//GEN-LAST:event_btnAddActionPerformed
-
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         FrmNoteMenu frmNoteMenu = new FrmNoteMenu();
         frmNoteMenu.setVisible(true);
@@ -374,86 +233,88 @@ public class FrmNote extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
         displaySavedData();
+        FrmNoteMenu frmNoteMenu = new FrmNoteMenu(savedNotes);
+        frmNoteMenu.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private boolean isBold = false;
     
     private void btnNegritaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNegritaActionPerformed
-    StyledDocument doc = txaContent.getStyledDocument();
-    int start = txaContent.getSelectionStart();
-    int end = txaContent.getSelectionEnd();
+        StyledDocument doc = txaContent.getStyledDocument();
+        int start = txaContent.getSelectionStart();
+        int end = txaContent.getSelectionEnd();
 
-    if (start != end) {
-        if (!isBold) {
-            StyleContext styleContext = StyleContext.getDefaultStyleContext();
-            AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, true);
-            doc.setCharacterAttributes(start, end - start, attrs, false);
-            isBold = true;
-        } else {
-            StyleContext styleContext = StyleContext.getDefaultStyleContext();
-            AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, false);
-            doc.setCharacterAttributes(start, end - start, attrs, true);
-            isBold = false;
+        if (start != end) {
+            if (!isBold) {
+                StyleContext styleContext = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, true);
+                doc.setCharacterAttributes(start, end - start, attrs, false);
+                isBold = true;
+            } else {
+                StyleContext styleContext = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, false);
+                doc.setCharacterAttributes(start, end - start, attrs, true);
+                isBold = false;
+            }
         }
-    }
     }//GEN-LAST:event_btnNegritaActionPerformed
     
     private boolean isUnderline = false;
     
     private void btnUnderlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnderlineActionPerformed
-            StyledDocument doc = txaContent.getStyledDocument();
-    int start = txaContent.getSelectionStart();
-    int end = txaContent.getSelectionEnd();
+        StyledDocument doc = txaContent.getStyledDocument();
+        int start = txaContent.getSelectionStart();
+        int end = txaContent.getSelectionEnd();
 
-    if (start != end) {
-        if (!isUnderline) {
-            StyleContext sc = StyleContext.getDefaultStyleContext();
-            AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, true);
-            doc.setCharacterAttributes(start, end - start, attrs, false);
-            isUnderline = true;
-        } else {
-            StyleContext sc = StyleContext.getDefaultStyleContext();
-            AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, false);
-            doc.setCharacterAttributes(start, end - start, attrs, true);
-            isUnderline = false;
+        if (start != end) {
+            if (!isUnderline) {
+                StyleContext sc = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, true);
+                doc.setCharacterAttributes(start, end - start, attrs, false);
+                isUnderline = true;
+            } else {
+                StyleContext sc = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, false);
+                doc.setCharacterAttributes(start, end - start, attrs, true);
+                isUnderline = false;
+            }
         }
-    }
     }//GEN-LAST:event_btnUnderlineActionPerformed
 
     private void btnColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColorActionPerformed
-    Color selectedColor = JColorChooser.showDialog(this, "Seleccionar color de fuente", Color.BLACK);
-    if (selectedColor != null) {
-        StyledDocument doc = txaContent.getStyledDocument();
-        StyleContext sc = StyleContext.getDefaultStyleContext();
-        AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, selectedColor);
-        int start = txaContent.getSelectionStart();
-        int end = txaContent.getSelectionEnd();
-        doc.setCharacterAttributes(start, end - start, attrs, false);
-    }
+        Color selectedColor = JColorChooser.showDialog(this, "Seleccionar color de fuente", Color.BLACK);
+        if (selectedColor != null) {
+            StyledDocument doc = txaContent.getStyledDocument();
+            StyleContext sc = StyleContext.getDefaultStyleContext();
+            AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, selectedColor);
+            int start = txaContent.getSelectionStart();
+            int end = txaContent.getSelectionEnd();
+            doc.setCharacterAttributes(start, end - start, attrs, false);
+        }
     }//GEN-LAST:event_btnColorActionPerformed
 
     private boolean isItalic = false;
     
     private void btnItalicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnItalicActionPerformed
         StyledDocument doc = txaContent.getStyledDocument();
-    int start = txaContent.getSelectionStart();
-    int end = txaContent.getSelectionEnd();
+        int start = txaContent.getSelectionStart();
+        int end = txaContent.getSelectionEnd();
 
-    if (start != end) {
-        if (!isItalic) {
-            StyleContext sc = StyleContext.getDefaultStyleContext();
-            AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, true);
-            doc.setCharacterAttributes(start, end - start, attrs, false);
-            isItalic = true;
-        } else {
-            StyleContext sc = StyleContext.getDefaultStyleContext();
-            AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, false);
-            doc.setCharacterAttributes(start, end - start, attrs, true);
-            isItalic = false;
+        if (start != end) {
+            if (!isItalic) {
+                StyleContext sc = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, true);
+                doc.setCharacterAttributes(start, end - start, attrs, false);
+                isItalic = true;
+            } else {
+                StyleContext sc = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, false);
+                doc.setCharacterAttributes(start, end - start, attrs, true);
+                isItalic = false;
+            }
         }
-    }
     }//GEN-LAST:event_btnItalicActionPerformed
 
     private void BtnFontComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFontComboBoxActionPerformed
@@ -464,71 +325,32 @@ public class FrmNote extends javax.swing.JFrame {
         txaContent.setFont(newFont);
     }//GEN-LAST:event_BtnFontComboBoxActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-    DefaultTableModel model = (DefaultTableModel) tableBudget.getModel();
-    int selectedRow = tableBudget.getSelectedRow();
-
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    int rowCount = model.getRowCount();
-    if (rowCount == 0) {
-        JOptionPane.showMessageDialog(this, "No hay información para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-    if (confirm == JOptionPane.YES_OPTION) {
-        model.removeRow(selectedRow);
-    }
-    }//GEN-LAST:event_btnDeleteActionPerformed
+    private void mniPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniPrintActionPerformed
+        Print print = new Print();
+        String title = txtTitle.getText();
+        String content = txaContent.getText();
+        print.printNote(title, content, this);
+    }//GEN-LAST:event_mniPrintActionPerformed
 
     
-    
-    private void addBudget() {
-        String material = txtMaterial.getText();
-        String quantity = txtQuantity.getText();
-        String unit = txtUnit.getText();
-        String UnitPrice = txtUnitPrice.getText();
-        String total = txtTotal.getText();
-        
-        Object[] rowData = {material, quantity, unit, UnitPrice, total};
-        savedData.add(rowData);
-        ((DefaultTableModel) tableBudget.getModel()).addRow(rowData);
+private void displaySavedData() {
+    String title = txtTitle.getText();
+    String description = txaContent.getText();
 
-        txtMaterial.setText("");
-        txtQuantity.setText("");
-        txtUnit.setText("");
-        txtUnitPrice.setText("");
-        txtTotal.setText("");
+    Note note = new Note(title, description);
+    if (savedNotes == null) {
+        savedNotes = new ArrayList<>();
     }
-    
-    private void displaySavedData() {
-    StringBuilder message = new StringBuilder();
-    message.append("Título: ").append(txtTitle.getText()).append("\n");
-    //message.append("Descripción: ").append(txpDescription.getText()).append("\n");
-    /*message.append("--Presupuesto--\n");
+    savedNotes.add(note);
 
-    DefaultTableModel model = (DefaultTableModel) tableBudget.getModel();
+    JOptionPane.showMessageDialog(this, note.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
 
-    for (int col = 0; col < model.getColumnCount(); col++) {
-        message.append(model.getColumnName(col)).append("\n  \t");
-    }
-    message.append("\n");
-    
-    for (int row = 0; row < model.getRowCount(); row++) {
-        for (int col = 0; col < model.getColumnCount(); col++) {
-            message.append(model.getValueAt(row, col)).append("\n \t");
-        }
-        message.append("\n");
-    }
-    */
-    JOptionPane.showMessageDialog(this, message.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+    txtTitle.setText("");
+    txaContent.setText("");
 }
+
    
-        private void setupFontSizeChangeListener() {
+    private void setupFontSizeChangeListener() {
         SpinnerNumberModel fontSizeModel = new SpinnerNumberModel(12, 6, 72, 1);
         btnFontSize.setModel(fontSizeModel);
         btnFontSize.addChangeListener(new ChangeListener() {
@@ -537,7 +359,7 @@ public class FrmNote extends javax.swing.JFrame {
                 StyledDocument doc = txaContent.getStyledDocument();
                 int start = txaContent.getSelectionStart();
                 int end = txaContent.getSelectionEnd();
-            
+
                 if (start != end) {
                     StyleContext styleContext = StyleContext.getDefaultStyleContext();
                     AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.FontSize, fontSize);
@@ -545,14 +367,22 @@ public class FrmNote extends javax.swing.JFrame {
                 }
             }
         });
-        
     }
         
-     private void setupFontComboBox() {
+    private void setupFontComboBox() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         String[] fontNames = ge.getAvailableFontFamilyNames();
         BtnFontComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(fontNames));
     }
+    
+    public void setNoteForEditing(Note note) {
+        txtTitle.setText(note.getTitle());
+        txaContent.setText(note.getContent());
+        setVisible(true);
+    }
+    public void setSavedNotes(ArrayList<Note> savedNotes) {
+    this.savedNotes = savedNotes;
+}
     
     /**
      * @param args the command line arguments
@@ -594,10 +424,8 @@ public class FrmNote extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> BtnFontComboBox;
-    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnColor;
-    private javax.swing.JButton btnDelete;
     private javax.swing.JSpinner btnFontSize;
     private javax.swing.JButton btnItalic;
     private javax.swing.JButton btnNegrita;
@@ -606,22 +434,12 @@ public class FrmNote extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JTable tableBudget;
+    private javax.swing.JMenuItem mniPrint;
     private javax.swing.JTextPane txaContent;
-    private javax.swing.JTextField txtMaterial;
-    private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtTitle;
-    private javax.swing.JTextField txtTotal;
-    private javax.swing.JTextField txtUnit;
-    private javax.swing.JTextField txtUnitPrice;
     // End of variables declaration//GEN-END:variables
 }

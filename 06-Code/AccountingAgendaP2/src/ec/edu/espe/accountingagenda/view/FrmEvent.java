@@ -1,7 +1,6 @@
-
 package ec.edu.espe.accountingagenda.view;
 
-import ec.edu.espe.accountingagenda.controller.MongoData;
+import ec.edu.espe.accountingagenda.controller.Print;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -10,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Alison Miranda, Bug Busters, DCCO-ESPE
  */
+
 public class FrmEvent extends javax.swing.JFrame {
     private ArrayList<Object[]> savedData;
     
@@ -42,6 +42,9 @@ public class FrmEvent extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
         txtEventName = new javax.swing.JTextField();
         btnDelete = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mniPrint = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,6 +118,20 @@ public class FrmEvent extends javax.swing.JFrame {
             }
         });
 
+        mniPrint.setText("Imprimir tabla");
+
+        jMenuItem1.setText("Imprimir");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        mniPrint.add(jMenuItem1);
+
+        jMenuBar1.add(mniPrint);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,7 +196,7 @@ public class FrmEvent extends javax.swing.JFrame {
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -232,6 +249,11 @@ public class FrmEvent extends javax.swing.JFrame {
             model.removeRow(selectedRow);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Print print = new Print();
+        print.printTable(tblEvent);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
         
     private void addEvent() {
         String eventName = txtEventName.getText();
@@ -331,8 +353,11 @@ public class FrmEvent extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenu mniPrint;
     private javax.swing.JTable tblEvent;
     private javax.swing.JTextField txtEventDate;
     private javax.swing.JTextField txtEventDescription;

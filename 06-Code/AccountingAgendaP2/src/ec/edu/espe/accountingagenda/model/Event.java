@@ -2,6 +2,11 @@ package ec.edu.espe.accountingagenda.model;
 
 import java.time.LocalDate;
 
+/**
+ *
+ * @author Alison Miranda, BugBuster, DCCO-ESPE
+ */
+
 public class Event {
     private String eventName;
     private String eventDescription;

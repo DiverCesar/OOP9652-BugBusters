@@ -1,29 +1,55 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ec.edu.espe.accountingagenda.view;
 
+import ec.edu.espe.accountingagenda.controller.Print;
+import ec.edu.espe.accountingagenda.model.Note;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 /**
  *
  * @author Alison Miranda, Bug Busters, DCCO-ESPE
  */
 public class FrmNoteMenu extends javax.swing.JFrame {
-   
-    /**
-     * Creates new form FrmNotes
-     */
+ 
+    private ArrayList<Note> savedNotes;
+    public FrmNoteMenu(ArrayList<Note> savedNotes) {
+        initComponents();
+        this.savedNotes = savedNotes;
+    }
+    public ArrayList<Note> getSavedNotes() {
+    return savedNotes;
+}
+
     public FrmNoteMenu() {
         initComponents();
+        savedNotes = new ArrayList<>();
+        JButton btnPrint = new javax.swing.JButton();
+        btnPrint.setText("Imprimir");
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnPrintActionPerformed(evt);
+        }
 
+    });
+    }
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {
+    Print print = new Print();
+    ArrayList<Note> savedNotes = getSavedNotes();
+
+    for (Note note : savedNotes) {
+        print.printNote(note.getTitle(), note.getContent(), FrmNoteMenu.this);
+    }
     }
 
-    FrmNoteMenu(ArrayList<Object[]> savedData) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,7 +66,6 @@ public class FrmNoteMenu extends javax.swing.JFrame {
         btnShowNote = new javax.swing.JButton();
         btnEditNote = new javax.swing.JButton();
         btnDeleteNote = new javax.swing.JButton();
-        btnSearchNote = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -57,15 +82,23 @@ public class FrmNoteMenu extends javax.swing.JFrame {
         });
 
         btnShowNote.setText("Ver Nota");
+        btnShowNote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowNoteActionPerformed(evt);
+            }
+        });
 
         btnEditNote.setText("Editar Nota");
+        btnEditNote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditNoteActionPerformed(evt);
+            }
+        });
 
         btnDeleteNote.setText("Borrar Nota");
-
-        btnSearchNote.setText("Buscar Nota");
-        btnSearchNote.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteNote.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchNoteActionPerformed(evt);
+                btnDeleteNoteActionPerformed(evt);
             }
         });
 
@@ -82,31 +115,24 @@ public class FrmNoteMenu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnSearchNote, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(54, 54, 54)
-                                    .addComponent(btnDeleteNote, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(btnCreateNote, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnShowNote, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(40, 40, 40)
-                                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnEditNote, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCreateNote, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnShowNote, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEditNote, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDeleteNote, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(94, 94, 94)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(159, 159, 159)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -123,12 +149,10 @@ public class FrmNoteMenu extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnShowNote, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearchNote, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDeleteNote, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27))
+                    .addComponent(btnDeleteNote, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
 
         pack();
@@ -136,7 +160,7 @@ public class FrmNoteMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateNoteActionPerformed
-        FrmNote frmNote = new FrmNote();
+        FrmNote frmNote = new FrmNote(savedNotes);
         frmNote.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCreateNoteActionPerformed
@@ -147,9 +171,118 @@ public class FrmNoteMenu extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnSearchNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchNoteActionPerformed
+    private void btnEditNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditNoteActionPerformed
+    if (savedNotes == null || savedNotes.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No hay notas guardadas", "Editar Nota",
+                JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
 
-    }//GEN-LAST:event_btnSearchNoteActionPerformed
+    String[] noteTitles = new String[savedNotes.size()];
+    for (int i = 0; i < savedNotes.size(); i++) {
+        noteTitles[i] = savedNotes.get(i).getTitle();
+    }
+
+    String selectedNoteTitle = (String) JOptionPane.showInputDialog(this, "Selecciona la nota a editar:",
+            "Editar Nota", JOptionPane.QUESTION_MESSAGE, null, noteTitles, noteTitles[0]);
+
+    if (selectedNoteTitle != null) {
+        Note selectedNote = null;
+        for (Note note : savedNotes) {
+            if (note.getTitle().equals(selectedNoteTitle)) {
+                selectedNote = note;
+                break;
+            }
+        }
+
+        FrmNote frmNote = new FrmNote(savedNotes);
+        frmNote.setNoteForEditing(selectedNote);
+        frmNote.setVisible(true);
+        dispose();
+    }
+    }//GEN-LAST:event_btnEditNoteActionPerformed
+
+    private void btnDeleteNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteNoteActionPerformed
+        if (savedNotes == null || savedNotes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay notas guardadas", "Borrar Nota",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        String[] noteTitles = new String[savedNotes.size()];
+        for (int i = 0; i < savedNotes.size(); i++) {
+            noteTitles[i] = savedNotes.get(i).getTitle();
+        }
+
+        String selectedNoteTitle = (String) JOptionPane.showInputDialog(this, "Selecciona la nota a borrar:",
+                "Borrar Nota", JOptionPane.QUESTION_MESSAGE, null, noteTitles, noteTitles[0]);
+
+        if (selectedNoteTitle != null) {
+            int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que quieres borrar la nota seleccionada?",
+                    "Confirmar Borrado", JOptionPane.YES_NO_OPTION);
+            
+            if (option == JOptionPane.YES_OPTION) {
+                Note selectedNote = null;
+                for (Note note : savedNotes) {
+                    if (note.getTitle().equals(selectedNoteTitle)) {
+                        selectedNote = note;
+                        break;
+                    }
+                }
+                
+                savedNotes.remove(selectedNote);
+                JOptionPane.showMessageDialog(this, "Nota borrada exitosamente", "Borrar Nota",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteNoteActionPerformed
+
+    private void btnShowNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowNoteActionPerformed
+    if (savedNotes.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No hay notas guardadas", "Ver Nota",
+                JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    String[] columnNames = {"Título", "Contenido"};
+    Object[][] rowData = new Object[savedNotes.size()][2];
+
+    for (int i = 0; i < savedNotes.size(); i++) {
+        rowData[i][0] = savedNotes.get(i).getTitle();
+        rowData[i][1] = savedNotes.get(i).getContent();
+    }
+
+    JTable table = new JTable(rowData, columnNames);
+    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    table.getColumnModel().getColumn(0).setPreferredWidth(200);
+    table.getColumnModel().getColumn(1).setPreferredWidth(400);
+
+    JButton printButton = new JButton("Imprimir");
+    printButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            PrinterJob printerJob = PrinterJob.getPrinterJob();
+            printerJob.setPrintable(table.getPrintable(JTable.PrintMode.FIT_WIDTH, null, null));
+
+            if (printerJob.printDialog()) {
+                try {
+                    printerJob.print();
+                } catch (PrinterException ex) {
+                    JOptionPane.showMessageDialog(FrmNoteMenu.this, "Error al imprimir", "Imprimir", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    });
+
+    JPanel buttonPanel = new JPanel();
+    buttonPanel.add(printButton);
+
+    JPanel panel = new JPanel(new BorderLayout());
+    panel.add(new JScrollPane(table), BorderLayout.CENTER);
+    panel.add(buttonPanel, BorderLayout.SOUTH);
+
+    JOptionPane.showMessageDialog(this, panel, "Lista de Notas", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnShowNoteActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -194,7 +327,6 @@ public class FrmNoteMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnCreateNote;
     private javax.swing.JButton btnDeleteNote;
     private javax.swing.JButton btnEditNote;
-    private javax.swing.JButton btnSearchNote;
     private javax.swing.JButton btnShowNote;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

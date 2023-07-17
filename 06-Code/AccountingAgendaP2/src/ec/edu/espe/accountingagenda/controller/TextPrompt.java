@@ -1,8 +1,5 @@
-package ec.edu.espe.accountingagenda.model;
-/**
- *
- * @author Monkeyelgrande
- */
+package ec.edu.espe.accountingagenda.controller;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -11,18 +8,12 @@ import javax.swing.event.*;
 import javax.swing.text.*;
 
 /**
- * The TextPrompt class will display a prompt over top of a text component when
- * the Document of the text field is empty. The Show property is used to
- * determine the visibility of the prompt.
  *
- * The Font and foreground Color of the prompt will default to those properties
- * of the parent text component. You are free to change the properties after
- * class construction.
+ * @author Monkeyelgrande
  */
+
 public class TextPrompt extends JLabel implements FocusListener, DocumentListener {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	public enum Show {
@@ -47,10 +38,8 @@ public class TextPrompt extends JLabel implements FocusListener, DocumentListene
 
 		setText(text);
 		setFont(component.getFont());
-                
-//		setForeground(component.getForeground());
+
 		setForeground(Color.gray);
-//		setBorder(new EmptyBorder(component.getInsets()));
 		setHorizontalAlignment(JLabel.LEADING);
 
 		component.addFocusListener(this);

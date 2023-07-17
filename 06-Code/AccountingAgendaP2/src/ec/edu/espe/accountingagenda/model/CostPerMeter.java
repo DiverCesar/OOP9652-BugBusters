@@ -2,24 +2,23 @@ package ec.edu.espe.accountingagenda.model;
 
 /**
  *
- * @author Alison Miranda, BugBuster, DCCO-ESPE
+ * @author Alison Miranda, Bug Busters, DCCO-ESPE
  */
-
-public class Budget {
+public class CostPerMeter {
     private String material;
     private String description;
     private double quantity;
-    private String unit;
     private double unitPrice;
-    private double totalCost;
+    private String area;    
+    private double costPerMeter;
 
-    public Budget(String material, String description, double quantity, String unit, double unitPrice, double totalCost) {
+    public CostPerMeter(String material, String description, double quantity, double unitPrice, String area, double costPerMeter) {
         this.material = material;
         this.description = description;
         this.quantity = quantity;
-        this.unit = unit;
         this.unitPrice = unitPrice;
-        this.totalCost = totalCost;
+        this.area = area;
+        this.costPerMeter = costPerMeter;
     }
 
     @Override
@@ -27,10 +26,12 @@ public class Budget {
         return "\n Material: " + material + 
                "\n Descripción: " + description + 
                "\n Cantidad: " + quantity + 
-               "\n Unidad: " + unit + 
                "\n Precio Unitario: " + unitPrice + 
-               "\n Total: " + totalCost;
+               "\n Area: " + area + 
+               "\n Costo por metro cuadrado: " + costPerMeter;
     }
+    
+    
 
     /**
      * @return the material
@@ -75,20 +76,6 @@ public class Budget {
     }
 
     /**
-     * @return the unit
-     */
-    public String getUnit() {
-        return unit;
-    }
-
-    /**
-     * @param unit the unit to set
-     */
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    /**
      * @return the unitPrice
      */
     public double getUnitPrice() {
@@ -103,17 +90,32 @@ public class Budget {
     }
 
     /**
-     * @return the totalCost
+     * @return the area
      */
-    public double getTotalCost() {
-        return totalCost;
+    public String getArea() {
+        return area;
     }
 
     /**
-     * @param totalCost the totalCost to set
+     * @param area the area to set
      */
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
+    public void setArea(String area) {
+        this.area = area;
     }
+
+    /**
+     * @return the costPerMeter
+     */
+    public double getCostPerMeter() {
+        return costPerMeter;
+    }
+
+    /**
+     * @param costPerMeter the costPerMeter to set
+     */
+    public void setCostPerMeter(double costPerMeter) {
+        this.costPerMeter = costPerMeter;
+    }
+    
     
 }

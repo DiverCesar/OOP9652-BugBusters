@@ -1,18 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ec.edu.espe.accountingagenda.view;
 
 /**
  *
  * @author Alison Miranda, Bug Busters, DCCO-ESPE
  */
+
 public class FrmPrincipalMenu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PrincipalMenu
-     */
     public FrmPrincipalMenu() {
         initComponents();
     }
@@ -34,6 +28,7 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
         btnNotesMenu = new javax.swing.JButton();
         btnCalendarMenu = new javax.swing.JButton();
         btnLogOut = new javax.swing.JButton();
+        btnCalculation = new javax.swing.JButton();
 
         jMenu3.setText("File");
         jMenuBar2.add(jMenu3);
@@ -68,6 +63,13 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
             }
         });
 
+        btnCalculation.setText("CÁLCULOS");
+        btnCalculation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalculationActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,17 +80,19 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
                         .addGap(47, 47, 47)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCalendarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNotesMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(97, 97, 97)
-                        .addComponent(jLabel1)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnCalculation, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnCalendarMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                .addComponent(btnNotesMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,8 +106,10 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnCalendarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(btnCalculation, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -127,6 +133,12 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
         frmLogIn.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnLogOutActionPerformed
+
+    private void btnCalculationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculationActionPerformed
+        FrmCalculationMenu frmCalculationMenu = new FrmCalculationMenu();
+        frmCalculationMenu.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnCalculationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,6 +177,7 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCalculation;
     private javax.swing.JButton btnCalendarMenu;
     private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnNotesMenu;

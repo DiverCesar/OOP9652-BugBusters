@@ -4,6 +4,7 @@ package ec.edu.espe.accountingagenda.view;
  *
  * @author Alison Miranda, Bug Busters, DCCO-ESPE
  */
+
 public class FrmCalendarMenu extends javax.swing.JFrame {
 
     /**
