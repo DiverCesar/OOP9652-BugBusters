@@ -2,7 +2,7 @@ package ec.edu.espe.accountingagenda.model;
 
 /**
  *
- * @author Alison Miranda, BugBuster, DCCO-ESPE
+ * @author  BugBuster, DCCO-ESPE
  */
 
 public class Budget {

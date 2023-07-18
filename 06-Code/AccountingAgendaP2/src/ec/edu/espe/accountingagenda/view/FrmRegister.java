@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Alison Miranda, Bug Busters, DCCO-ESPE
+ * @author Bug Busters, DCCO-ESPE
  */
 
 public class FrmRegister extends javax.swing.JFrame {
@@ -165,7 +165,15 @@ public class FrmRegister extends javax.swing.JFrame {
     }//GEN-LAST:event_brnBackActionPerformed
 
     private void btnCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAccountActionPerformed
-        String username = txtNewUsername.getText();
+        account();
+    }//GEN-LAST:event_btnCreateAccountActionPerformed
+
+    private boolean comparePasswords(char[] password, char[] passwordCheck) {
+        return Arrays.equals(password, passwordCheck);
+    }
+    
+    private void account(){
+                String username = txtNewUsername.getText();
         char[] password = pswNewPassword.getPassword();
         char[] passwordCheck = pswNewPasswordCheck.getPassword();
 
@@ -185,12 +193,7 @@ public class FrmRegister extends javax.swing.JFrame {
         FrmEntryMenu frmEntryMenu = new FrmEntryMenu();
         frmEntryMenu.setVisible(true);
         dispose();
-    }//GEN-LAST:event_btnCreateAccountActionPerformed
-
-    private boolean comparePasswords(char[] password, char[] passwordCheck) {
-        return Arrays.equals(password, passwordCheck);
     }
-    
     /**
      * @param args the command line arguments
      */

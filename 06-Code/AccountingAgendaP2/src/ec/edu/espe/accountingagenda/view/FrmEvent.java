@@ -9,10 +9,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Alison Miranda, Bug Busters, DCCO-ESPE
  */
-
 public class FrmEvent extends javax.swing.JFrame {
+
     private ArrayList<Object[]> savedData;
-    
+
     public FrmEvent() {
         initComponents();
         savedData = new ArrayList<>();
@@ -208,7 +208,7 @@ public class FrmEvent extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEventDescriptionActionPerformed
 
     private void txtEventDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEventDateActionPerformed
- 
+
     }//GEN-LAST:event_txtEventDateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -230,31 +230,14 @@ public class FrmEvent extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        DefaultTableModel model = (DefaultTableModel) tblEvent.getModel();
-        int selectedRow = tblEvent.getSelectedRow();
-
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int rowCount = model.getRowCount();
-        if (rowCount == 0) {
-            JOptionPane.showMessageDialog(this, "No hay información para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            model.removeRow(selectedRow);
-        }
+        delete();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         Print print = new Print();
         print.printTable(tblEvent);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-        
+
     private void addEvent() {
         String eventName = txtEventName.getText();
         String eventDescription = txtEventDescription.getText();
@@ -273,34 +256,55 @@ public class FrmEvent extends javax.swing.JFrame {
         txtEventDescription.setText("");
         txtEventDate.setText("");
     }
-      
+
     private boolean validateDateFormat(String date) {
         String regex = "\\d{4}-\\d{2}-\\d{2}";
         return date.matches(regex);
     }
-    
+
     void showInformationSaved() {
         StringBuilder informacion = new StringBuilder();
-    for (int i = 0; i < savedData.size(); i++) {
-        Object[] rowData = savedData.get(i);
-        String eventName = rowData[0].toString();
-        String eventDescription = rowData[1].toString();
-        String eventDate = rowData[2].toString();
+        for (int i = 0; i < savedData.size(); i++) {
+            Object[] rowData = savedData.get(i);
+            String eventName = rowData[0].toString();
+            String eventDescription = rowData[1].toString();
+            String eventDate = rowData[2].toString();
 
-        informacion.append("Guardado ").append(i + 1).append(":\n");
-        informacion.append("Nombre de evento: ").append(eventName).append("\n");
-        informacion.append("Descripcion de evento: ").append(eventDescription).append("\n");
-        informacion.append("Fecha de evento: ").append(eventDate).append("\n");
-        informacion.append("---------------------\n");
+            informacion.append("Guardado ").append(i + 1).append(":\n");
+            informacion.append("Nombre de evento: ").append(eventName).append("\n");
+            informacion.append("Descripcion de evento: ").append(eventDescription).append("\n");
+            informacion.append("Fecha de evento: ").append(eventDate).append("\n");
+            informacion.append("---------------------\n");
+        }
+
+        if (informacion.length() > 0) {
+            JOptionPane.showMessageDialog(this, informacion.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay información guardada.", "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
-    if (informacion.length() > 0) {
-        JOptionPane.showMessageDialog(this, informacion.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        JOptionPane.showMessageDialog(this, "No hay información guardada.", "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+    private void delete() {
+        DefaultTableModel model = (DefaultTableModel) tblEvent.getModel();
+        int selectedRow = tblEvent.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int rowCount = model.getRowCount();
+        if (rowCount == 0) {
+            JOptionPane.showMessageDialog(this, "No hay información para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            model.removeRow(selectedRow);
+        }
     }
-}
-    
+
     /**
      * @param args the command line arguments
      */

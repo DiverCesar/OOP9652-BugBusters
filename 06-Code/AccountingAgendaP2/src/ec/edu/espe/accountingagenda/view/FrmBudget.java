@@ -12,11 +12,12 @@ import javax.swing.table.DefaultTableModel;
  * @author Edison Ludeña, BugBuster, DCCO-ESPE
  */
 public class FrmBudget extends javax.swing.JFrame {
+
     private ArrayList<Budget> savedData;
-    
-    public FrmBudget() {       
+
+    public FrmBudget() {
         initComponents();
-        TextPrompt placeHolderTotal = new TextPrompt("Presione enter para calcular",txtTotal);
+        TextPrompt placeHolderTotal = new TextPrompt("Presione enter para calcular", txtTotal);
         savedData = new ArrayList<>();
     }
 
@@ -274,7 +275,7 @@ public class FrmBudget extends javax.swing.JFrame {
             txtTotal.setText(Double.toString(total));
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos en los campos de cantidad y precio unitario.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        }
     }//GEN-LAST:event_txtTotalActionPerformed
 
     private void txtUnitPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUnitPriceActionPerformed
@@ -294,8 +295,17 @@ public class FrmBudget extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         displaySavedData();
     }//GEN-LAST:event_btnSaveActionPerformed
-    
+
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        deleteOfTable();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void mniPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniPrintActionPerformed
+        Print print = new Print();
+        print.printTable(tableBudget);
+    }//GEN-LAST:event_mniPrintActionPerformed
+
+    private void deleteOfTable() {
         DefaultTableModel model = (DefaultTableModel) tableBudget.getModel();
         int selectedRow = tableBudget.getSelectedRow();
 
@@ -314,13 +324,8 @@ public class FrmBudget extends javax.swing.JFrame {
         if (confirm == JOptionPane.YES_OPTION) {
             model.removeRow(selectedRow);
         }
-    }//GEN-LAST:event_btnDeleteActionPerformed
+    }
 
-    private void mniPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniPrintActionPerformed
-        Print print = new Print();
-        print.printTable(tableBudget);
-    }//GEN-LAST:event_mniPrintActionPerformed
-    
     private void addBudget() {
         String material = txtMaterial.getText();
         String description = txtDescription.getText();
@@ -346,7 +351,7 @@ public class FrmBudget extends javax.swing.JFrame {
         message.append("Material: ").append(txtMaterial.getText()).append("\n");
         JOptionPane.showMessageDialog(this, message.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     /**
      * @param args the command line arguments
      */

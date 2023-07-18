@@ -22,11 +22,10 @@ import javax.swing.text.StyledDocument;
  *
  * @author Edison Ludeña, BugBuster, DCCO-ESPE
  */
-
 public class FrmNote extends javax.swing.JFrame {
 
     private ArrayList<Note> savedNotes;
-    
+
     /**
      * Creates new form FrmNota
      */
@@ -35,12 +34,11 @@ public class FrmNote extends javax.swing.JFrame {
         setupFontComboBox();
         setupFontSizeChangeListener();
     }
-    
+
     public FrmNote(ArrayList<Note> savedNotes) {
         initComponents();
         this.savedNotes = savedNotes;
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -240,81 +238,25 @@ public class FrmNote extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private boolean isBold = false;
-    
+
     private void btnNegritaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNegritaActionPerformed
-        StyledDocument doc = txaContent.getStyledDocument();
-        int start = txaContent.getSelectionStart();
-        int end = txaContent.getSelectionEnd();
-
-        if (start != end) {
-            if (!isBold) {
-                StyleContext styleContext = StyleContext.getDefaultStyleContext();
-                AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, true);
-                doc.setCharacterAttributes(start, end - start, attrs, false);
-                isBold = true;
-            } else {
-                StyleContext styleContext = StyleContext.getDefaultStyleContext();
-                AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, false);
-                doc.setCharacterAttributes(start, end - start, attrs, true);
-                isBold = false;
-            }
-        }
+        bold();
     }//GEN-LAST:event_btnNegritaActionPerformed
-    
-    private boolean isUnderline = false;
-    
-    private void btnUnderlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnderlineActionPerformed
-        StyledDocument doc = txaContent.getStyledDocument();
-        int start = txaContent.getSelectionStart();
-        int end = txaContent.getSelectionEnd();
 
-        if (start != end) {
-            if (!isUnderline) {
-                StyleContext sc = StyleContext.getDefaultStyleContext();
-                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, true);
-                doc.setCharacterAttributes(start, end - start, attrs, false);
-                isUnderline = true;
-            } else {
-                StyleContext sc = StyleContext.getDefaultStyleContext();
-                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, false);
-                doc.setCharacterAttributes(start, end - start, attrs, true);
-                isUnderline = false;
-            }
-        }
+    private boolean isUnderline = false;
+
+    private void btnUnderlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnderlineActionPerformed
+        underline();
     }//GEN-LAST:event_btnUnderlineActionPerformed
 
     private void btnColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColorActionPerformed
-        Color selectedColor = JColorChooser.showDialog(this, "Seleccionar color de fuente", Color.BLACK);
-        if (selectedColor != null) {
-            StyledDocument doc = txaContent.getStyledDocument();
-            StyleContext sc = StyleContext.getDefaultStyleContext();
-            AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, selectedColor);
-            int start = txaContent.getSelectionStart();
-            int end = txaContent.getSelectionEnd();
-            doc.setCharacterAttributes(start, end - start, attrs, false);
-        }
+        color();
     }//GEN-LAST:event_btnColorActionPerformed
 
     private boolean isItalic = false;
-    
-    private void btnItalicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnItalicActionPerformed
-        StyledDocument doc = txaContent.getStyledDocument();
-        int start = txaContent.getSelectionStart();
-        int end = txaContent.getSelectionEnd();
 
-        if (start != end) {
-            if (!isItalic) {
-                StyleContext sc = StyleContext.getDefaultStyleContext();
-                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, true);
-                doc.setCharacterAttributes(start, end - start, attrs, false);
-                isItalic = true;
-            } else {
-                StyleContext sc = StyleContext.getDefaultStyleContext();
-                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, false);
-                doc.setCharacterAttributes(start, end - start, attrs, true);
-                isItalic = false;
-            }
-        }
+    private void btnItalicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnItalicActionPerformed
+        italic();
     }//GEN-LAST:event_btnItalicActionPerformed
 
     private void BtnFontComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFontComboBoxActionPerformed
@@ -332,24 +274,94 @@ public class FrmNote extends javax.swing.JFrame {
         print.printNote(title, content, this);
     }//GEN-LAST:event_mniPrintActionPerformed
 
-    
-private void displaySavedData() {
-    String title = txtTitle.getText();
-    String description = txaContent.getText();
+    private void displaySavedData() {
+        String title = txtTitle.getText();
+        String description = txaContent.getText();
 
-    Note note = new Note(title, description);
-    if (savedNotes == null) {
-        savedNotes = new ArrayList<>();
+        Note note = new Note(title, description);
+        if (savedNotes == null) {
+            savedNotes = new ArrayList<>();
+        }
+        savedNotes.add(note);
+
+        JOptionPane.showMessageDialog(rootPane, note.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+
+        txtTitle.setText("");
+        txaContent.setText("");
     }
-    savedNotes.add(note);
 
-    JOptionPane.showMessageDialog(rootPane, note.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+    private void bold() {
+        StyledDocument doc = txaContent.getStyledDocument();
+        int start = txaContent.getSelectionStart();
+        int end = txaContent.getSelectionEnd();
 
-    txtTitle.setText("");
-    txaContent.setText("");
-}
+        if (start != end) {
+            if (!isBold) {
+                StyleContext styleContext = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, true);
+                doc.setCharacterAttributes(start, end - start, attrs, false);
+                isBold = true;
+            } else {
+                StyleContext styleContext = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Bold, false);
+                doc.setCharacterAttributes(start, end - start, attrs, true);
+                isBold = false;
+            }
+        }
+    }
 
-   
+    private void underline() {
+        StyledDocument doc = txaContent.getStyledDocument();
+        int start = txaContent.getSelectionStart();
+        int end = txaContent.getSelectionEnd();
+
+        if (start != end) {
+            if (!isUnderline) {
+                StyleContext sc = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, true);
+                doc.setCharacterAttributes(start, end - start, attrs, false);
+                isUnderline = true;
+            } else {
+                StyleContext sc = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Underline, false);
+                doc.setCharacterAttributes(start, end - start, attrs, true);
+                isUnderline = false;
+            }
+        }
+    }
+
+    private void color() {
+        Color selectedColor = JColorChooser.showDialog(this, "Seleccionar color de fuente", Color.BLACK);
+        if (selectedColor != null) {
+            StyledDocument doc = txaContent.getStyledDocument();
+            StyleContext sc = StyleContext.getDefaultStyleContext();
+            AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, selectedColor);
+            int start = txaContent.getSelectionStart();
+            int end = txaContent.getSelectionEnd();
+            doc.setCharacterAttributes(start, end - start, attrs, false);
+        }
+    }
+
+    private void italic() {
+        StyledDocument doc = txaContent.getStyledDocument();
+        int start = txaContent.getSelectionStart();
+        int end = txaContent.getSelectionEnd();
+
+        if (start != end) {
+            if (!isItalic) {
+                StyleContext sc = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, true);
+                doc.setCharacterAttributes(start, end - start, attrs, false);
+                isItalic = true;
+            } else {
+                StyleContext sc = StyleContext.getDefaultStyleContext();
+                AttributeSet attrs = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Italic, false);
+                doc.setCharacterAttributes(start, end - start, attrs, true);
+                isItalic = false;
+            }
+        }
+    }
+
     private void setupFontSizeChangeListener() {
         SpinnerNumberModel fontSizeModel = new SpinnerNumberModel(12, 6, 72, 1);
         btnFontSize.setModel(fontSizeModel);
@@ -368,22 +380,23 @@ private void displaySavedData() {
             }
         });
     }
-        
+
     private void setupFontComboBox() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         String[] fontNames = ge.getAvailableFontFamilyNames();
         BtnFontComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(fontNames));
     }
-    
+
     public void setNoteForEditing(Note note) {
         txtTitle.setText(note.getTitle());
         txaContent.setText(note.getContent());
         setVisible(true);
     }
+
     public void setSavedNotes(ArrayList<Note> savedNotes) {
-    this.savedNotes = savedNotes;
-}
-    
+        this.savedNotes = savedNotes;
+    }
+
     /**
      * @param args the command line arguments
      */

@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Alison Miranda, Bug Busters, DCCO-ESPE
+ * @author Bug Busters, DCCO-ESPE
  */
 public class Print {
     

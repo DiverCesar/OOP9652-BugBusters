@@ -12,13 +12,12 @@ import javax.swing.JOptionPane;
  *
  * @author Alison Miranda, Bug Busters, DCCO-ESPE
  */
-
 public class FrmLogInAdministrator extends javax.swing.JFrame {
 
     public FrmLogInAdministrator() {
         initComponents();
-        TextPrompt placeHolderUsername = new TextPrompt("Ingrese su nombre usuario",txtUsername);
-        TextPrompt placeHolderPassword = new TextPrompt("Ingrese su contraseña",jPasswordField);
+        TextPrompt placeHolderUsername = new TextPrompt("Ingrese su nombre usuario", txtUsername);
+        TextPrompt placeHolderPassword = new TextPrompt("Ingrese su contraseña", jPasswordField);
     }
 
     /**
@@ -160,30 +159,18 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
-        String usrcomparative = this.txtUsername.getText();
-        String pswcomparative = this.jPasswordField.getText();
-        if(usrcomparative.equals("Hernan") && pswcomparative.equals("Hernan")){
-        Conection logInConection = new Conection();
-        logInConection.createConection();
-        FrmPrincipalMenu frmPrincipalMenu = new FrmPrincipalMenu();
-        frmPrincipalMenu.setVisible(true);
-        dispose();
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Usuario "+this.txtUsername.getText()+" sin registrar");
-            this.txtUsername.setText("");
-            this.jPasswordField.setText("");
-            }
+        logIn();
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         FrmEntryMenu frmEntryMenu = new FrmEntryMenu();
         frmEntryMenu.setVisible(true);
         dispose();
-        
+
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void txtUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusGained
-        
+
     }//GEN-LAST:event_txtUsernameFocusGained
 
     private void jPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldActionPerformed
@@ -196,6 +183,22 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
         frmRegister.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnRegisterActionPerformed
+
+    private void logIn() {
+        String usrcomparative = this.txtUsername.getText();
+        String pswcomparative = this.jPasswordField.getText();
+        if (usrcomparative.equals("Hernan") && pswcomparative.equals("Hernan")) {
+            Conection logInConection = new Conection();
+            logInConection.createConection();
+            FrmPrincipalMenu frmPrincipalMenu = new FrmPrincipalMenu();
+            frmPrincipalMenu.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Usuario " + this.txtUsername.getText() + " sin registrar");
+            this.txtUsername.setText("");
+            this.jPasswordField.setText("");
+        }
+    }
 
     /**
      * @param args the command line arguments
