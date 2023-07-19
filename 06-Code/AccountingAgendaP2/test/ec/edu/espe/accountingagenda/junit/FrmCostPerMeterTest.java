@@ -45,13 +45,12 @@ public class FrmCostPerMeterTest {
         double area = 871.12;
         double quantity = 54;
         double unitPrice = 234.37;
-        double expTotalResult = 47040.48;
         double total = quantity * unitPrice;
-        double expCostResult = 54;
+        double expTotalResult = 47040.48;
         double cost = total/area;
-        assertEquals(expTotalResult, total, 0.00000000001);
-        assertEquals(expCostResult, cost, 0.00000000001);
-        fail("The test case is a prototype.");
+        double expCostResult = 54;
+        assertEquals(expTotalResult, total,0.00000000000001);
+        assertEquals(expCostResult, cost,0.00000000000001);
     }
     
 }
