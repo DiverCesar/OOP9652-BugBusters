@@ -40,7 +40,6 @@
               <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnBack" min="-2" pref="211" max="-2" attributes="0"/>
-                  <Component id="btnShowPending" min="-2" pref="211" max="-2" attributes="0"/>
                   <Component id="btnAddEvent" min="-2" pref="211" max="-2" attributes="0"/>
                   <Component id="btnAddTask" min="-2" pref="211" max="-2" attributes="0"/>
               </Group>
@@ -57,13 +56,11 @@
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="btnAddTask" min="-2" pref="43" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Component id="btnAddEvent" min="-2" pref="43" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnShowPending" min="-2" pref="43" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnBack" min="-2" pref="43" max="-2" attributes="0"/>
-              <EmptySpace pref="40" max="32767" attributes="0"/>
+              <EmptySpace pref="87" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -94,11 +91,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddEventActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnShowPending">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Mostrar Pendientes"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnBack">
       <Properties>

@@ -284,6 +284,7 @@ public class FrmNoteMenu extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(FrmNoteMenu.this, "Error al imprimir", "Imprimir", JOptionPane.ERROR_MESSAGE);
                     }
                 }
+                
             }
         });
 
