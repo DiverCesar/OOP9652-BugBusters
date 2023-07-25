@@ -4,7 +4,6 @@
  */
 package ec.edu.espe.accountingagenda.junit;
 
-import ec.edu.espe.accountingagenda.view.FrmCostPerMeter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;

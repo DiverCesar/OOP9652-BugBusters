@@ -1,5 +1,6 @@
 package ec.edu.espe.accountingagenda.view;
 
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -63,9 +64,19 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel3.setText("BIENVENIDO");
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Agenda2_0.jpg"))); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Agenda_3.0.gif"))); // NOI18N
 
         jMenu3.setText("Iniciar Sesión");
+        jMenu3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jMenu3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jMenu3MouseExited(evt);
+            }
+        });
 
         jMenuItem3.setText("Administrador");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +97,8 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu1.setText("Acerca de");
+        jMenu1.setContentAreaFilled(false);
+        jMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         mniInformation.setText("Información ");
         mniInformation.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +111,7 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Ayuda");
+        jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         mniInstructions.setText("Contacto");
         mniInstructions.addActionListener(new java.awt.event.ActionListener() {
@@ -110,6 +124,7 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         mniExit.setText("Salir");
+        mniExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jMenuItem2.setText("Abandonar programa");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -128,26 +143,27 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(28, 28, 28)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addGap(86, 86, 86)))
                 .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addGap(156, 156, 156))
+                .addGap(118, 118, 118))
         );
 
         pack();
@@ -194,6 +210,14 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         frmLogIn.setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenu3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseEntered
+        
+    }//GEN-LAST:event_jMenu3MouseEntered
+
+    private void jMenu3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseExited
+        
+    }//GEN-LAST:event_jMenu3MouseExited
 
     /**
      * @param args the command line arguments

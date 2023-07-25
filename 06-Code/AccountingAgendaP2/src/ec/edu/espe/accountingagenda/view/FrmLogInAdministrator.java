@@ -5,7 +5,11 @@ import com.mongodb.MongoException;
 import ec.edu.espe.accountingagenda.controller.Conection;
 import ec.edu.espe.accountingagenda.controller.Password;
 import ec.edu.espe.accountingagenda.controller.TextPrompt;
+import java.awt.Image;
 import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,6 +20,7 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
 
     public FrmLogInAdministrator() {
         initComponents();
+        SetImageLabel(jLabel7, "../../../../../Images/login3_0.png");
         TextPrompt placeHolderUsername = new TextPrompt("Ingrese su nombre usuario", txtUsername);
         TextPrompt placeHolderPassword = new TextPrompt("Ingrese su contraseña", jPasswordField);
     }
@@ -87,21 +92,23 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/login.jpg"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(72, 72, 72)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
+                        .addGap(72, 72, 72)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -130,8 +137,9 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -188,6 +196,7 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
         String usrcomparative = this.txtUsername.getText();
         String pswcomparative = this.jPasswordField.getText();
         if (usrcomparative.equals("Hernan") && pswcomparative.equals("Hernan")) {
+            SetImageLabel(jLabel7, "../../../../../Images/login3_0_Unlock.png");
             Conection logInConection = new Conection();
             logInConection.createConection();
             FrmPrincipalMenu frmPrincipalMenu = new FrmPrincipalMenu();
@@ -236,6 +245,13 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
                 new FrmLogInAdministrator().setVisible(true);
             }
         });
+    }
+    
+    private void SetImageLabel(JLabel labelName, String root){
+        ImageIcon image = new ImageIcon(getClass().getResource(root));
+        Icon icon = new ImageIcon(image.getImage().getScaledInstance(labelName.getWidth(), labelName.getHeight(), Image.SCALE_SMOOTH));
+        labelName.setIcon(icon);
+        this.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
