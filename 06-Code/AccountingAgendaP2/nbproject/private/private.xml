@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/diver/OneDrive/Documentos/GitHub/OOP9652-BugBusters/06-Code/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmLogInGuest.java</file>
-            <file>file:/C:/Users/diver/OneDrive/Documentos/GitHub/OOP9652-BugBusters/06-Code/AccountingAgendaP2/test/ec/edu/espe/accountingagenda/junit/FrmBudgetTest.java</file>
-            <file>file:/C:/Users/diver/OneDrive/Documentos/GitHub/OOP9652-BugBusters/06-Code/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmLogInAdministrator.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/model/Event.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/model/Task.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmNote.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmTask.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmEvent.java</file>
         </group>
     </open-files>
 </project-private>

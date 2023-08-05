@@ -17,6 +17,10 @@ public class Event {
         this.eventDescription = eventDescription;
         this.eventDate = eventDate;
     }
+    
+    public Object[] toObjectArray() {
+        return new Object[]{this.eventName, this.eventDescription, this.eventDate};
+    }
 
     public String getEventName() {
         return eventName;

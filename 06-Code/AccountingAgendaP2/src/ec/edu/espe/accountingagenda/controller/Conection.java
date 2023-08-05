@@ -15,7 +15,7 @@ import org.bson.Document;
  */
 public class Conection {
     public void createConection(){
-        String uri = "mongodb+srv://cgalarza:cgalarza@cluster0.lqbdjyg.mongodb.net/?retryWrites=true&w=majority";
+        String uri = "mongodb+srv://eludena:eludena@cluster0.sxrxhjy.mongodb.net/?retryWrites=true&w=majority";
         MongoClient mongo;
         
         try {

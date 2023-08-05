@@ -2,6 +2,7 @@ package ec.edu.espe.accountingagenda.view;
 
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.model.Note;
+import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -17,6 +18,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
+import org.bson.Document;
 
 /**
  *
@@ -25,6 +27,7 @@ import javax.swing.text.StyledDocument;
 public class FrmNote extends javax.swing.JFrame {
 
     private ArrayList<Note> savedNotes;
+    private MongoDBConnection mongoDBConnection;
 
     /**
      * Creates new form FrmNota
@@ -33,6 +36,8 @@ public class FrmNote extends javax.swing.JFrame {
         initComponents();
         setupFontComboBox();
         setupFontSizeChangeListener();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Notes");
     }
 
     public FrmNote(ArrayList<Note> savedNotes) {
@@ -276,16 +281,13 @@ public class FrmNote extends javax.swing.JFrame {
 
     private void displaySavedData() {
         String title = txtTitle.getText();
-        String description = txaContent.getText();
+        String content = txaContent.getText();
 
-        Note note = new Note(title, description);
-        if (savedNotes == null) {
-            savedNotes = new ArrayList<>();
-        }
-        savedNotes.add(note);
-
-        JOptionPane.showMessageDialog(rootPane, note.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
-
+        Note note = new Note(title, content);
+        Document noteDocument = new Document("Titulo", note.getTitle())
+                .append("Contenido", note.getContent());
+        mongoDBConnection.getCollection().insertOne(noteDocument);
+        JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         txtTitle.setText("");
         txaContent.setText("");
     }

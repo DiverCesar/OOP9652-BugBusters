@@ -1,9 +1,13 @@
 package ec.edu.espe.accountingagenda.view;
 
 import ec.edu.espe.accountingagenda.controller.Print;
+import ec.edu.espe.accountingagenda.model.Event;
+import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.bson.Document;
 
 /**
  *
@@ -12,10 +16,13 @@ import javax.swing.table.DefaultTableModel;
 public class FrmEvent extends javax.swing.JFrame {
 
     private ArrayList<Object[]> savedData;
+    private MongoDBConnection mongoDBConnection;
 
     public FrmEvent() {
         initComponents();
         savedData = new ArrayList<>();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Event");
     }
 
     /**
@@ -248,9 +255,17 @@ public class FrmEvent extends javax.swing.JFrame {
             return;
         }
 
-        Object[] rowData = {eventName, eventDescription, eventDate};
-        savedData.add(rowData);
-        ((DefaultTableModel) tblEvent.getModel()).addRow(rowData);
+        LocalDate eventDatee = LocalDate.parse(eventDate);
+        
+        Event event = new Event(eventName,eventDescription,eventDatee);
+        Document eventDocument = new Document("Nombre de la tarea", event.getEventName())
+                .append("Descripcion de la tarea", event.getEventDescription())
+                .append("Fecha de inicio de la tarea", event.getEventDate());
+        
+        mongoDBConnection.getCollection().insertOne(eventDocument);
+        JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        
+        ((DefaultTableModel) tblEvent.getModel()).addRow(event.toObjectArray());
 
         txtEventName.setText("");
         txtEventDescription.setText("");

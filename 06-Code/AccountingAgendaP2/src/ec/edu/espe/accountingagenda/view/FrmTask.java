@@ -2,10 +2,12 @@ package ec.edu.espe.accountingagenda.view;
 
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.model.Task;
+import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.bson.Document;
 
 /**
  *
@@ -14,10 +16,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class FrmTask extends javax.swing.JFrame {
     private ArrayList<Task> savedData;
+    private MongoDBConnection mongoDBConnection;
     
     public FrmTask() {
         initComponents();
         savedData = new ArrayList<>();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Task");
     }
 
     /**
@@ -296,7 +301,14 @@ public class FrmTask extends javax.swing.JFrame {
         LocalDate taskDueDate = LocalDate.parse(taskDueDateText);
 
         Task task = new Task(taskName, taskDescription, taskBeginDate, taskDueDate);
-        savedData.add(task);
+        Document taskDocument = new Document("Nombre de la tarea", task.getTaskName())
+                .append("Descripcion de la tarea", task.getTaskDescription())
+                .append("Fecha de inicio de la tarea", task.getTaskBeginDate())
+                .append("Fecha de entrega", task.getTaskDueDate());
+
+        mongoDBConnection.getCollection().insertOne(taskDocument);
+        JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        
         ((DefaultTableModel) tblTask.getModel()).addRow(task.toObjectArray());
 
         txtTaskName.setText("");
