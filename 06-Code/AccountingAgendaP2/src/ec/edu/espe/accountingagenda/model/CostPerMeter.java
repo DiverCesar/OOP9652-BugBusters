@@ -10,19 +10,19 @@ public class CostPerMeter {
     private double quantity;
     private double unitPrice;
     private String area;    
-    private double costPerMeter;
+    private double costPerMeter1;
 
-    public CostPerMeter(String material, String description, double quantity, double unitPrice, String area, double costPerMeter) {
+    public CostPerMeter(String material, String description, double quantity, double unitPrice, String area, double costPerMeter1) {
         this.material = material;
         this.description = description;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.area = area;
-        this.costPerMeter = costPerMeter;
+        this.costPerMeter1 = costPerMeter1;
     }
     
     public Object[] toObjectArray() {
-        return new Object[]{this.material, this.description, this.quantity, this.quantity, this.unitPrice, this.area, this.costPerMeter};
+        return new Object[]{this.material, this.description, this.quantity, this.unitPrice, this.area, this.costPerMeter1};
     }
 
     @Override
@@ -32,7 +32,7 @@ public class CostPerMeter {
                "\n Cantidad: " + quantity + 
                "\n Precio Unitario: " + unitPrice + 
                "\n Area: " + area + 
-               "\n Costo por metro cuadrado: " + costPerMeter;
+               "\n Costo por metro cuadrado: " + costPerMeter1;
     }
     
     
@@ -108,17 +108,17 @@ public class CostPerMeter {
     }
 
     /**
-     * @return the costPerMeter
+     * @return the costPerMeter1
      */
-    public double getCostPerMeter() {
-        return costPerMeter;
+    public double getCostPerMeter1() {
+        return costPerMeter1;
     }
 
     /**
-     * @param costPerMeter the costPerMeter to set
+     * @param costPerMeter1 the costPerMeter1 to set
      */
-    public void setCostPerMeter(double costPerMeter) {
-        this.costPerMeter = costPerMeter;
+    public void setCostPerMeter1(double costPerMeter1) {
+        this.costPerMeter1 = costPerMeter1;
     }
     
     

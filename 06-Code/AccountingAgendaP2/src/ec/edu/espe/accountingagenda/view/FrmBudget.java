@@ -52,7 +52,7 @@ public class FrmBudget extends javax.swing.JFrame {
         tableBudget = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
-        showData = new javax.swing.JButton();
+        btnLoadData = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
         btnDelete = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
@@ -131,10 +131,10 @@ public class FrmBudget extends javax.swing.JFrame {
             }
         });
 
-        showData.setText("Mostrar Datos");
-        showData.addActionListener(new java.awt.event.ActionListener() {
+        btnLoadData.setText("Cargar Datos");
+        btnLoadData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showDataActionPerformed(evt);
+                btnLoadDataActionPerformed(evt);
             }
         });
 
@@ -190,7 +190,7 @@ public class FrmBudget extends javax.swing.JFrame {
                                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jLabel2))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(showData, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnLoadData, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(19, 19, 19)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -256,7 +256,7 @@ public class FrmBudget extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(showData, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnLoadData, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -298,12 +298,13 @@ public class FrmBudget extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void showDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDataActionPerformed
+    private void btnLoadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDataActionPerformed
         displaySavedData();
-    }//GEN-LAST:event_showDataActionPerformed
+    }//GEN-LAST:event_btnLoadDataActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         deleteOfTable();
+        displaySavedData();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void mniPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniPrintActionPerformed
@@ -430,6 +431,7 @@ public class FrmBudget extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnLoadData;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -445,7 +447,6 @@ public class FrmBudget extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuItem mniPrint;
-    private javax.swing.JButton showData;
     private javax.swing.JTable tableBudget;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtMaterial;

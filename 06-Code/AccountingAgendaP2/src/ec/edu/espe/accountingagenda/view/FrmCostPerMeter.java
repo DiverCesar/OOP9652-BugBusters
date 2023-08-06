@@ -1,10 +1,12 @@
 package ec.edu.espe.accountingagenda.view;
 
+import com.mongodb.client.model.Filters;
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.controller.TextPrompt;
 import ec.edu.espe.accountingagenda.model.CostPerMeter;
 import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
@@ -70,7 +72,7 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
         tblCostPerMeter = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
+        btnLoadData = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
         btnDelete = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
@@ -182,10 +184,10 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
             }
         });
 
-        btnSave.setText("Guardar");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
+        btnLoadData.setText("Cargar Datos");
+        btnLoadData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                btnLoadDataActionPerformed(evt);
             }
         });
 
@@ -247,7 +249,7 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnLoadData, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(37, 37, 37)
@@ -302,7 +304,7 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnLoadData, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -346,29 +348,13 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+    private void btnLoadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDataActionPerformed
         displaySavedData();
-    }//GEN-LAST:event_btnSaveActionPerformed
+    }//GEN-LAST:event_btnLoadDataActionPerformed
     
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        DefaultTableModel model = (DefaultTableModel) tblCostPerMeter.getModel();
-        int selectedRow = tblCostPerMeter.getSelectedRow();
-
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int rowCount = model.getRowCount();
-        if (rowCount == 0) {
-            JOptionPane.showMessageDialog(this, "No hay información para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            model.removeRow(selectedRow);
-        }
+        deleteOfTable();
+        displaySavedData();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
@@ -376,27 +362,50 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
         print.printTable(tblCostPerMeter);
     }//GEN-LAST:event_btnPrintActionPerformed
 
-    
+    private void deleteOfTable(){
+        String materialName = txtMaterial.getText().trim();
+
+    if (materialName.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingresa el nombre del material a eliminar.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    Document budgetDocument = mongoDBConnection.getCollection().find(Filters.eq("Material", materialName)).first();
+
+    if (budgetDocument != null) {
+        int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar ese material '" + materialName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            mongoDBConnection.getCollection().deleteOne(budgetDocument);
+
+            txtMaterial.setText("");
+
+//            btnRefreshActionPerformed(evt);
+
+            JOptionPane.showMessageDialog(this, "Material eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "El material con el nombre '" + materialName + "' no fue encontrado.", "Jugador no encontrado", JOptionPane.WARNING_MESSAGE);
+    }
+
+    }
     
     private void addCostPerMeter() {
         String material = txtMaterial.getText();
         String description = txtDescription.getText();
-        String quantity = txtQuantity.getText();
-        String unitPrice = txtUnitPrice.getText();
+        double quantity = Double.parseDouble(txtQuantity.getText());
+        double unitPrice = Double.parseDouble(txtUnitPrice.getText());
         String area = txtArea.getText();       
-        String costPerMeter1 = txtCostPerMeter.getText();
+        double costPerMeter1 = Double.parseDouble(txtCostPerMeter.getText());
+
         
-        double quantityText = Double.parseDouble(quantity);
-        double unitPriceText = Double.parseDouble(unitPrice);
-        double costPerMeterText = Double.parseDouble(costPerMeter1);
-        
-        CostPerMeter costPerMeter = new CostPerMeter(material,description,quantityText,unitPriceText,area,costPerMeterText);
+        CostPerMeter costPerMeter = new CostPerMeter(material,description,quantity,unitPrice,area,costPerMeter1);
         Document costPerMeterDocument = new Document("Material", costPerMeter.getMaterial())
                 .append("Descripcion", costPerMeter.getDescription())
                 .append("Cantidad", costPerMeter.getQuantity())
-                .append("PrecioUnitario", costPerMeter.getUnitPrice())
+                .append("Precio Unitario", costPerMeter.getUnitPrice())
                 .append("Area Total", costPerMeter.getArea())
-                .append("Costo por metro cuadrado", costPerMeter.getCostPerMeter());
+                .append("Costo por metro cuadrado", costPerMeter.getCostPerMeter1());
         
         mongoDBConnection.getCollection().insertOne(costPerMeterDocument);
         JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
@@ -413,9 +422,19 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
     }
     
     private void displaySavedData() {
-        StringBuilder message = new StringBuilder();
-        message.append("Material: ").append(txtMaterial.getText()).append("\n");
-        JOptionPane.showMessageDialog(this, message.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
+        DefaultTableModel model = (DefaultTableModel) tblCostPerMeter.getModel();
+        model.setRowCount(0);
+
+    for (Document doc : documents) {
+        String material = doc.getString("Material");
+        String description = doc.getString("Descripcion");
+        double quantity = doc.getDouble("Cantidad");
+        double unitPrice = doc.getDouble("Precio Unitario");
+        String area = doc.getString("Area Total");
+        double costPerMeter1 = doc.getDouble("Costo por metro cuadrado");
+        model.addRow(new Object[]{material, description, quantity, unitPrice, area, costPerMeter1});
+    }
     }
     
     /**
@@ -472,8 +491,8 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnLoadData;
     private javax.swing.JButton btnPrint;
-    private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
