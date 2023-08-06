@@ -1,6 +1,7 @@
 package ec.edu.espe.accountingagenda.view;
 
 import java.awt.Color;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 /**
@@ -171,22 +172,7 @@ public class FrmEntryMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mniInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniInformationActionPerformed
-        String appName = "Mi Agenda Contable";
-        String appVersion = "2.0.0";
-        String appDescription = "Aplicación de agenda para generar notas, registrar tareas y eventos, entre otras fucionalidades.";
-        String developedBy = "BugBusters";
-        String team = "\n- Galarza Cesar \n- Ludeña Edison \n- Miranda Alison";
-        String copyright = "© 2023 BugBusters. Todos los derechos reservados.";
-
-        String aboutMessage = "Nombre de la Aplicación: " + appName + "\n"
-                + "Versión: " + appVersion + "\n"
-                + "Descripción: " + appDescription + "\n"
-                + "Desarrollado por: " + developedBy + "\n"
-                + "Integrantes: " + team + "\n\n"
-                + copyright;
-
-        JOptionPane.showMessageDialog(null, aboutMessage, "Acerca de", JOptionPane.INFORMATION_MESSAGE);
-
+        showInformation();
     }//GEN-LAST:event_mniInformationActionPerformed
 
     private void mniInstructionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniInstructionsActionPerformed
@@ -219,6 +205,24 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenu3MouseExited
 
+       public void showInformation() throws HeadlessException {
+        String appName = "Mi Agenda Contable";
+        String appVersion = "2.0.0";
+        String appDescription = "Aplicación de agenda para generar notas, registrar tareas y eventos, entre otras fucionalidades.";
+        String developedBy = "BugBusters";
+        String team = "\n- Galarza Cesar \n- Ludeña Edison \n- Miranda Alison";
+        String copyright = "© 2023 BugBusters. Todos los derechos reservados.";
+        
+        String aboutMessage = "Nombre de la Aplicación: " + appName + "\n"
+                + "Versión: " + appVersion + "\n"
+                + "Descripción: " + appDescription + "\n"
+                + "Desarrollado por: " + developedBy + "\n"
+                + "Integrantes: " + team + "\n\n"
+                + copyright;
+        
+        JOptionPane.showMessageDialog(null, aboutMessage, "Acerca de", JOptionPane.INFORMATION_MESSAGE);
+    }
+       
     /**
      * @param args the command line arguments
      */

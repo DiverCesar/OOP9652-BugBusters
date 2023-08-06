@@ -3,6 +3,7 @@ package ec.edu.espe.accountingagenda.view;
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.model.Note;
 import java.awt.BorderLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
@@ -172,51 +173,96 @@ public class FrmNoteMenuGuest extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnEditNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditNoteActionPerformed
-    if (savedNotes == null || savedNotes.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "No hay notas guardadas", "Editar Nota",
-                JOptionPane.INFORMATION_MESSAGE);
-        return;
-    }
-
-    String[] noteTitles = new String[savedNotes.size()];
-    for (int i = 0; i < savedNotes.size(); i++) {
-        noteTitles[i] = savedNotes.get(i).getTitle();
-    }
-
-    String selectedNoteTitle = (String) JOptionPane.showInputDialog(this, "Selecciona la nota a editar:",
-            "Editar Nota", JOptionPane.QUESTION_MESSAGE, null, noteTitles, noteTitles[0]);
-
-    if (selectedNoteTitle != null) {
-        Note selectedNote = null;
-        for (Note note : savedNotes) {
-            if (note.getTitle().equals(selectedNoteTitle)) {
-                selectedNote = note;
-                break;
-            }
-        }
-
-        FrmNote frmNote = new FrmNote(savedNotes);
-        frmNote.setNoteForEditing(selectedNote);
-        frmNote.setVisible(true);
-        dispose();
-    }
+        if (editNote()) return;
     }//GEN-LAST:event_btnEditNoteActionPerformed
 
     private void btnDeleteNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteNoteActionPerformed
+        if (deleteNote()) return;
+    }//GEN-LAST:event_btnDeleteNoteActionPerformed
+
+    private void btnShowNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowNoteActionPerformed
+        if (showNote()) return;
+    }//GEN-LAST:event_btnShowNoteActionPerformed
+
+    public boolean showNote() throws HeadlessException {
+        if (savedNotes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay notas guardadas", "Ver Nota",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }
+        String[] columnNames = {"Título", "Contenido"};
+        Object[][] rowData = new Object[savedNotes.size()][2];
+        for (int i = 0; i < savedNotes.size(); i++) {
+            rowData[i][0] = savedNotes.get(i).getTitle();
+            rowData[i][1] = savedNotes.get(i).getContent();
+        }
+        JTable table = new JTable(rowData, columnNames);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        table.getColumnModel().getColumn(0).setPreferredWidth(200);
+        table.getColumnModel().getColumn(1).setPreferredWidth(400);
+        JButton printButton = new JButton("Imprimir");
+        printButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                PrinterJob printerJob = PrinterJob.getPrinterJob();
+                printerJob.setPrintable(table.getPrintable(JTable.PrintMode.FIT_WIDTH, null, null));
+                
+                if (printerJob.printDialog()) {
+                    try {
+                        printerJob.print();
+                    } catch (PrinterException ex) {
+                        JOptionPane.showMessageDialog(FrmNoteMenuGuest.this, "Error al imprimir", "Imprimir", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(printButton);
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(new JScrollPane(table), BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+        JOptionPane.showMessageDialog(this, panel, "Lista de Notas", JOptionPane.INFORMATION_MESSAGE);
+        return false;
+    }
+
+    public boolean editNote() throws HeadlessException {
+        if (savedNotes == null || savedNotes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay notas guardadas", "Editar Nota",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }
+        String[] noteTitles = new String[savedNotes.size()];
+        for (int i = 0; i < savedNotes.size(); i++) {
+            noteTitles[i] = savedNotes.get(i).getTitle();
+        }   String selectedNoteTitle = (String) JOptionPane.showInputDialog(this, "Selecciona la nota a editar:",
+                "Editar Nota", JOptionPane.QUESTION_MESSAGE, null, noteTitles, noteTitles[0]);
+        if (selectedNoteTitle != null) {
+            Note selectedNote = null;
+            for (Note note : savedNotes) {
+                if (note.getTitle().equals(selectedNoteTitle)) {
+                    selectedNote = note;
+                    break;
+                }
+            }
+            
+            FrmNote frmNote = new FrmNote(savedNotes);
+            frmNote.setNoteForEditing(selectedNote);
+            frmNote.setVisible(true);
+            dispose();
+        }   return false;
+    }
+    
+    public boolean deleteNote() throws HeadlessException {
         if (savedNotes == null || savedNotes.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay notas guardadas", "Borrar Nota",
                     JOptionPane.INFORMATION_MESSAGE);
-            return;
+            return true;
         }
-
         String[] noteTitles = new String[savedNotes.size()];
         for (int i = 0; i < savedNotes.size(); i++) {
             noteTitles[i] = savedNotes.get(i).getTitle();
         }
-
         String selectedNoteTitle = (String) JOptionPane.showInputDialog(this, "Selecciona la nota a borrar:",
                 "Borrar Nota", JOptionPane.QUESTION_MESSAGE, null, noteTitles, noteTitles[0]);
-
         if (selectedNoteTitle != null) {
             int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que quieres borrar la nota seleccionada?",
                     "Confirmar Borrado", JOptionPane.YES_NO_OPTION);
@@ -235,53 +281,8 @@ public class FrmNoteMenuGuest extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE);
             }
         }
-    }//GEN-LAST:event_btnDeleteNoteActionPerformed
-
-    private void btnShowNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowNoteActionPerformed
-    if (savedNotes.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "No hay notas guardadas", "Ver Nota",
-                JOptionPane.INFORMATION_MESSAGE);
-        return;
+        return false;
     }
-
-    String[] columnNames = {"Título", "Contenido"};
-    Object[][] rowData = new Object[savedNotes.size()][2];
-
-    for (int i = 0; i < savedNotes.size(); i++) {
-        rowData[i][0] = savedNotes.get(i).getTitle();
-        rowData[i][1] = savedNotes.get(i).getContent();
-    }
-
-    JTable table = new JTable(rowData, columnNames);
-    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    table.getColumnModel().getColumn(0).setPreferredWidth(200);
-    table.getColumnModel().getColumn(1).setPreferredWidth(400);
-
-    JButton printButton = new JButton("Imprimir");
-    printButton.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            PrinterJob printerJob = PrinterJob.getPrinterJob();
-            printerJob.setPrintable(table.getPrintable(JTable.PrintMode.FIT_WIDTH, null, null));
-
-            if (printerJob.printDialog()) {
-                try {
-                    printerJob.print();
-                } catch (PrinterException ex) {
-                    JOptionPane.showMessageDialog(FrmNoteMenuGuest.this, "Error al imprimir", "Imprimir", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-    });
-
-    JPanel buttonPanel = new JPanel();
-    buttonPanel.add(printButton);
-
-    JPanel panel = new JPanel(new BorderLayout());
-    panel.add(new JScrollPane(table), BorderLayout.CENTER);
-    panel.add(buttonPanel, BorderLayout.SOUTH);
-
-    JOptionPane.showMessageDialog(this, panel, "Lista de Notas", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_btnShowNoteActionPerformed
 
 
     /**
