@@ -4,10 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/model/Event.java</file>
-            <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/model/Task.java</file>
-            <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmNote.java</file>
-            <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmTask.java</file>
             <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmEvent.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmBudget.java</file>
+            <file>file:/C:/Users/LENOVO/Documents/Netbeans/Works/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/model/Budget.java</file>
         </group>
     </open-files>
 </project-private>

@@ -11,7 +11,7 @@ import org.bson.Document;
 
 /**
  *
- * @author Bug Busters, DCCO-ESPE
+ * @author Edison Ludeña Bug Busters, DCCO-ESPE
  */
 
 public class FrmTask extends javax.swing.JFrame {

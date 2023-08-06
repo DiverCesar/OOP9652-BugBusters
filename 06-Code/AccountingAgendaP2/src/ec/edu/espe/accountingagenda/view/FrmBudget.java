@@ -314,33 +314,26 @@ public class FrmBudget extends javax.swing.JFrame {
     private void deleteOfTable() {
        String materialName = txtMaterial.getText().trim();
 
-    // Verificar que el nombre del jugador no esté vacío
     if (materialName.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Por favor, ingresa el nombre del material a eliminar.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    // Realizar una consulta en la base de datos para encontrar el documento del jugador
     Document budgetDocument = mongoDBConnection.getCollection().find(Filters.eq("Material", materialName)).first();
 
     if (budgetDocument != null) {
-        // Mostrar el cuadro de diálogo de confirmación
         int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar ese material '" + materialName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
         if (option == JOptionPane.YES_OPTION) {
-            // Si el usuario elige "Sí", eliminar el documento de la base de datos
             mongoDBConnection.getCollection().deleteOne(budgetDocument);
 
-            // Limpiar el campo txtPlayerName después de eliminar el jugador
             txtMaterial.setText("");
 
-            // Actualizar la tabla después de eliminar el jugador
 //            btnRefreshActionPerformed(evt);
 
             JOptionPane.showMessageDialog(this, "Material eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
         }
     } else {
-        // Si no se encontró el jugador, mostrar un mensaje de error
         JOptionPane.showMessageDialog(this, "El material con el nombre '" + materialName + "' no fue encontrado.", "Jugador no encontrado", JOptionPane.WARNING_MESSAGE);
     }
     }
@@ -377,11 +370,9 @@ public class FrmBudget extends javax.swing.JFrame {
 
     private void displaySavedData() {
         List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
-        // Limpiar la tabla antes de mostrar los nuevos datos
         DefaultTableModel model = (DefaultTableModel) tableBudget.getModel();
         model.setRowCount(0);
 
-    // Agregar los datos ordenados a la tabla
     for (Document doc : documents) {
         String material = doc.getString("Material");
         String description = doc.getString("Descripcion");
