@@ -2,9 +2,12 @@ package ec.edu.espe.accountingagenda.view;
 
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.controller.TextPrompt;
+import ec.edu.espe.accountingagenda.model.CostPerMeter;
+import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.bson.Document;
 
 /**
  *
@@ -13,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FrmCostPerMeter extends javax.swing.JFrame {
     private ArrayList<Object[]> savedData;
+    private MongoDBConnection mongoDBConnection;
     
     /**
      * Creates new form FrmNota
@@ -21,6 +25,8 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
         initComponents();
         TextPrompt placeHolderTotal = new TextPrompt("Presione enter para calcular",txtCostPerMeter);
         savedData = new ArrayList<>();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("CostPerMeter");
     }
 
     /**
@@ -378,11 +384,25 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
         String quantity = txtQuantity.getText();
         String unitPrice = txtUnitPrice.getText();
         String area = txtArea.getText();       
-        String costPerMeter = txtCostPerMeter.getText();
+        String costPerMeter1 = txtCostPerMeter.getText();
         
-        Object[] rowData = {material, description, quantity, unitPrice, area, costPerMeter};
-        savedData.add(rowData);
-        ((DefaultTableModel) tblCostPerMeter.getModel()).addRow(rowData);
+        double quantityText = Double.parseDouble(quantity);
+        double unitPriceText = Double.parseDouble(unitPrice);
+        double costPerMeterText = Double.parseDouble(costPerMeter1);
+        
+        CostPerMeter costPerMeter = new CostPerMeter(material,description,quantityText,unitPriceText,area,costPerMeterText);
+        Document costPerMeterDocument = new Document("Material", costPerMeter.getMaterial())
+                .append("Descripcion", costPerMeter.getDescription())
+                .append("Cantidad", costPerMeter.getQuantity())
+                .append("PrecioUnitario", costPerMeter.getUnitPrice())
+                .append("Area Total", costPerMeter.getArea())
+                .append("Costo por metro cuadrado", costPerMeter.getCostPerMeter());
+        
+        mongoDBConnection.getCollection().insertOne(costPerMeterDocument);
+        JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        
+        
+        ((DefaultTableModel) tblCostPerMeter.getModel()).addRow(costPerMeter.toObjectArray());
         
         txtMaterial.setText("");
         txtDescription.setText("");

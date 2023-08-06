@@ -20,6 +20,10 @@ public class CostPerMeter {
         this.area = area;
         this.costPerMeter = costPerMeter;
     }
+    
+    public Object[] toObjectArray() {
+        return new Object[]{this.material, this.description, this.quantity, this.quantity, this.unitPrice, this.area, this.costPerMeter};
+    }
 
     @Override
     public String toString() {

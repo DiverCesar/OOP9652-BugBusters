@@ -32,6 +32,10 @@ public class Budget {
                "\n Total: " + totalCost;
     }
 
+    public Object[] toObjectArray() {
+        return new Object[]{this.material, this.description, this.quantity, this.unit, this.unitPrice, this.totalCost};
+    }
+    
     /**
      * @return the material
      */

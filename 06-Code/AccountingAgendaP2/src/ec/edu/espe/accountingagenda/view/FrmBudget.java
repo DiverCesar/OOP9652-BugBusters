@@ -1,11 +1,15 @@
 package ec.edu.espe.accountingagenda.view;
 
+import com.mongodb.client.model.Filters;
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.controller.TextPrompt;
 import ec.edu.espe.accountingagenda.model.Budget;
+import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.bson.Document;
 
 /**
  *
@@ -14,11 +18,14 @@ import javax.swing.table.DefaultTableModel;
 public class FrmBudget extends javax.swing.JFrame {
 
     private ArrayList<Budget> savedData;
+    private MongoDBConnection mongoDBConnection;
 
     public FrmBudget() {
         initComponents();
         TextPrompt placeHolderTotal = new TextPrompt("Presione enter para calcular", txtTotal);
         savedData = new ArrayList<>();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Budget");
     }
 
     /**
@@ -45,7 +52,7 @@ public class FrmBudget extends javax.swing.JFrame {
         tableBudget = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
+        showData = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
         btnDelete = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
@@ -124,10 +131,10 @@ public class FrmBudget extends javax.swing.JFrame {
             }
         });
 
-        btnSave.setText("Guardar");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
+        showData.setText("Mostrar Datos");
+        showData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                showDataActionPerformed(evt);
             }
         });
 
@@ -183,9 +190,8 @@ public class FrmBudget extends javax.swing.JFrame {
                                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jLabel2))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(showData, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(19, 19, 19)))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -250,7 +256,7 @@ public class FrmBudget extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(showData, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -292,9 +298,9 @@ public class FrmBudget extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+    private void showDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDataActionPerformed
         displaySavedData();
-    }//GEN-LAST:event_btnSaveActionPerformed
+    }//GEN-LAST:event_showDataActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         deleteOfTable();
@@ -306,24 +312,37 @@ public class FrmBudget extends javax.swing.JFrame {
     }//GEN-LAST:event_mniPrintActionPerformed
 
     private void deleteOfTable() {
-        DefaultTableModel model = (DefaultTableModel) tableBudget.getModel();
-        int selectedRow = tableBudget.getSelectedRow();
+       String materialName = txtMaterial.getText().trim();
 
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    // Verificar que el nombre del jugador no esté vacío
+    if (materialName.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingresa el nombre del material a eliminar.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        int rowCount = model.getRowCount();
-        if (rowCount == 0) {
-            JOptionPane.showMessageDialog(this, "No hay información para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    // Realizar una consulta en la base de datos para encontrar el documento del jugador
+    Document budgetDocument = mongoDBConnection.getCollection().find(Filters.eq("Material", materialName)).first();
 
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            model.removeRow(selectedRow);
+    if (budgetDocument != null) {
+        // Mostrar el cuadro de diálogo de confirmación
+        int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar ese material '" + materialName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            // Si el usuario elige "Sí", eliminar el documento de la base de datos
+            mongoDBConnection.getCollection().deleteOne(budgetDocument);
+
+            // Limpiar el campo txtPlayerName después de eliminar el jugador
+            txtMaterial.setText("");
+
+            // Actualizar la tabla después de eliminar el jugador
+//            btnRefreshActionPerformed(evt);
+
+            JOptionPane.showMessageDialog(this, "Material eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
         }
+    } else {
+        // Si no se encontró el jugador, mostrar un mensaje de error
+        JOptionPane.showMessageDialog(this, "El material con el nombre '" + materialName + "' no fue encontrado.", "Jugador no encontrado", JOptionPane.WARNING_MESSAGE);
+    }
     }
 
     private void addBudget() {
@@ -335,8 +354,18 @@ public class FrmBudget extends javax.swing.JFrame {
         double totalCost = Double.parseDouble(txtTotal.getText());
 
         Budget budget = new Budget(material, description, quantity, unit, unitPrice, totalCost);
-        savedData.add(budget);
-        ((DefaultTableModel) tableBudget.getModel()).addRow(new Object[]{material, description, quantity, unit, unitPrice, totalCost});
+        Document budgetDocument = new Document("Material", budget.getMaterial())
+                .append("Descripcion", budget.getDescription())
+                .append("Cantidad", budget.getQuantity())
+                .append("Unidad de Medida", budget.getUnit())
+                .append("Precio Unitario", budget.getUnitPrice())
+                .append("Costo Total", budget.getTotalCost());
+        
+        mongoDBConnection.getCollection().insertOne(budgetDocument);
+        JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        
+        
+        ((DefaultTableModel) tableBudget.getModel()).addRow(budget.toObjectArray());
 
         txtMaterial.setText("");
         txtDescription.setText("");
@@ -347,9 +376,21 @@ public class FrmBudget extends javax.swing.JFrame {
     }
 
     private void displaySavedData() {
-        StringBuilder message = new StringBuilder();
-        message.append("Material: ").append(txtMaterial.getText()).append("\n");
-        JOptionPane.showMessageDialog(this, message.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
+        // Limpiar la tabla antes de mostrar los nuevos datos
+        DefaultTableModel model = (DefaultTableModel) tableBudget.getModel();
+        model.setRowCount(0);
+
+    // Agregar los datos ordenados a la tabla
+    for (Document doc : documents) {
+        String material = doc.getString("Material");
+        String description = doc.getString("Descripcion");
+        double quantity = doc.getDouble("Cantidad");
+        String unit = doc.getString("Unidad de Medida");
+        double unitPrice = doc.getDouble("Precio Unitario");
+        double totalCost = doc.getDouble("Costo Total");
+        model.addRow(new Object[]{material, description, quantity, unit, unitPrice, totalCost});
+    }
     }
 
     /**
@@ -398,7 +439,6 @@ public class FrmBudget extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -414,6 +454,7 @@ public class FrmBudget extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuItem mniPrint;
+    private javax.swing.JButton showData;
     private javax.swing.JTable tableBudget;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtMaterial;
