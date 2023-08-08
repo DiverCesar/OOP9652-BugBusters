@@ -76,7 +76,7 @@
                               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                               <Component id="btnDelete" min="-2" pref="129" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnSave" min="-2" pref="129" max="-2" attributes="0"/>
+                              <Component id="btnLoadTask" min="-2" pref="129" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                               <Component id="btnBack" min="-2" pref="129" max="-2" attributes="0"/>
                           </Group>
@@ -125,7 +125,7 @@
                   <Component id="btnAdd" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="btnBack" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="btnDelete" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                  <Component id="btnSave" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                  <Component id="btnLoadTask" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
           </Group>
@@ -243,12 +243,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnSave">
+    <Component class="javax.swing.JButton" name="btnLoadTask">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Guardar cambios"/>
+        <Property name="text" type="java.lang.String" value="Cargar Tareas"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoadTaskActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">

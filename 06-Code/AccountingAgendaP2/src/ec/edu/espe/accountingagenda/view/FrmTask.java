@@ -1,10 +1,14 @@
 package ec.edu.espe.accountingagenda.view;
 
+import com.mongodb.client.model.Filters;
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.model.Task;
 import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
@@ -47,7 +51,7 @@ public class FrmTask extends javax.swing.JFrame {
         tblTask = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
+        btnLoadTask = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtTaskBeginDate = new javax.swing.JTextField();
         btnDelete = new javax.swing.JButton();
@@ -119,10 +123,10 @@ public class FrmTask extends javax.swing.JFrame {
             }
         });
 
-        btnSave.setText("Guardar cambios");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
+        btnLoadTask.setText("Cargar Tareas");
+        btnLoadTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                btnLoadTaskActionPerformed(evt);
             }
         });
 
@@ -184,7 +188,7 @@ public class FrmTask extends javax.swing.JFrame {
                                 .addGap(34, 34, 34)
                                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(33, 33, 33)
-                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnLoadTask, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(42, 42, 42)
                                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
@@ -222,7 +226,7 @@ public class FrmTask extends javax.swing.JFrame {
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLoadTask, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25))
         );
 
@@ -248,13 +252,9 @@ public class FrmTask extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        dispose();
-        JOptionPane.showMessageDialog(null, "La tarea se ha guardado exitosamente", "Tarea guardada", JOptionPane.INFORMATION_MESSAGE);
-        FrmCalendarMenu frmCalendarMenu = new FrmCalendarMenu();
-        frmCalendarMenu.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_btnSaveActionPerformed
+    private void btnLoadTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadTaskActionPerformed
+        displaySavedData();
+    }//GEN-LAST:event_btnLoadTaskActionPerformed
 
     private void txtTaskNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaskNameActionPerformed
         // TODO add your handling code here:
@@ -262,6 +262,7 @@ public class FrmTask extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         delete();
+        displaySavedData();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void txtTaskBeginDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaskBeginDateActionPerformed
@@ -321,49 +322,48 @@ public class FrmTask extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Ingrese la fecha en formato aaaa-mm-dd en el campo " + fieldName, "Formato de fecha incorrecto", JOptionPane.ERROR_MESSAGE);
     }  
 
-    void showInformationSaved() {
-        StringBuilder informacion = new StringBuilder();
-        for (int i = 0; i < savedData.size(); i++) {
-            Task task = savedData.get(i);
-            String taskName = task.getTaskName();
-            String taskDescription = task.getTaskDescription();
-            LocalDate taskBeginDate = task.getTaskBeginDate();
-            LocalDate taskDueDate = task.getTaskDueDate();
+    private void displaySavedData() {
+        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
+        DefaultTableModel model = (DefaultTableModel) tblTask.getModel();
+        model.setRowCount(0);
 
-            informacion.append("Guardado ").append(i + 1).append(":\n");
-            informacion.append("Nombre de tarea: ").append(taskName).append("\n");
-            informacion.append("Descripcion de tarea: ").append(taskDescription).append("\n");
-            informacion.append("Fecha de inicio: ").append(taskBeginDate).append("\n");
-            informacion.append("Fecha de entrega: ").append(taskDueDate).append("\n");
-            informacion.append("---------------------\n");
-        }
+    for (Document doc : documents) {
+        String taskName = doc.getString("Nombre de la tarea");
+        String taskDescription = doc.getString("Descripcion de la tarea");
+        
+        Date date = doc.getDate("Fecha de inicio de la tarea");
+        LocalDate taskBeginDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        if (informacion.length() > 0) {
-            JOptionPane.showMessageDialog(this, informacion.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay información guardada.", "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
-        }
+        Date date1 = doc.getDate("Fecha de inicio de la tarea");
+        LocalDate taskDueDate = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        model.addRow(new Object[]{taskName,taskDescription,taskBeginDate,taskDueDate});
+    }
     }
     
     private void delete(){
-                DefaultTableModel model = (DefaultTableModel) tblTask.getModel();
-        int selectedRow = tblTask.getSelectedRow();
+        String taskName = txtTaskName.getText().trim();
 
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (taskName.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingresa el nombre dela tarea a eliminar.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        int rowCount = model.getRowCount();
-        if (rowCount == 0) {
-            JOptionPane.showMessageDialog(this, "No hay información para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    Document taskDocument = mongoDBConnection.getCollection().find(Filters.eq("Nombre de la tarea", taskName)).first();
 
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            model.removeRow(selectedRow);
+    if (taskDocument != null) {
+        int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar esta tarea '" + taskName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            mongoDBConnection.getCollection().deleteOne(taskDocument);
+
+            txtTaskName.setText("");
+
+            JOptionPane.showMessageDialog(this, "Tarea eliminada correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
         }
+    } else {
+        JOptionPane.showMessageDialog(this, "La tarea con el nombre '" + taskName + "' no fue encontrada.", "Tarea no encontrada", JOptionPane.WARNING_MESSAGE);
+    }
     }
     
     /**
@@ -420,7 +420,7 @@ public class FrmTask extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnLoadTask;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;

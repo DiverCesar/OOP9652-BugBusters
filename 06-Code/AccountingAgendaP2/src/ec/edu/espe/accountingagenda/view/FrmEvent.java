@@ -315,10 +315,10 @@ public class FrmEvent extends javax.swing.JFrame {
 
 //            btnRefreshActionPerformed(evt);
 
-            JOptionPane.showMessageDialog(this, "Material eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Evento eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
         }
     } else {
-        JOptionPane.showMessageDialog(this, "El material con el nombre '" + eventName + "' no fue encontrado.", "Jugador no encontrado", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "El evento con el nombre '" + eventName + "' no fue encontrado.", "Evento no encontrado", JOptionPane.WARNING_MESSAGE);
     }
     }
 
