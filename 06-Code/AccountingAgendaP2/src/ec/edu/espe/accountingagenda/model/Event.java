@@ -26,13 +26,27 @@ public class Event {
         return eventName;
     }
 
-    public LocalDate getEventDate() {
-        return eventDate;
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
     public String getEventDescription() {
         return eventDescription;
     }
+
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
+    }
+
+    public LocalDate getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(LocalDate eventDate) {
+        this.eventDate = eventDate;
+    }
+
+
 
     @Override
     public String toString() {
