@@ -385,7 +385,7 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Material eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
         }
     } else {
-        JOptionPane.showMessageDialog(this, "El material con el nombre '" + materialName + "' no fue encontrado.", "Jugador no encontrado", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "El material con el nombre '" + materialName + "' no fue encontrado.", "Material no encontrado", JOptionPane.WARNING_MESSAGE);
     }
 
     }
