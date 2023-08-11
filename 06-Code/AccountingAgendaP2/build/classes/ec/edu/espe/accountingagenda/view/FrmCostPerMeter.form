@@ -184,7 +184,6 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="btnCancel" min="-2" pref="119" max="-2" attributes="0"/>
-                                          <Component id="btnLoadData" min="-2" pref="119" max="-2" attributes="0"/>
                                           <Component id="btnAdd" alignment="1" min="-2" pref="77" max="-2" attributes="0"/>
                                           <Component id="btnDelete" alignment="1" min="-2" pref="77" max="-2" attributes="0"/>
                                       </Group>
@@ -254,11 +253,9 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="btnAdd" min="-2" pref="37" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="btnDelete" min="-2" pref="37" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnLoadData" min="-2" pref="35" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="btnCancel" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -386,14 +383,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnLoadData">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Cargar Datos"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoadDataActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JToolBar" name="jToolBar1">

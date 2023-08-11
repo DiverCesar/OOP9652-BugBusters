@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
  *
  * @author Alison Miranda, Bug Busters, DCCO-ESPE
  */
-
 public class FrmEntryMenu extends javax.swing.JFrame {
 
     public FrmEntryMenu() {
@@ -41,8 +40,6 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         mniInformation = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         mniInstructions = new javax.swing.JMenuItem();
-        mniExit = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -69,7 +66,7 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Agenda_3.0.gif"))); // NOI18N
 
         jMenu3.setText("Iniciar Sesión");
-        jMenu3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jMenu3MouseEntered(evt);
@@ -99,7 +96,7 @@ public class FrmEntryMenu extends javax.swing.JFrame {
 
         jMenu1.setText("Acerca de");
         jMenu1.setContentAreaFilled(false);
-        jMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         mniInformation.setText("Información ");
         mniInformation.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +109,7 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Ayuda");
-        jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         mniInstructions.setText("Contacto");
         mniInstructions.addActionListener(new java.awt.event.ActionListener() {
@@ -123,19 +120,6 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         jMenu2.add(mniInstructions);
 
         jMenuBar1.add(jMenu2);
-
-        mniExit.setText("Salir");
-        mniExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jMenuItem2.setText("Abandonar programa");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        mniExit.add(jMenuItem2);
-
-        jMenuBar1.add(mniExit);
 
         setJMenuBar(jMenuBar1);
 
@@ -180,11 +164,6 @@ public class FrmEntryMenu extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, message, "Ayuda", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_mniInstructionsActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        dispose();
-        System.exit(0);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         FrmLogInAdministrator frmLogIn = new FrmLogInAdministrator();
         frmLogIn.setVisible(true);
@@ -198,31 +177,31 @@ public class FrmEntryMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenu3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseEntered
-        
+
     }//GEN-LAST:event_jMenu3MouseEntered
 
     private void jMenu3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseExited
-        
+
     }//GEN-LAST:event_jMenu3MouseExited
 
-       public void showInformation() throws HeadlessException {
+    public void showInformation() throws HeadlessException {
         String appName = "Mi Agenda Contable";
         String appVersion = "2.0.0";
         String appDescription = "Aplicación de agenda para generar notas, registrar tareas y eventos, entre otras fucionalidades.";
         String developedBy = "BugBusters";
         String team = "\n- Galarza Cesar \n- Ludeña Edison \n- Miranda Alison";
         String copyright = "© 2023 BugBusters. Todos los derechos reservados.";
-        
+
         String aboutMessage = "Nombre de la Aplicación: " + appName + "\n"
                 + "Versión: " + appVersion + "\n"
                 + "Descripción: " + appDescription + "\n"
                 + "Desarrollado por: " + developedBy + "\n"
                 + "Integrantes: " + team + "\n\n"
                 + copyright;
-        
+
         JOptionPane.showMessageDialog(null, aboutMessage, "Acerca de", JOptionPane.INFORMATION_MESSAGE);
     }
-       
+
     /**
      * @param args the command line arguments
      */
@@ -272,11 +251,9 @@ public class FrmEntryMenu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenu mniExit;
     private javax.swing.JMenuItem mniInformation;
     private javax.swing.JMenuItem mniInstructions;
     // End of variables declaration//GEN-END:variables

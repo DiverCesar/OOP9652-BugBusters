@@ -135,7 +135,7 @@ public class FrmNoteMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateNoteActionPerformed
-        FrmNote frmNote = new FrmNote(savedNotes);
+        FrmNote frmNote = new FrmNote();
         frmNote.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCreateNoteActionPerformed

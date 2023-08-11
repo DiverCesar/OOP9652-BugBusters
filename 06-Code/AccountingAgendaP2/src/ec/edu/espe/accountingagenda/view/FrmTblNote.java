@@ -13,8 +13,9 @@ import org.bson.Document;
  * @author LENOVO
  */
 public class FrmTblNote extends javax.swing.JFrame {
-    
-    private MongoDBConnection mongoDBConnection;    
+
+    private MongoDBConnection mongoDBConnection;
+
     /**
      * Creates new form FrmTblNote
      */
@@ -22,6 +23,7 @@ public class FrmTblNote extends javax.swing.JFrame {
         initComponents();
         mongoDBConnection = new MongoDBConnection();
         mongoDBConnection.connection("Notes");
+        displaySavedData();
     }
 
     /**
@@ -39,7 +41,6 @@ public class FrmTblNote extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         btnPrint = new javax.swing.JButton();
-        btnLoadNotes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,13 +76,6 @@ public class FrmTblNote extends javax.swing.JFrame {
 
         btnPrint.setText("Imprimir tabla");
 
-        btnLoadNotes.setText("Cargar Notas");
-        btnLoadNotes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoadNotesActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,19 +85,18 @@ public class FrmTblNote extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66))
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(btnPrint)
-                .addGap(109, 109, 109)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(btnPrint)
+                        .addGap(109, 109, 109)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(btnDelete)
+                        .addGap(113, 113, 113)
+                        .addComponent(btnBack)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addComponent(btnDelete)
-                .addGap(43, 43, 43)
-                .addComponent(btnLoadNotes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBack)
-                .addGap(148, 148, 148))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +109,6 @@ public class FrmTblNote extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLoadNotes)
                     .addComponent(btnDelete)
                     .addComponent(btnBack))
                 .addContainerGap(40, Short.MAX_VALUE))
@@ -131,36 +123,36 @@ public class FrmTblNote extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnLoadNotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadNotesActionPerformed
-        displaySavedData();
-    }//GEN-LAST:event_btnLoadNotesActionPerformed
-
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         deleteOfTable();
         displaySavedData();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void deleteOfTable(){
-        String noteName = JOptionPane.showInputDialog(null, "Ingrese el titulo de la nota:", "Eliminar Nota", JOptionPane.PLAIN_MESSAGE);
+    private void deleteOfTable() {
+        int selectedRow = tblNotes.getSelectedRow();
 
-        if (noteName == null || noteName.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por Favor ingrese el titulo de la nota a eliminar.", "Campo Vacio", JOptionPane.WARNING_MESSAGE);
-        return;
-        }    
-        Document budgetDocument = mongoDBConnection.getCollection().find(Filters.eq("Titulo", noteName)).first();
+        if (selectedRow != -1) {
+            String noteTitle = tblNotes.getValueAt(selectedRow, 0).toString();
 
-    if (budgetDocument != null) {
-        int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar esta nota '" + noteName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            Document noteDocument = mongoDBConnection.getCollection().find(Filters.eq("Titulo", noteTitle)).first();
 
-        if (option == JOptionPane.YES_OPTION) {
-            mongoDBConnection.getCollection().deleteOne(budgetDocument);
+            if (noteDocument != null) {
+                int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar esta nota '" + noteTitle + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
-            JOptionPane.showMessageDialog(this, "Nota eliminada correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
+                if (option == JOptionPane.YES_OPTION) {
+                    mongoDBConnection.getCollection().deleteOne(noteDocument);
+
+                    JOptionPane.showMessageDialog(this, "Nota eliminada correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "La nota con el título '" + noteTitle + "' no fue encontrada.", "Nota no encontrada", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona una fila para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "La nota con el nombre '" + noteName + "' no fue encontrada.", "Nota no encontrada", JOptionPane.WARNING_MESSAGE);
-    }    
     }
+
     private void displaySavedData() {
         List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
         DefaultTableModel model = (DefaultTableModel) tblNotes.getModel();
@@ -172,7 +164,7 @@ public class FrmTblNote extends javax.swing.JFrame {
             model.addRow(new Object[]{title, content});
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -211,7 +203,6 @@ public class FrmTblNote extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnLoadNotes;
     private javax.swing.JButton btnPrint;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
