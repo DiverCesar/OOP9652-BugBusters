@@ -65,7 +65,7 @@
                                   <Component id="txtTaskName" min="-2" pref="212" max="-2" attributes="0"/>
                                   <Component id="txtTaskDescription" alignment="0" min="-2" pref="476" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="datechTaskDueDate" alignment="0" pref="146" max="32767" attributes="0"/>
+                                      <Component id="datechTaskDueDate" alignment="0" pref="148" max="32767" attributes="0"/>
                                       <Component id="datechTaskBeginDate" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -86,7 +86,7 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="84" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -131,18 +131,6 @@
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
-<<<<<<< HEAD
-=======
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="195" max="32767" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnAdd" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                  <Component id="btnBack" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                  <Component id="btnDelete" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
->>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
           </Group>
       </Group>
     </DimensionLayout>

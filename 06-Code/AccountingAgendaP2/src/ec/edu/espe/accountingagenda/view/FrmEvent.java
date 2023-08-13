@@ -150,15 +150,9 @@ public class FrmEvent extends javax.swing.JFrame {
                                             .addComponent(jLabel7))
                                         .addGap(48, 48, 48)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-<<<<<<< HEAD
                                             .addComponent(txtEventDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtEventName, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(datechEventDate, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-=======
-                                            .addComponent(txtEventDate, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtEventDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtEventName, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))))
->>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
+                                            .addComponent(datechEventDate, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(257, 257, 257)
                                 .addComponent(jLabel1)))
@@ -189,7 +183,6 @@ public class FrmEvent extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtEventDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-<<<<<<< HEAD
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -202,19 +195,6 @@ public class FrmEvent extends javax.swing.JFrame {
                             .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(datechEventDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
-=======
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtEventDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
->>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
         );
 
         pack();
@@ -248,22 +228,16 @@ public class FrmEvent extends javax.swing.JFrame {
     private void addEvent() {
         String eventName = txtEventName.getText();
         String eventDescription = txtEventDescription.getText();
-        Date eventDate = datechEventDate.getDate(); 
+        Date eventDate = datechEventDate.getDate();
 
-        if (eventDate == null) {
-            JOptionPane.showMessageDialog(rootPane, "Seleccione una fecha válida", "Error de fecha", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        if (datechEventDate == null) {
+                JOptionPane.showMessageDialog(rootPane, "Selecciona una fecha válida", "Error de fecha", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-<<<<<<< HEAD
         Event event = new Event(eventName, eventDescription, 
                 eventDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-      
-=======
-        LocalDate eventDatee = LocalDate.parse(eventDate);
-
-        Event event = new Event(eventName, eventDescription, eventDatee);
->>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
+        
         Document eventDocument = new Document("Nombre del evento", event.getEventName())
                 .append("Descripcion del evento", event.getEventDescription())
                 .append("Fecha del evento", event.getEventDate());
@@ -283,26 +257,12 @@ public class FrmEvent extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblEvent.getModel();
         model.setRowCount(0);
 
-<<<<<<< HEAD
         for (Document doc : documents) {
             String eventName = doc.getString("Nombre del evento");
             String eventDescription = doc.getString("Descripcion del evento");
             Date date = doc.getDate("Fecha del evento");
             LocalDate eventDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-=======
-    private void displaySavedData() {
-        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
-        DefaultTableModel model = (DefaultTableModel) tblEvent.getModel();
-        model.setRowCount(0);
-
-        for (Document doc : documents) {
-            String eventName = doc.getString("Nombre del evento");
-            String eventDescription = doc.getString("Descripcion del evento");
-            Date date = doc.getDate("Fecha del evento");
-            LocalDate eventDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
->>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
             model.addRow(new Object[]{eventName, eventDescription, eventDate});
         }
     }
@@ -379,10 +339,7 @@ public class FrmEvent extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
-<<<<<<< HEAD
     private com.toedter.calendar.JDateChooser datechEventDate;
-=======
->>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
