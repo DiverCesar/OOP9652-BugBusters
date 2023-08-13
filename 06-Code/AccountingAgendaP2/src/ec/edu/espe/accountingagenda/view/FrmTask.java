@@ -117,7 +117,17 @@ public class FrmTask extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< HEAD
         jLabel2.setText("Fecha de inicio de la tarea ");
+=======
+        jLabel2.setText("Fecha de inicio de la tarea (aaaa-mm-dd)");
+
+        txtTaskBeginDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTaskBeginDateActionPerformed(evt);
+            }
+        });
+>>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
 
         btnDelete.setText("Eliminar tarea");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -196,6 +206,7 @@ public class FrmTask extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(datechTaskBeginDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+<<<<<<< HEAD
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -210,6 +221,19 @@ public class FrmTask extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(datechTaskDueDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+=======
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTaskDueDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
+>>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
         );
 
         pack();
@@ -220,6 +244,13 @@ public class FrmTask extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTaskDescriptionActionPerformed
 
+<<<<<<< HEAD
+=======
+    private void txtTaskDueDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaskDueDateActionPerformed
+
+    }//GEN-LAST:event_txtTaskDueDateActionPerformed
+
+>>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         addTask();
     }//GEN-LAST:event_btnAddActionPerformed
@@ -239,11 +270,26 @@ public class FrmTask extends javax.swing.JFrame {
         displaySavedData();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+<<<<<<< HEAD
+=======
+    private void txtTaskBeginDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaskBeginDateActionPerformed
+
+    }//GEN-LAST:event_txtTaskBeginDateActionPerformed
+
+>>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
     private void mniPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniPrintActionPerformed
         Print print = new Print();
         print.printTable(tblTask);
     }//GEN-LAST:event_mniPrintActionPerformed
 
+<<<<<<< HEAD
+=======
+    private boolean validateDateFormat(String date) {
+        String regex = "\\d{4}-\\d{2}-\\d{2}";
+        return date.matches(regex);
+    }
+
+>>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
     private void addTask() {
         String taskName = txtTaskName.getText();
         String taskDescription = txtTaskDescription.getText();
@@ -382,8 +428,11 @@ public class FrmTask extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
+<<<<<<< HEAD
     private com.toedter.calendar.JDateChooser datechTaskBeginDate;
     private com.toedter.calendar.JDateChooser datechTaskDueDate;
+=======
+>>>>>>> 767855f5b7272c09a3d69c4c213b774590c815bd
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
