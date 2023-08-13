@@ -26,6 +26,7 @@ public class FrmBudget extends javax.swing.JFrame {
         savedData = new ArrayList<>();
         mongoDBConnection = new MongoDBConnection();
         mongoDBConnection.connection("Budget");
+        displaySavedData();
     }
 
     /**
@@ -52,7 +53,6 @@ public class FrmBudget extends javax.swing.JFrame {
         tableBudget = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
-        btnLoadData = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
         btnDelete = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
@@ -131,13 +131,6 @@ public class FrmBudget extends javax.swing.JFrame {
             }
         });
 
-        btnLoadData.setText("Cargar Datos");
-        btnLoadData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoadDataActionPerformed(evt);
-            }
-        });
-
         jToolBar1.setRollover(true);
 
         btnDelete.setText("Eliminar");
@@ -175,9 +168,9 @@ public class FrmBudget extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel6)
@@ -190,25 +183,20 @@ public class FrmBudget extends javax.swing.JFrame {
                                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jLabel2))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnLoadData, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)))
+                                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(156, 156, 156)
-                                .addComponent(txtMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(187, 187, 187)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 70, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(312, 312, 312)
@@ -251,13 +239,11 @@ public class FrmBudget extends javax.swing.JFrame {
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
+                        .addGap(54, 54, 54)
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(27, 27, 27)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnLoadData, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(27, 27, 27)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
@@ -298,10 +284,6 @@ public class FrmBudget extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void btnLoadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDataActionPerformed
-        displaySavedData();
-    }//GEN-LAST:event_btnLoadDataActionPerformed
-
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         deleteOfTable();
         displaySavedData();
@@ -313,30 +295,30 @@ public class FrmBudget extends javax.swing.JFrame {
     }//GEN-LAST:event_mniPrintActionPerformed
 
     private void deleteOfTable() {
-       String materialName = txtMaterial.getText().trim();
+        int selectedRow = tableBudget.getSelectedRow();
 
-    if (materialName.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingresa el nombre del material a eliminar.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        if (selectedRow != -1) {
+            String materialName = tableBudget.getValueAt(selectedRow, 0).toString();
 
-    Document budgetDocument = mongoDBConnection.getCollection().find(Filters.eq("Material", materialName)).first();
+            Document budgetDocument = mongoDBConnection.getCollection().find(Filters.eq("Material", materialName)).first();
 
-    if (budgetDocument != null) {
-        int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar ese material '" + materialName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            if (budgetDocument != null) {
+                int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar ese material '" + materialName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
-        if (option == JOptionPane.YES_OPTION) {
-            mongoDBConnection.getCollection().deleteOne(budgetDocument);
+                if (option == JOptionPane.YES_OPTION) {
+                    mongoDBConnection.getCollection().deleteOne(budgetDocument);
 
-            txtMaterial.setText("");
+                    JOptionPane.showMessageDialog(this, "Material eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
 
-//            btnRefreshActionPerformed(evt);
-
-            JOptionPane.showMessageDialog(this, "Material eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
+                    // Actualiza la tabla después de eliminar
+                    displaySavedData();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "El material con el nombre '" + materialName + "' no fue encontrado.", "Material no encontrado", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona una fila para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "El material con el nombre '" + materialName + "' no fue encontrado.", "Jugador no encontrado", JOptionPane.WARNING_MESSAGE);
-    }
     }
 
     private void addBudget() {
@@ -354,11 +336,10 @@ public class FrmBudget extends javax.swing.JFrame {
                 .append("Unidad de Medida", budget.getUnit())
                 .append("Precio Unitario", budget.getUnitPrice())
                 .append("Costo Total", budget.getTotalCost());
-        
+
         mongoDBConnection.getCollection().insertOne(budgetDocument);
         JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        
-        
+
         ((DefaultTableModel) tableBudget.getModel()).addRow(budget.toObjectArray());
 
         txtMaterial.setText("");
@@ -374,15 +355,15 @@ public class FrmBudget extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tableBudget.getModel();
         model.setRowCount(0);
 
-    for (Document doc : documents) {
-        String material = doc.getString("Material");
-        String description = doc.getString("Descripcion");
-        double quantity = doc.getDouble("Cantidad");
-        String unit = doc.getString("Unidad de Medida");
-        double unitPrice = doc.getDouble("Precio Unitario");
-        double totalCost = doc.getDouble("Costo Total");
-        model.addRow(new Object[]{material, description, quantity, unit, unitPrice, totalCost});
-    }
+        for (Document doc : documents) {
+            String material = doc.getString("Material");
+            String description = doc.getString("Descripcion");
+            double quantity = doc.getDouble("Cantidad");
+            String unit = doc.getString("Unidad de Medida");
+            double unitPrice = doc.getDouble("Precio Unitario");
+            double totalCost = doc.getDouble("Costo Total");
+            model.addRow(new Object[]{material, description, quantity, unit, unitPrice, totalCost});
+        }
     }
 
     /**
@@ -431,7 +412,6 @@ public class FrmBudget extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnLoadData;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

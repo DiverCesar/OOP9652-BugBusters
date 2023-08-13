@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
  *
  * @author Bug Busters, DCCO-ESPE
  */
-
 public class FrmRegister extends javax.swing.JFrame {
 
     public FrmRegister() {
@@ -171,9 +170,9 @@ public class FrmRegister extends javax.swing.JFrame {
     private boolean comparePasswords(char[] password, char[] passwordCheck) {
         return Arrays.equals(password, passwordCheck);
     }
-    
-    private void account(){
-                String username = txtNewUsername.getText();
+
+    private void account() {
+        String username = txtNewUsername.getText();
         char[] password = pswNewPassword.getPassword();
         char[] passwordCheck = pswNewPasswordCheck.getPassword();
 
@@ -194,6 +193,7 @@ public class FrmRegister extends javax.swing.JFrame {
         frmEntryMenu.setVisible(true);
         dispose();
     }
+
     /**
      * @param args the command line arguments
      */

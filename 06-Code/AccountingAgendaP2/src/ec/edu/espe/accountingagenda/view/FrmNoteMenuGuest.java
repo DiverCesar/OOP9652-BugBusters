@@ -20,15 +20,17 @@ import javax.swing.JTable;
  * @author Alison Miranda, Bug Busters, DCCO-ESPE
  */
 public class FrmNoteMenuGuest extends javax.swing.JFrame {
- 
+
     private ArrayList<Note> savedNotes;
+
     public FrmNoteMenuGuest(ArrayList<Note> savedNotes) {
         initComponents();
         this.savedNotes = savedNotes;
     }
+
     public ArrayList<Note> getSavedNotes() {
-    return savedNotes;
-}
+        return savedNotes;
+    }
 
     public FrmNoteMenuGuest() {
         initComponents();
@@ -36,21 +38,21 @@ public class FrmNoteMenuGuest extends javax.swing.JFrame {
         JButton btnPrint = new javax.swing.JButton();
         btnPrint.setText("Imprimir");
         btnPrint.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            btnPrintActionPerformed(evt);
-        }
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
 
-    });
+        });
     }
+
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {
-    Print print = new Print();
-    ArrayList<Note> savedNotes = getSavedNotes();
+        Print print = new Print();
+        ArrayList<Note> savedNotes = getSavedNotes();
 
-    for (Note note : savedNotes) {
-        print.printNote(note.getTitle(), note.getContent(), FrmNoteMenuGuest.this);
+        for (Note note : savedNotes) {
+            print.printNote(note.getTitle(), note.getContent(), FrmNoteMenuGuest.this);
+        }
     }
-    }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -173,15 +175,18 @@ public class FrmNoteMenuGuest extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnEditNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditNoteActionPerformed
-        if (editNote()) return;
+        if (editNote())
+            return;
     }//GEN-LAST:event_btnEditNoteActionPerformed
 
     private void btnDeleteNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteNoteActionPerformed
-        if (deleteNote()) return;
+        if (deleteNote())
+            return;
     }//GEN-LAST:event_btnDeleteNoteActionPerformed
 
     private void btnShowNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowNoteActionPerformed
-        if (showNote()) return;
+        if (showNote())
+            return;
     }//GEN-LAST:event_btnShowNoteActionPerformed
 
     public boolean showNote() throws HeadlessException {
@@ -205,7 +210,7 @@ public class FrmNoteMenuGuest extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 PrinterJob printerJob = PrinterJob.getPrinterJob();
                 printerJob.setPrintable(table.getPrintable(JTable.PrintMode.FIT_WIDTH, null, null));
-                
+
                 if (printerJob.printDialog()) {
                     try {
                         printerJob.print();
@@ -233,7 +238,8 @@ public class FrmNoteMenuGuest extends javax.swing.JFrame {
         String[] noteTitles = new String[savedNotes.size()];
         for (int i = 0; i < savedNotes.size(); i++) {
             noteTitles[i] = savedNotes.get(i).getTitle();
-        }   String selectedNoteTitle = (String) JOptionPane.showInputDialog(this, "Selecciona la nota a editar:",
+        }
+        String selectedNoteTitle = (String) JOptionPane.showInputDialog(this, "Selecciona la nota a editar:",
                 "Editar Nota", JOptionPane.QUESTION_MESSAGE, null, noteTitles, noteTitles[0]);
         if (selectedNoteTitle != null) {
             Note selectedNote = null;
@@ -243,14 +249,15 @@ public class FrmNoteMenuGuest extends javax.swing.JFrame {
                     break;
                 }
             }
-            
+
             FrmNote frmNote = new FrmNote(savedNotes);
             frmNote.setNoteForEditing(selectedNote);
             frmNote.setVisible(true);
             dispose();
-        }   return false;
+        }
+        return false;
     }
-    
+
     public boolean deleteNote() throws HeadlessException {
         if (savedNotes == null || savedNotes.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay notas guardadas", "Borrar Nota",
@@ -266,7 +273,7 @@ public class FrmNoteMenuGuest extends javax.swing.JFrame {
         if (selectedNoteTitle != null) {
             int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que quieres borrar la nota seleccionada?",
                     "Confirmar Borrado", JOptionPane.YES_NO_OPTION);
-            
+
             if (option == JOptionPane.YES_OPTION) {
                 Note selectedNote = null;
                 for (Note note : savedNotes) {
@@ -275,7 +282,7 @@ public class FrmNoteMenuGuest extends javax.swing.JFrame {
                         break;
                     }
                 }
-                
+
                 savedNotes.remove(selectedNote);
                 JOptionPane.showMessageDialog(this, "Nota borrada exitosamente", "Borrar Nota",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -283,7 +290,6 @@ public class FrmNoteMenuGuest extends javax.swing.JFrame {
         }
         return false;
     }
-
 
     /**
      * @param args the command line arguments

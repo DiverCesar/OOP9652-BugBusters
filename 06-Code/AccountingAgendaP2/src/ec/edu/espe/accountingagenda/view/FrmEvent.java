@@ -1,10 +1,14 @@
 package ec.edu.espe.accountingagenda.view;
 
+import com.mongodb.client.model.Filters;
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.model.Event;
 import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
@@ -23,6 +27,7 @@ public class FrmEvent extends javax.swing.JFrame {
         savedData = new ArrayList<>();
         mongoDBConnection = new MongoDBConnection();
         mongoDBConnection.connection("Event");
+        displaySavedData();
     }
 
     /**
@@ -40,15 +45,14 @@ public class FrmEvent extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtEventDescription = new javax.swing.JTextField();
-        txtEventDate = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblEvent = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
         txtEventName = new javax.swing.JTextField();
         btnDelete = new javax.swing.JButton();
+        datechEventDate = new com.toedter.calendar.JDateChooser();
         jMenuBar1 = new javax.swing.JMenuBar();
         mniPrint = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -67,12 +71,6 @@ public class FrmEvent extends javax.swing.JFrame {
         txtEventDescription.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEventDescriptionActionPerformed(evt);
-            }
-        });
-
-        txtEventDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEventDateActionPerformed(evt);
             }
         });
 
@@ -111,13 +109,6 @@ public class FrmEvent extends javax.swing.JFrame {
             }
         });
 
-        btnSave.setText("Guardar cambios");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-
         btnDelete.setText("Borrar evento");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,34 +137,35 @@ public class FrmEvent extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(50, 50, 50)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel8)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel7))
-                                    .addGap(48, 48, 48)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtEventDate, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtEventDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtEventName, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(257, 257, 257)
-                            .addComponent(jLabel1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(67, 67, 67)
-                            .addComponent(btnAdd)
-                            .addGap(30, 30, 30)
-                            .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(42, 42, 42)
-                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(35, 35, 35)
-                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel7))
+                                        .addGap(48, 48, 48)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtEventDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtEventName, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(datechEventDate, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(257, 257, 257)
+                                .addComponent(jLabel1)))
+                        .addGap(38, 38, 38)))
                 .addContainerGap(55, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addComponent(btnAdd)
+                .addGap(79, 79, 79)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,19 +183,18 @@ public class FrmEvent extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtEventDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtEventDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(52, 52, 52)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(datechEventDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -213,10 +204,6 @@ public class FrmEvent extends javax.swing.JFrame {
     private void txtEventDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEventDescriptionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEventDescriptionActionPerformed
-
-    private void txtEventDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEventDateActionPerformed
-
-    }//GEN-LAST:event_txtEventDateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         addEvent();
@@ -228,16 +215,9 @@ public class FrmEvent extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        dispose();
-        JOptionPane.showMessageDialog(null, "El evento se ha guardado exitosamente", "Evento guardado", JOptionPane.INFORMATION_MESSAGE);
-        FrmCalendarMenu frmCalendarMenu = new FrmCalendarMenu();
-        frmCalendarMenu.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_btnSaveActionPerformed
-
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         delete();
+        displaySavedData();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -248,75 +228,68 @@ public class FrmEvent extends javax.swing.JFrame {
     private void addEvent() {
         String eventName = txtEventName.getText();
         String eventDescription = txtEventDescription.getText();
-        String eventDate = txtEventDate.getText();
+        Date eventDate = datechEventDate.getDate(); 
 
-        if (!validateDateFormat(eventDate)) {
-            JOptionPane.showMessageDialog(null, "Ingrese la fecha en formato aaaa-mm-dd", "Formato de fecha incorrecto", JOptionPane.ERROR_MESSAGE);
+        if (eventDate == null) {
+            JOptionPane.showMessageDialog(rootPane, "Seleccione una fecha válida", "Error de fecha", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        LocalDate eventDatee = LocalDate.parse(eventDate);
-        
-        Event event = new Event(eventName,eventDescription,eventDatee);
-        Document eventDocument = new Document("Nombre de la tarea", event.getEventName())
-                .append("Descripcion de la tarea", event.getEventDescription())
-                .append("Fecha de inicio de la tarea", event.getEventDate());
-        
+        Event event = new Event(eventName, eventDescription, 
+                eventDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+      
+        Document eventDocument = new Document("Nombre del evento", event.getEventName())
+                .append("Descripcion del evento", event.getEventDescription())
+                .append("Fecha del evento", event.getEventDate());
+
         mongoDBConnection.getCollection().insertOne(eventDocument);
         JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        
+
         ((DefaultTableModel) tblEvent.getModel()).addRow(event.toObjectArray());
 
         txtEventName.setText("");
         txtEventDescription.setText("");
-        txtEventDate.setText("");
+        datechEventDate.setDate(null);
     }
 
-    private boolean validateDateFormat(String date) {
-        String regex = "\\d{4}-\\d{2}-\\d{2}";
-        return date.matches(regex);
-    }
+    private void displaySavedData() {
+        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
+        DefaultTableModel model = (DefaultTableModel) tblEvent.getModel();
+        model.setRowCount(0);
 
-    void showInformationSaved() {
-        StringBuilder informacion = new StringBuilder();
-        for (int i = 0; i < savedData.size(); i++) {
-            Object[] rowData = savedData.get(i);
-            String eventName = rowData[0].toString();
-            String eventDescription = rowData[1].toString();
-            String eventDate = rowData[2].toString();
+        for (Document doc : documents) {
+            String eventName = doc.getString("Nombre del evento");
+            String eventDescription = doc.getString("Descripcion del evento");
+            Date date = doc.getDate("Fecha del evento");
+            LocalDate eventDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-            informacion.append("Guardado ").append(i + 1).append(":\n");
-            informacion.append("Nombre de evento: ").append(eventName).append("\n");
-            informacion.append("Descripcion de evento: ").append(eventDescription).append("\n");
-            informacion.append("Fecha de evento: ").append(eventDate).append("\n");
-            informacion.append("---------------------\n");
-        }
-
-        if (informacion.length() > 0) {
-            JOptionPane.showMessageDialog(this, informacion.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay información guardada.", "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+            model.addRow(new Object[]{eventName, eventDescription, eventDate});
         }
     }
 
     private void delete() {
-        DefaultTableModel model = (DefaultTableModel) tblEvent.getModel();
-        int selectedRow = tblEvent.getSelectedRow();
+        String eventName = txtEventName.getText().trim();
 
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (eventName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingresa el nombre del evento a eliminar.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        int rowCount = model.getRowCount();
-        if (rowCount == 0) {
-            JOptionPane.showMessageDialog(this, "No hay información para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        Document eventDocument = mongoDBConnection.getCollection().find(Filters.eq("Nombre del evento", eventName)).first();
 
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            model.removeRow(selectedRow);
+        if (eventDocument != null) {
+            int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este evento '" + eventName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+            if (option == JOptionPane.YES_OPTION) {
+                mongoDBConnection.getCollection().deleteOne(eventDocument);
+
+                txtEventName.setText("");
+
+//            btnRefreshActionPerformed(evt);
+                JOptionPane.showMessageDialog(this, "Evento eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "El evento con el nombre '" + eventName + "' no fue encontrado.", "Evento no encontrado", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -366,7 +339,7 @@ public class FrmEvent extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnSave;
+    private com.toedter.calendar.JDateChooser datechEventDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -378,7 +351,6 @@ public class FrmEvent extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenu mniPrint;
     private javax.swing.JTable tblEvent;
-    private javax.swing.JTextField txtEventDate;
     private javax.swing.JTextField txtEventDescription;
     private javax.swing.JTextField txtEventName;
     // End of variables declaration//GEN-END:variables

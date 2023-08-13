@@ -1,10 +1,14 @@
 package ec.edu.espe.accountingagenda.view;
 
+import com.mongodb.client.model.Filters;
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.model.Task;
 import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
@@ -13,16 +17,17 @@ import org.bson.Document;
  *
  * @author Edison Ludeña Bug Busters, DCCO-ESPE
  */
-
 public class FrmTask extends javax.swing.JFrame {
+
     private ArrayList<Task> savedData;
     private MongoDBConnection mongoDBConnection;
-    
+
     public FrmTask() {
         initComponents();
         savedData = new ArrayList<>();
         mongoDBConnection = new MongoDBConnection();
         mongoDBConnection.connection("Task");
+        displaySavedData();
     }
 
     /**
@@ -41,16 +46,15 @@ public class FrmTask extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtTaskName = new javax.swing.JTextField();
         txtTaskDescription = new javax.swing.JTextField();
-        txtTaskDueDate = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblTask = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtTaskBeginDate = new javax.swing.JTextField();
         btnDelete = new javax.swing.JButton();
+        datechTaskBeginDate = new com.toedter.calendar.JDateChooser();
+        datechTaskDueDate = new com.toedter.calendar.JDateChooser();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mniPrint = new javax.swing.JMenuItem();
@@ -64,7 +68,7 @@ public class FrmTask extends javax.swing.JFrame {
 
         jLabel6.setText("Descripcion de la tarea");
 
-        jLabel7.setText("Fecha de entrega (aaaa-mm-dd)");
+        jLabel7.setText("Fecha de entrega ");
 
         txtTaskName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,12 +79,6 @@ public class FrmTask extends javax.swing.JFrame {
         txtTaskDescription.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTaskDescriptionActionPerformed(evt);
-            }
-        });
-
-        txtTaskDueDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTaskDueDateActionPerformed(evt);
             }
         });
 
@@ -119,20 +117,7 @@ public class FrmTask extends javax.swing.JFrame {
             }
         });
 
-        btnSave.setText("Guardar cambios");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Fecha de inicio de la tarea (aaaa-mm-dd)");
-
-        txtTaskBeginDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTaskBeginDateActionPerformed(evt);
-            }
-        });
+        jLabel2.setText("Fecha de inicio de la tarea ");
 
         btnDelete.setText("Eliminar tarea");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -176,16 +161,15 @@ public class FrmTask extends javax.swing.JFrame {
                                     .addComponent(txtTaskName, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtTaskDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtTaskBeginDate, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtTaskDueDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))))
+                                        .addComponent(datechTaskDueDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                                        .addComponent(datechTaskBeginDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
                                 .addComponent(btnAdd)
-                                .addGap(34, 34, 34)
+                                .addGap(106, 106, 106)
                                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(42, 42, 42)
+                                .addGap(106, 106, 106)
                                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(257, 257, 257)
@@ -208,22 +192,24 @@ public class FrmTask extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtTaskDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTaskBeginDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(datechTaskBeginDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTaskDueDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(34, 34, 34)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(37, 37, 37)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(datechTaskDueDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -233,10 +219,6 @@ public class FrmTask extends javax.swing.JFrame {
     private void txtTaskDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaskDescriptionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTaskDescriptionActionPerformed
-
-    private void txtTaskDueDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaskDueDateActionPerformed
-  
-    }//GEN-LAST:event_txtTaskDueDateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         addTask();
@@ -248,59 +230,35 @@ public class FrmTask extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        dispose();
-        JOptionPane.showMessageDialog(null, "La tarea se ha guardado exitosamente", "Tarea guardada", JOptionPane.INFORMATION_MESSAGE);
-        FrmCalendarMenu frmCalendarMenu = new FrmCalendarMenu();
-        frmCalendarMenu.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_btnSaveActionPerformed
-
     private void txtTaskNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaskNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTaskNameActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         delete();
+        displaySavedData();
     }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void txtTaskBeginDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaskBeginDateActionPerformed
-   
-    }//GEN-LAST:event_txtTaskBeginDateActionPerformed
 
     private void mniPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniPrintActionPerformed
         Print print = new Print();
         print.printTable(tblTask);
     }//GEN-LAST:event_mniPrintActionPerformed
-    
-    private boolean validateDateFormat(String date) {
-        String regex = "\\d{4}-\\d{2}-\\d{2}";
-        return date.matches(regex);
-    }
-    
+
     private void addTask() {
         String taskName = txtTaskName.getText();
         String taskDescription = txtTaskDescription.getText();
-        String taskBeginDateText = txtTaskBeginDate.getText();
-        String taskDueDateText = txtTaskDueDate.getText();
+        Date taskBeginDate = datechTaskBeginDate.getDate(); 
+        Date taskDueDate = datechTaskDueDate.getDate();
 
-        boolean isBeginDateValid = validateDateFormat(taskBeginDateText);
-        boolean isDueDateValid = validateDateFormat(taskDueDateText);
-
-        if (!isBeginDateValid) {
-            displayDateFormatError("Fecha de inicio");
+        if (taskBeginDate == null || taskDueDate == null) {
+            JOptionPane.showMessageDialog(rootPane, "Seleccione una fecha válida", "Error de fecha", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (!isDueDateValid) {
-            displayDateFormatError("Fecha de entrega");
-            return;
-        }
-
-        LocalDate taskBeginDate = LocalDate.parse(taskBeginDateText);
-        LocalDate taskDueDate = LocalDate.parse(taskDueDateText);
-
-        Task task = new Task(taskName, taskDescription, taskBeginDate, taskDueDate);
+        Task task = new Task(taskName, taskDescription, 
+                taskBeginDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+            taskDueDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        
         Document taskDocument = new Document("Nombre de la tarea", task.getTaskName())
                 .append("Descripcion de la tarea", task.getTaskDescription())
                 .append("Fecha de inicio de la tarea", task.getTaskBeginDate())
@@ -308,64 +266,68 @@ public class FrmTask extends javax.swing.JFrame {
 
         mongoDBConnection.getCollection().insertOne(taskDocument);
         JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        
+
         ((DefaultTableModel) tblTask.getModel()).addRow(task.toObjectArray());
 
         txtTaskName.setText("");
         txtTaskDescription.setText("");
-        txtTaskBeginDate.setText("");
-        txtTaskDueDate.setText("");
+        datechTaskBeginDate.setDate(null);
+        datechTaskDueDate.setDate(null);
     }
-    
+
     private void displayDateFormatError(String fieldName) {
         JOptionPane.showMessageDialog(null, "Ingrese la fecha en formato aaaa-mm-dd en el campo " + fieldName, "Formato de fecha incorrecto", JOptionPane.ERROR_MESSAGE);
-    }  
+    }
 
-    void showInformationSaved() {
-        StringBuilder informacion = new StringBuilder();
-        for (int i = 0; i < savedData.size(); i++) {
-            Task task = savedData.get(i);
-            String taskName = task.getTaskName();
-            String taskDescription = task.getTaskDescription();
-            LocalDate taskBeginDate = task.getTaskBeginDate();
-            LocalDate taskDueDate = task.getTaskDueDate();
+    private void displaySavedData() {
+        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
+        DefaultTableModel model = (DefaultTableModel) tblTask.getModel();
+        model.setRowCount(0);
 
-            informacion.append("Guardado ").append(i + 1).append(":\n");
-            informacion.append("Nombre de tarea: ").append(taskName).append("\n");
-            informacion.append("Descripcion de tarea: ").append(taskDescription).append("\n");
-            informacion.append("Fecha de inicio: ").append(taskBeginDate).append("\n");
-            informacion.append("Fecha de entrega: ").append(taskDueDate).append("\n");
-            informacion.append("---------------------\n");
-        }
+        for (Document doc : documents) {
+            String taskName = doc.getString("Nombre de la tarea");
+            String taskDescription = doc.getString("Descripcion de la tarea");
 
-        if (informacion.length() > 0) {
-            JOptionPane.showMessageDialog(this, informacion.toString(), "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay información guardada.", "Información Guardada", JOptionPane.INFORMATION_MESSAGE);
+            Date date = doc.getDate("Fecha de inicio de la tarea");
+            LocalDate taskBeginDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            Date date1 = doc.getDate("Fecha de inicio de la tarea");
+            LocalDate taskDueDate = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            model.addRow(new Object[]{taskName, taskDescription, taskBeginDate, taskDueDate});
         }
     }
-    
-    private void delete(){
-                DefaultTableModel model = (DefaultTableModel) tblTask.getModel();
+
+    private void delete() {
         int selectedRow = tblTask.getSelectedRow();
 
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Selecciona una fila para eliminar.", "Fila no seleccionada", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        int rowCount = model.getRowCount();
-        if (rowCount == 0) {
-            JOptionPane.showMessageDialog(this, "No hay información para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        String taskName = (String) tblTask.getValueAt(selectedRow, 0);
 
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            model.removeRow(selectedRow);
+        Document taskDocument = mongoDBConnection.getCollection().find(Filters.eq("Nombre de la tarea", taskName)).first();
+
+        if (taskDocument != null) {
+            int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar la tarea '" + taskName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+            if (option == JOptionPane.YES_OPTION) {
+                mongoDBConnection.getCollection().deleteOne(taskDocument);
+
+                DefaultTableModel model = (DefaultTableModel) tblTask.getModel();
+                model.removeRow(selectedRow);
+
+                txtTaskName.setText("");
+
+                JOptionPane.showMessageDialog(this, "Tarea eliminada correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "La tarea con el nombre '" + taskName + "' no fue encontrada.", "Tarea no encontrada", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -420,7 +382,8 @@ public class FrmTask extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnSave;
+    private com.toedter.calendar.JDateChooser datechTaskBeginDate;
+    private com.toedter.calendar.JDateChooser datechTaskDueDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -433,9 +396,7 @@ public class FrmTask extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem mniPrint;
     private javax.swing.JTable tblTask;
-    private javax.swing.JTextField txtTaskBeginDate;
     private javax.swing.JTextField txtTaskDescription;
-    private javax.swing.JTextField txtTaskDueDate;
     private javax.swing.JTextField txtTaskName;
     // End of variables declaration//GEN-END:variables
 }
