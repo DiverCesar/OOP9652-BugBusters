@@ -75,6 +75,9 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane1.setBackground(new java.awt.Color(60, 63, 65));
+        jScrollPane1.setForeground(new java.awt.Color(60, 63, 65));
+
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setLineWrap(true);
@@ -166,8 +169,8 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCalendarMenuActionPerformed
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
-        FrmLogInAdministrator frmLogIn = new FrmLogInAdministrator();
-        frmLogIn.setVisible(true);
+        FrmEntryMenu frmEntryIn = new FrmEntryMenu();
+        frmEntryIn.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnLogOutActionPerformed
 
