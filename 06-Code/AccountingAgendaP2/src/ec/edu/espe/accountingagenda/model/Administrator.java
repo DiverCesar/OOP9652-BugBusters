@@ -16,7 +16,8 @@ public class Administrator {
 
     @Override
     public String toString() {
-        return "Administrator{" + "user=" + user + ", pasword=" + pasword + '}';
+        return "\nuser: " + user + 
+                "\npasword: " + pasword;
     }
     
     public Object[] toObjectArray() {

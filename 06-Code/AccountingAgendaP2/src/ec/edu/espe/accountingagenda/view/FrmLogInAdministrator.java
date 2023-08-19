@@ -1,16 +1,15 @@
 package ec.edu.espe.accountingagenda.view;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoException;
-import ec.edu.espe.accountingagenda.controller.Conection;
+import com.mongodb.client.model.Filters;
 import ec.edu.espe.accountingagenda.controller.Password;
 import ec.edu.espe.accountingagenda.controller.TextPrompt;
+import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
 import java.awt.Image;
-import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import org.bson.Document;
 
 /**
  *
@@ -18,11 +17,15 @@ import javax.swing.JOptionPane;
  */
 public class FrmLogInAdministrator extends javax.swing.JFrame {
 
+    private MongoDBConnection mongoDBConnection;
+
     public FrmLogInAdministrator() {
         initComponents();
         SetImageLabel(jLabel7, "../../../../../Images/login3_0.png");
         TextPrompt placeHolderUsername = new TextPrompt("Ingrese su nombre usuario", txtUsername);
-        TextPrompt placeHolderPassword = new TextPrompt("Ingrese su contraseña", jPasswordField);
+        TextPrompt placeHolderPassword = new TextPrompt("Ingrese su contraseña", txtPasword);
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Administrator");
     }
 
     /**
@@ -40,7 +43,7 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
         txtUsername = new javax.swing.JTextField();
         btnLogIn = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
-        jPasswordField = new javax.swing.JPasswordField();
+        txtPasword = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -72,9 +75,9 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
             }
         });
 
-        jPasswordField.addActionListener(new java.awt.event.ActionListener() {
+        txtPasword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordFieldActionPerformed(evt);
+                txtPaswordActionPerformed(evt);
             }
         });
 
@@ -97,7 +100,7 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
                                 .addComponent(jLabel3))
                             .addGap(28, 28, 28)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jPasswordField)
+                                .addComponent(txtPasword)
                                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -130,7 +133,7 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPasword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -157,25 +160,25 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtUsernameFocusGained
 
-    private void jPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldActionPerformed
-        String password = jPasswordField.getText();
+    private void txtPaswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPaswordActionPerformed
+        String password = txtPasword.getText();
         String encryptedPassword = Password.encrypt(password);
-    }//GEN-LAST:event_jPasswordFieldActionPerformed
+    }//GEN-LAST:event_txtPaswordActionPerformed
 
     private void logIn() {
-        String usrcomparative = this.txtUsername.getText();
-        String pswcomparative = this.jPasswordField.getText();
-        if (usrcomparative.equals("Hernan") && pswcomparative.equals("Hernan")) {
-            SetImageLabel(jLabel7, "../../../../../Images/login3_0_Unlock.png");
-            Conection logInConection = new Conection();
-            logInConection.createConection();
+        String user = txtUsername.getText();
+        String password = new String(txtPasword.getPassword());
+
+        String encryptedPassword = Password.encrypt(password);
+
+        Document guestDocument = mongoDBConnection.getCollection().find(Filters.eq("Usuario", user)).first();
+
+        if (guestDocument != null && encryptedPassword.equals(guestDocument.getString("Contraseña"))) {
             FrmPrincipalMenu frmPrincipalMenu = new FrmPrincipalMenu();
             frmPrincipalMenu.setVisible(true);
             dispose();
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Usuario " + this.txtUsername.getText() + " sin registrar");
-            this.txtUsername.setText("");
-            this.jPasswordField.setText("");
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -193,16 +196,24 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmLogInAdministrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogInAdministrator.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmLogInAdministrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogInAdministrator.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmLogInAdministrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogInAdministrator.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmLogInAdministrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogInAdministrator.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -232,7 +243,7 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPasswordField jPasswordField;
+    private javax.swing.JPasswordField txtPasword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

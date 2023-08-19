@@ -308,7 +308,7 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
-        // TODO add your handling code here:
+   
     }//GEN-LAST:event_txtQuantityActionPerformed
 
     private void txtCostPerMeterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCostPerMeterActionPerformed

@@ -20,7 +20,8 @@ public class Guest {
 
     @Override
     public String toString() {
-        return "Guest{" + "user=" + user + ", pasword=" + pasword + '}';
+        return "\nuser: " + user + 
+                "\npasword: " + pasword;
     }
 
     public String getUser() {
