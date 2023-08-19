@@ -1,6 +1,7 @@
 package ec.edu.espe.accountingagenda.view;
 
 import com.mongodb.client.model.Filters;
+import ec.edu.espe.accountingagenda.controller.Conection;
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.controller.TextPrompt;
 import ec.edu.espe.accountingagenda.model.CostPerMeter;
@@ -19,6 +20,9 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
 
     private ArrayList<Object[]> savedData;
     private MongoDBConnection mongoDBConnection;
+    
+    private MongoDBConnection singletonMongoDBConnection;
+    private Conection singletonConection;
 
     /**
      * Creates new form FrmNota
@@ -27,8 +31,8 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
         initComponents();
         TextPrompt placeHolderTotal = new TextPrompt("Presione enter para calcular", txtCostPerMeter);
         savedData = new ArrayList<>();
-        mongoDBConnection = new MongoDBConnection();
-        mongoDBConnection.connection("CostPerMeter");
+        singletonMongoDBConnection = MongoDBConnection.getInstance();
+        singletonConection = Conection.getInstance();
         displaySavedData();
     }
 
@@ -362,10 +366,10 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
         int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar el material '" + materialName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
         if (option == JOptionPane.YES_OPTION) {
-            Document budgetDocument = mongoDBConnection.getCollection().find(Filters.eq("Material", materialName)).first();
+            Document costPerMeterDocument = singletonMongoDBConnection.getCollection("CostPerMeter").find(Filters.eq("Material", materialName)).first();
 
-            if (budgetDocument != null) {
-                mongoDBConnection.getCollection().deleteOne(budgetDocument);
+            if (costPerMeterDocument != null) {
+                singletonMongoDBConnection.getCollection("CostPerMeter").deleteOne(costPerMeterDocument);
                 model.removeRow(selectedRow);
                 JOptionPane.showMessageDialog(this, "Material eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -390,7 +394,7 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
                 .append("Area Total", costPerMeter.getArea())
                 .append("Costo por metro cuadrado", costPerMeter.getCostPerMeter1());
 
-        mongoDBConnection.getCollection().insertOne(costPerMeterDocument);
+        singletonMongoDBConnection.getCollection("CostPerMeter").insertOne(costPerMeterDocument);
         JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         ((DefaultTableModel) tblCostPerMeter.getModel()).addRow(costPerMeter.toObjectArray());
@@ -404,7 +408,7 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
     }
 
     private void displaySavedData() {
-        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
+        List<Document> documents = singletonMongoDBConnection.getCollection("CostPerMeter").find().into(new ArrayList<>());
         DefaultTableModel model = (DefaultTableModel) tblCostPerMeter.getModel();
         model.setRowCount(0);
 

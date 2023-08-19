@@ -1,6 +1,7 @@
 package ec.edu.espe.accountingagenda.view;
 
 import com.mongodb.client.model.Filters;
+import ec.edu.espe.accountingagenda.controller.Conection;
 import ec.edu.espe.accountingagenda.controller.Password;
 import ec.edu.espe.accountingagenda.controller.TextPrompt;
 import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
@@ -14,13 +15,16 @@ import org.bson.Document;
 public class FrmLogInGuest extends javax.swing.JFrame {
 
     private MongoDBConnection mongoDBConnection;
+    
+    private MongoDBConnection singletonMongoDBConnection;
+    private Conection singletonConection;
 
     public FrmLogInGuest() {
         initComponents();
         TextPrompt placeHolderUsername = new TextPrompt("Ingrese su nombre usuario", txtUsername);
         TextPrompt placeHolderPassword = new TextPrompt("Ingrese su contraseña", txtPasword);
-        mongoDBConnection = new MongoDBConnection();
-        mongoDBConnection.connection("Guest");
+        singletonMongoDBConnection = MongoDBConnection.getInstance();
+        singletonConection = Conection.getInstance();
     }
 
     /**
@@ -146,7 +150,7 @@ public class FrmLogInGuest extends javax.swing.JFrame {
 
         String encryptedPassword = Password.encrypt(password);
 
-        Document guestDocument = mongoDBConnection.getCollection().find(Filters.eq("Usuario", user)).first();
+        Document guestDocument = singletonMongoDBConnection.getCollection("Guest").find(Filters.eq("Usuario", user)).first();
 
         if (guestDocument != null && encryptedPassword.equals(guestDocument.getString("Contraseña"))) {
             FrmNoteMenuGuest frmNoteMenuGuest = new FrmNoteMenuGuest();

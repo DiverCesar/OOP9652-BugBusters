@@ -5,18 +5,14 @@
             <url>src/ec/edu/espe/accountingagenda/view/FrmBudget.java</url>
             <bookmark id="1">
                 <name/>
-                <line>332</line>
+                <line>302</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/USUARIO/Desktop/GitHub/OOP9652-BugBusters/06-Code/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmTblNote.java</file>
-            <file>file:/C:/Users/USUARIO/Desktop/GitHub/OOP9652-BugBusters/06-Code/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmEvent.java</file>
-            <file>file:/C:/Users/USUARIO/Desktop/GitHub/OOP9652-BugBusters/06-Code/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmPending.java</file>
-            <file>file:/C:/Users/USUARIO/Desktop/GitHub/OOP9652-BugBusters/06-Code/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmTask.java</file>
-            <file>file:/C:/Users/USUARIO/Desktop/GitHub/OOP9652-BugBusters/06-Code/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/view/FrmCalendarMenu.java</file>
+            <file>file:/C:/Users/USUARIO/Desktop/GitHub/OOP9652-BugBusters/06-Code/AccountingAgendaP2/src/ec/edu/espe/accountingagenda/controller/Conection.java</file>
         </group>
     </open-files>
 </project-private>

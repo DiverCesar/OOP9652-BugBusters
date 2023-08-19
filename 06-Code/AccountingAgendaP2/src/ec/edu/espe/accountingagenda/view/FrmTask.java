@@ -1,6 +1,7 @@
 package ec.edu.espe.accountingagenda.view;
 
 import com.mongodb.client.model.Filters;
+import ec.edu.espe.accountingagenda.controller.Conection;
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.model.Task;
 import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
@@ -21,12 +22,15 @@ public class FrmTask extends javax.swing.JFrame {
 
     private ArrayList<Task> savedData;
     private MongoDBConnection mongoDBConnection;
+    
+    private MongoDBConnection singletonMongoDBConnection;
+    private Conection singletonConection;
 
     public FrmTask() {
         initComponents();
         savedData = new ArrayList<>();
-        mongoDBConnection = new MongoDBConnection();
-        mongoDBConnection.connection("Task");
+        singletonMongoDBConnection = MongoDBConnection.getInstance();
+        singletonConection = Conection.getInstance();
         displaySavedData();
     }
 
@@ -264,7 +268,7 @@ public class FrmTask extends javax.swing.JFrame {
                 .append("Fecha de inicio de la tarea", task.getTaskBeginDate())
                 .append("Fecha de entrega", task.getTaskDueDate());
 
-        mongoDBConnection.getCollection().insertOne(taskDocument);
+        mongoDBConnection.getCollection("Task").insertOne(taskDocument);
         JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         ((DefaultTableModel) tblTask.getModel()).addRow(task.toObjectArray());
@@ -280,7 +284,7 @@ public class FrmTask extends javax.swing.JFrame {
     }
 
     private void displaySavedData() {
-        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
+        List<Document> documents = mongoDBConnection.getCollection("Task").find().into(new ArrayList<>());
         DefaultTableModel model = (DefaultTableModel) tblTask.getModel();
         model.setRowCount(0);
 
@@ -308,13 +312,13 @@ public class FrmTask extends javax.swing.JFrame {
 
         String taskName = (String) tblTask.getValueAt(selectedRow, 0);
 
-        Document taskDocument = mongoDBConnection.getCollection().find(Filters.eq("Nombre de la tarea", taskName)).first();
+        Document taskDocument = mongoDBConnection.getCollection("Task").find(Filters.eq("Nombre de la tarea", taskName)).first();
 
         if (taskDocument != null) {
             int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar la tarea '" + taskName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
             if (option == JOptionPane.YES_OPTION) {
-                mongoDBConnection.getCollection().deleteOne(taskDocument);
+                mongoDBConnection.getCollection("Task").deleteOne(taskDocument);
 
                 DefaultTableModel model = (DefaultTableModel) tblTask.getModel();
                 model.removeRow(selectedRow);

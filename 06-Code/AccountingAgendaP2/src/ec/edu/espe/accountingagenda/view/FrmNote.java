@@ -1,5 +1,6 @@
 package ec.edu.espe.accountingagenda.view;
 
+import ec.edu.espe.accountingagenda.controller.Conection;
 import ec.edu.espe.accountingagenda.controller.Print;
 import ec.edu.espe.accountingagenda.model.Note;
 import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
@@ -28,6 +29,9 @@ public class FrmNote extends javax.swing.JFrame {
 
     private ArrayList<Note> savedNotes;
     private MongoDBConnection mongoDBConnection;
+    
+    private MongoDBConnection singletonMongoDBConnection;
+    private Conection singletonConection;
 
     /**
      * Creates new form FrmNota
@@ -36,8 +40,8 @@ public class FrmNote extends javax.swing.JFrame {
         initComponents();
         setupFontComboBox();
         setupFontSizeChangeListener();
-        mongoDBConnection = new MongoDBConnection();
-        mongoDBConnection.connection("Notes");
+        singletonMongoDBConnection = MongoDBConnection.getInstance();
+        singletonConection = Conection.getInstance();
     }
 
     public FrmNote(ArrayList<Note> savedNotes) {
@@ -286,7 +290,7 @@ public class FrmNote extends javax.swing.JFrame {
         Note note = new Note(title, content);
         Document noteDocument = new Document("Titulo", note.getTitle())
                 .append("Contenido", note.getContent());
-        mongoDBConnection.getCollection().insertOne(noteDocument);
+        singletonMongoDBConnection.getCollection("Notes").insertOne(noteDocument);
         JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         txtTitle.setText("");
         txaContent.setText("");

@@ -11,22 +11,34 @@ import org.bson.Document;
 
 /**
  *
- * @author Cesar Galarza, BugBusters, DCCO-ESPE
+ * @author BugBusters, DCCO-ESPE
  */
 public class Conection {
-    public void createConection(){
+    private static Conection instance;
+
+    private Conection() {
+    }
+
+    public static Conection getInstance() {
+        if (instance == null) {
+            instance = new Conection();
+        }
+        return instance;
+    }
+
+    public void createConnection() {
         String uri = "mongodb+srv://eludena:eludena@cluster0.sxrxhjy.mongodb.net/?retryWrites=true&w=majority";
         MongoClient mongo;
-        
+
         try {
             mongo = new MongoClient(new MongoClientURI(uri));
             MongoDatabase database = mongo.getDatabase("dbAccountingAgenda");
             MongoCollection<Document> collection = database.getCollection("logIn");
             List<String> dataBaseNames = mongo.getDatabaseNames();
-            JOptionPane.showMessageDialog(null, "Se ha iniciado correctamente sesión en "+database.getName());
-            
+            JOptionPane.showMessageDialog(null, "Se ha iniciado correctamente sesión en " + database.getName());
+
         } catch (MongoException e) {
-            JOptionPane.showMessageDialog(null, "Error en la conexión"+"\nTipo de error: "+e.toString());
+            JOptionPane.showMessageDialog(null, "Error en la conexión" + "\nTipo de error: " + e.toString());
         }
     }
 }
