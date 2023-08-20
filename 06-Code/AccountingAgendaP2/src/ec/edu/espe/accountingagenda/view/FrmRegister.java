@@ -232,11 +232,11 @@ public class FrmRegister extends javax.swing.JFrame {
             }
 
             JOptionPane.showMessageDialog(null, "Cuenta creada exitosamente.\nInicie sesión de nuevo.", "Cuenta creada", JOptionPane.INFORMATION_MESSAGE);
-            FrmEntryMenu frmEntryMenu = new FrmEntryMenu();
-            frmEntryMenu.setVisible(true);
+            FrmPrincipalMenu frmPrincipalMenu = new FrmPrincipalMenu();
+            frmPrincipalMenu.setVisible(true);
             dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione al menos un tipo de cuenta.", "Selección de cuenta", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Cuenta creada exitosamente.", "Confirmación", JOptionPane.ERROR_MESSAGE);
         }
     }
 
