@@ -62,11 +62,23 @@
                                           <Component id="pswNewPasswordCheck" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="btnCreateAccount" min="-2" pref="166" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="brnBack" min="-2" pref="166" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              <Component id="btnCreateAccount" min="-2" pref="166" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                                              <Component id="cbxAdministrator" max="32767" attributes="0"/>
+                                              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="cbxGuest" min="-2" pref="85" max="-2" attributes="0"/>
+                                          <Component id="brnBack" min="-2" pref="166" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -119,7 +131,12 @@
                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="pswNewPasswordCheck" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="62" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="cbxAdministrator" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbxGuest" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="24" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnCreateAccount" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="brnBack" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
@@ -191,6 +208,16 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="brnBackActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbxAdministrator">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Administrator"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbxGuest">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guest"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -1,4 +1,3 @@
-
 package ec.edu.espe.accountingagenda.model;
 
 /**
@@ -6,22 +5,23 @@ package ec.edu.espe.accountingagenda.model;
  * @author LENOVO
  */
 public class Administrator {
-    private String user;
-    private String pasword;
 
-    public Administrator(String user, String pasword) {
+    private String user;
+    private String password;
+
+    public Administrator(String user, String password) {
         this.user = user;
-        this.pasword = pasword;
+        this.password = password;
     }
 
     @Override
     public String toString() {
-        return "\nuser: " + user + 
-                "\npasword: " + pasword;
+        return "\nuser: " + user
+                + "\npasword: " + password;
     }
-    
+
     public Object[] toObjectArray() {
-        return new Object[]{this.user, this.pasword};
+        return new Object[]{this.user, this.password};
     }
 
     public String getUser() {
@@ -33,12 +33,11 @@ public class Administrator {
     }
 
     public String getPasword() {
-        return pasword;
+        return password;
     }
 
-    public void setPasword(String pasword) {
-        this.pasword = pasword;
+    public void setPasword(String password) {
+        this.password = password;
     }
-    
-    
+
 }

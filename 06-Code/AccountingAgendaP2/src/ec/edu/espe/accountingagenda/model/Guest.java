@@ -7,21 +7,21 @@ package ec.edu.espe.accountingagenda.model;
 public class Guest {
 
     private String user;
-    private String pasword;
+    private String password;
 
-    public Guest(String user, String pasword) {
+    public Guest(String user, String password) {
         this.user = user;
-        this.pasword = pasword;
+        this.password = password;
     }
 
     public Object[] toObjectArray() {
-        return new Object[]{this.user, this.pasword};
+        return new Object[]{this.user, this.password};
     }
 
     @Override
     public String toString() {
-        return "\nuser: " + user + 
-                "\npasword: " + pasword;
+        return "\nuser: " + user
+                + "\npasword: " + password;
     }
 
     public String getUser() {
@@ -33,11 +33,11 @@ public class Guest {
     }
 
     public String getPasword() {
-        return pasword;
+        return password;
     }
 
-    public void setPasword(String pasword) {
-        this.pasword = pasword;
+    public void setPasword(String password) {
+        this.password = password;
     }
 
 }

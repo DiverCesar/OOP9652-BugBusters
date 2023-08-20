@@ -1,7 +1,13 @@
 package ec.edu.espe.accountingagenda.view;
 
+import ec.edu.espe.accountingagenda.controller.Conection;
+import ec.edu.espe.accountingagenda.controller.Password;
+import ec.edu.espe.accountingagenda.model.Administrator;
+import ec.edu.espe.accountingagenda.model.Guest;
+import ec.edu.espe.accountingagenda.utils.MongoDBConnection;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
+import org.bson.Document;
 
 /**
  *
@@ -9,8 +15,13 @@ import javax.swing.JOptionPane;
  */
 public class FrmRegister extends javax.swing.JFrame {
 
+    private MongoDBConnection singletonMongoDBConnection;
+    private Conection singletonConection;
+
     public FrmRegister() {
         initComponents();
+        singletonMongoDBConnection = MongoDBConnection.getInstance();
+        singletonConection = Conection.getInstance();
     }
 
     /**
@@ -36,6 +47,8 @@ public class FrmRegister extends javax.swing.JFrame {
         pswNewPasswordCheck = new javax.swing.JPasswordField();
         btnCreateAccount = new javax.swing.JButton();
         brnBack = new javax.swing.JButton();
+        cbxAdministrator = new javax.swing.JCheckBox();
+        cbxGuest = new javax.swing.JCheckBox();
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel2.setText("MI AGENDA CONTABLE");
@@ -77,6 +90,10 @@ public class FrmRegister extends javax.swing.JFrame {
             }
         });
 
+        cbxAdministrator.setText("Administrator");
+
+        cbxGuest.setText("Guest");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,11 +118,19 @@ public class FrmRegister extends javax.swing.JFrame {
                                             .addComponent(txtNewUsername)
                                             .addComponent(pswNewPassword)
                                             .addComponent(pswNewPasswordCheck)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(btnCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(30, 30, 30)
-                                        .addComponent(brnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(btnCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(30, 30, 30))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(64, 64, 64)
+                                                .addComponent(cbxAdministrator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(65, 65, 65)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cbxGuest, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(brnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(18, 18, 18))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -142,7 +167,11 @@ public class FrmRegister extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(pswNewPasswordCheck, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxAdministrator)
+                    .addComponent(cbxGuest))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(brnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -167,31 +196,48 @@ public class FrmRegister extends javax.swing.JFrame {
         account();
     }//GEN-LAST:event_btnCreateAccountActionPerformed
 
-    private boolean comparePasswords(char[] password, char[] passwordCheck) {
-        return Arrays.equals(password, passwordCheck);
-    }
-
     private void account() {
         String username = txtNewUsername.getText();
-        char[] password = pswNewPassword.getPassword();
-        char[] passwordCheck = pswNewPasswordCheck.getPassword();
+        String password = new String(pswNewPassword.getPassword());
+        String passwordCheck = new String(pswNewPasswordCheck.getPassword());
 
-        if (username.isEmpty() || password.length == 0 || passwordCheck.length == 0) {
+        String encryptedPassword = Password.encrypt(password);
+        String encryptedPasswordCheck = Password.encrypt(passwordCheck);
+
+        if (username.isEmpty() || encryptedPassword.isEmpty() || encryptedPasswordCheck.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.", "Campos incompletos", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (!comparePasswords(password, passwordCheck)) {
+        if (!encryptedPassword.equals(encryptedPasswordCheck)) {
             JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden. Por favor, ingréselas nuevamente.", "Contraseñas no coinciden", JOptionPane.ERROR_MESSAGE);
             pswNewPassword.setText("");
             pswNewPasswordCheck.setText("");
             return;
         }
 
-        JOptionPane.showMessageDialog(null, "Cuenta creada exitosamente.\nInicie sesión de nuevo.", "Cuenta creada", JOptionPane.INFORMATION_MESSAGE);
-        FrmEntryMenu frmEntryMenu = new FrmEntryMenu();
-        frmEntryMenu.setVisible(true);
-        dispose();
+        if (cbxAdministrator.isSelected() || cbxGuest.isSelected()) {
+            if (cbxAdministrator.isSelected()) {
+                Administrator administrator = new Administrator(username, encryptedPasswordCheck);
+                Document administratorDocument = new Document("Usuario", administrator.getUser())
+                        .append("Contraseña", administrator.getPasword());
+                singletonMongoDBConnection.getCollection("Administrator").insertOne(administratorDocument);
+            }
+
+            if (cbxGuest.isSelected()) {
+                Guest guest = new Guest(username, encryptedPasswordCheck);
+                Document guestDocument = new Document("Usuario", guest.getUser())
+                        .append("Contraseña", guest.getPasword());
+                singletonMongoDBConnection.getCollection("Guest").insertOne(guestDocument);
+            }
+
+            JOptionPane.showMessageDialog(null, "Cuenta creada exitosamente.\nInicie sesión de nuevo.", "Cuenta creada", JOptionPane.INFORMATION_MESSAGE);
+            FrmEntryMenu frmEntryMenu = new FrmEntryMenu();
+            frmEntryMenu.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione al menos un tipo de cuenta.", "Selección de cuenta", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -232,6 +278,8 @@ public class FrmRegister extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brnBack;
     private javax.swing.JButton btnCreateAccount;
+    private javax.swing.JCheckBox cbxAdministrator;
+    private javax.swing.JCheckBox cbxGuest;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

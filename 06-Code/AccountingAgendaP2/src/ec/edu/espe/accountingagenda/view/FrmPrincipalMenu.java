@@ -34,6 +34,7 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
         jTextArea2 = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
+        btnRegister = new javax.swing.JButton();
 
         jMenu3.setText("File");
         jMenuBar2.add(jMenu3);
@@ -99,18 +100,29 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
         jTextArea3.setText("Maneja materiales\nusar en tu proyecto\ny registra el precio\nde cada uno con\ncálculos de forma\nautomática.");
         jScrollPane3.setViewportView(jTextArea3);
 
+        btnRegister.setText("Register");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(192, 192, 192))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addComponent(jLabel1)))
-                .addGap(192, 192, 192))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRegister)
+                        .addGap(25, 25, 25))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -133,8 +145,10 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnRegister))
                 .addGap(29, 29, 29)
                 .addComponent(jLabel2)
                 .addGap(34, 34, 34)
@@ -180,6 +194,12 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCalculationActionPerformed
 
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        FrmRegister frmRegister = new FrmRegister();
+        frmRegister.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnRegisterActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -221,6 +241,7 @@ public class FrmPrincipalMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnCalendarMenu;
     private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnNotesMenu;
+    private javax.swing.JButton btnRegister;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu3;

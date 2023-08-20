@@ -29,7 +29,7 @@ public class FrmNote extends javax.swing.JFrame {
 
     private ArrayList<Note> savedNotes;
     private MongoDBConnection mongoDBConnection;
-    
+
     private MongoDBConnection singletonMongoDBConnection;
     private Conection singletonConection;
 
