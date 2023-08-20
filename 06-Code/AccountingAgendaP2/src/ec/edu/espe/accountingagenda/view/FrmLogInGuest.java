@@ -145,20 +145,7 @@ public class FrmLogInGuest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
-        String user = txtUsername.getText();
-        String password = new String(txtPasword.getPassword());
-
-        String encryptedPassword = Password.encrypt(password);
-
-        Document guestDocument = singletonMongoDBConnection.getCollection("Guest").find(Filters.eq("Usuario", user)).first();
-
-        if (guestDocument != null && encryptedPassword.equals(guestDocument.getString("Contraseña"))) {
-            FrmNoteMenuGuest frmNoteMenuGuest = new FrmNoteMenuGuest();
-            frmNoteMenuGuest.setVisible(true);
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        logIn();
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
@@ -177,6 +164,22 @@ public class FrmLogInGuest extends javax.swing.JFrame {
         String encryptedPassword = Password.encrypt(password);
     }//GEN-LAST:event_txtPaswordActionPerformed
 
+    public void logIn(){
+        String user = txtUsername.getText();
+        String password = new String(txtPasword.getPassword());
+
+        String encryptedPassword = Password.encrypt(password);
+
+        Document guestDocument = singletonMongoDBConnection.getCollection("Guest").find(Filters.eq("Usuario", user)).first();
+
+        if (guestDocument != null && encryptedPassword.equals(guestDocument.getString("Contraseña"))) {
+            FrmNoteMenuGuest frmNoteMenuGuest = new FrmNoteMenuGuest();
+            frmNoteMenuGuest.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * @param args the command line arguments
      */
