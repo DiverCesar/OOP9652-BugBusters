@@ -187,8 +187,8 @@ public class FrmRegister extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNewUsernameActionPerformed
 
     private void brnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnBackActionPerformed
-        FrmEntryMenu frmEntryMenu = new FrmEntryMenu();
-        frmEntryMenu.setVisible(true);
+        FrmPrincipalMenu frmPrincipalMenu = new FrmPrincipalMenu();
+        frmPrincipalMenu.setVisible(true);
         dispose();
     }//GEN-LAST:event_brnBackActionPerformed
 

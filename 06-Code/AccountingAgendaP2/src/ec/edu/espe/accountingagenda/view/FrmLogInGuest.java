@@ -23,8 +23,8 @@ public class FrmLogInGuest extends javax.swing.JFrame {
         initComponents();
         TextPrompt placeHolderUsername = new TextPrompt("Ingrese su nombre usuario", txtUsername);
         TextPrompt placeHolderPassword = new TextPrompt("Ingrese su contraseña", txtPasword);
-        singletonMongoDBConnection = MongoDBConnection.getInstance();
-        singletonConection = Conection.getInstance();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Guest");
     }
 
     /**
@@ -170,7 +170,7 @@ public class FrmLogInGuest extends javax.swing.JFrame {
 
         String encryptedPassword = Password.encrypt(password);
 
-        Document guestDocument = singletonMongoDBConnection.getCollection("Guest").find(Filters.eq("Usuario", user)).first();
+        Document guestDocument = mongoDBConnection.getCollection().find(Filters.eq("Usuario", user)).first();
 
         if (guestDocument != null && encryptedPassword.equals(guestDocument.getString("Contraseña"))) {
             FrmNoteMenuGuest frmNoteMenuGuest = new FrmNoteMenuGuest();

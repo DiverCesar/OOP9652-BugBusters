@@ -20,7 +20,7 @@ public class FrmBudget extends javax.swing.JFrame {
 
     private ArrayList<Budget> savedData;
     private MongoDBConnection mongoDBConnection;
-    
+
     private MongoDBConnection singletonMongoDBConnection;
     private Conection singletonConection;
 
@@ -28,8 +28,8 @@ public class FrmBudget extends javax.swing.JFrame {
         initComponents();
         TextPrompt placeHolderTotal = new TextPrompt("Presione enter para calcular", txtTotal);
         savedData = new ArrayList<>();
-        singletonMongoDBConnection = MongoDBConnection.getInstance();
-        singletonConection = Conection.getInstance();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Budget");
         displaySavedData();
     }
 
@@ -304,13 +304,13 @@ public class FrmBudget extends javax.swing.JFrame {
         if (selectedRow != -1) {
             String materialName = tableBudget.getValueAt(selectedRow, 0).toString();
 
-            Document budgetDocument = singletonMongoDBConnection.getCollection("Budget").find(Filters.eq("Material", materialName)).first();
+            Document budgetDocument = mongoDBConnection.getCollection().find(Filters.eq("Material", materialName)).first();
 
             if (budgetDocument != null) {
                 int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar ese material '" + materialName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
                 if (option == JOptionPane.YES_OPTION) {
-                    singletonMongoDBConnection.getCollection("Budget").deleteOne(budgetDocument);
+                    mongoDBConnection.getCollection().deleteOne(budgetDocument);
 
                     JOptionPane.showMessageDialog(this, "Material eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
 
@@ -341,7 +341,7 @@ public class FrmBudget extends javax.swing.JFrame {
                 .append("Precio Unitario", budget.getUnitPrice())
                 .append("Costo Total", budget.getTotalCost());
 
-        singletonMongoDBConnection.getCollection("Budget").insertOne(budgetDocument);
+        mongoDBConnection.getCollection().insertOne(budgetDocument);
         JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         ((DefaultTableModel) tableBudget.getModel()).addRow(budget.toObjectArray());
@@ -355,7 +355,7 @@ public class FrmBudget extends javax.swing.JFrame {
     }
 
     private void displaySavedData() {
-        List<Document> documents = singletonMongoDBConnection.getCollection("Budget").find().into(new ArrayList<>());
+        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
         DefaultTableModel model = (DefaultTableModel) tableBudget.getModel();
         model.setRowCount(0);
 

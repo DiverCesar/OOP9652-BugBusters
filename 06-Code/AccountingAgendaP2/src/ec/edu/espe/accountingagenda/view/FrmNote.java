@@ -40,8 +40,8 @@ public class FrmNote extends javax.swing.JFrame {
         initComponents();
         setupFontComboBox();
         setupFontSizeChangeListener();
-        singletonMongoDBConnection = MongoDBConnection.getInstance();
-        singletonConection = Conection.getInstance();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Notes");
     }
 
     public FrmNote(ArrayList<Note> savedNotes) {
@@ -284,16 +284,11 @@ public class FrmNote extends javax.swing.JFrame {
     }//GEN-LAST:event_mniPrintActionPerformed
 
     private void displaySavedData() {
-        String title = txtTitle.getText();
-        String content = txaContent.getText();
-
-        Note note = new Note(title, content);
-        Document noteDocument = new Document("Titulo", note.getTitle())
-                .append("Contenido", note.getContent());
-        singletonMongoDBConnection.getCollection("Notes").insertOne(noteDocument);
-        JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        txtTitle.setText("");
-        txaContent.setText("");
+        initComponents();
+        setupFontComboBox();
+        setupFontSizeChangeListener();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Notes");
     }
 
     private void bold() {

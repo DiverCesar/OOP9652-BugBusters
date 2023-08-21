@@ -31,8 +31,8 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
         initComponents();
         TextPrompt placeHolderTotal = new TextPrompt("Presione enter para calcular", txtCostPerMeter);
         savedData = new ArrayList<>();
-        singletonMongoDBConnection = MongoDBConnection.getInstance();
-        singletonConection = Conection.getInstance();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("CostPerMeter");
         displaySavedData();
     }
 
@@ -366,10 +366,10 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
         int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar el material '" + materialName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
         if (option == JOptionPane.YES_OPTION) {
-            Document costPerMeterDocument = singletonMongoDBConnection.getCollection("CostPerMeter").find(Filters.eq("Material", materialName)).first();
+            Document budgetDocument = mongoDBConnection.getCollection().find(Filters.eq("Material", materialName)).first();
 
-            if (costPerMeterDocument != null) {
-                singletonMongoDBConnection.getCollection("CostPerMeter").deleteOne(costPerMeterDocument);
+            if (budgetDocument != null) {
+                mongoDBConnection.getCollection().deleteOne(budgetDocument);
                 model.removeRow(selectedRow);
                 JOptionPane.showMessageDialog(this, "Material eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -394,7 +394,7 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
                 .append("Area Total", costPerMeter.getArea())
                 .append("Costo por metro cuadrado", costPerMeter.getCostPerMeter1());
 
-        singletonMongoDBConnection.getCollection("CostPerMeter").insertOne(costPerMeterDocument);
+        mongoDBConnection.getCollection().insertOne(costPerMeterDocument);
         JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         ((DefaultTableModel) tblCostPerMeter.getModel()).addRow(costPerMeter.toObjectArray());
@@ -408,7 +408,7 @@ public class FrmCostPerMeter extends javax.swing.JFrame {
     }
 
     private void displaySavedData() {
-        List<Document> documents = singletonMongoDBConnection.getCollection("CostPerMeter").find().into(new ArrayList<>());
+        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
         DefaultTableModel model = (DefaultTableModel) tblCostPerMeter.getModel();
         model.setRowCount(0);
 

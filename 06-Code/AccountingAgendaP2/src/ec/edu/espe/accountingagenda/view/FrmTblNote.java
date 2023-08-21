@@ -25,8 +25,8 @@ public class FrmTblNote extends javax.swing.JFrame {
      */
     public FrmTblNote() {
         initComponents();
-        singletonMongoDBConnection = MongoDBConnection.getInstance();
-        singletonConection = Conection.getInstance();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Notes");
         displaySavedData();
     }
 
@@ -139,13 +139,13 @@ public class FrmTblNote extends javax.swing.JFrame {
         if (selectedRow != -1) {
             String noteTitle = tblNotes.getValueAt(selectedRow, 0).toString();
 
-            Document noteDocument = mongoDBConnection.getCollection("Notes").find(Filters.eq("Titulo", noteTitle)).first();
+            Document noteDocument = mongoDBConnection.getCollection().find(Filters.eq("Titulo", noteTitle)).first();
 
             if (noteDocument != null) {
                 int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar esta nota '" + noteTitle + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
                 if (option == JOptionPane.YES_OPTION) {
-                    mongoDBConnection.getCollection("Notes").deleteOne(noteDocument);
+                    mongoDBConnection.getCollection().deleteOne(noteDocument);
 
                     JOptionPane.showMessageDialog(this, "Nota eliminada correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
 
@@ -159,7 +159,7 @@ public class FrmTblNote extends javax.swing.JFrame {
     }
 
     private void displaySavedData() {
-        List<Document> documents = mongoDBConnection.getCollection("Notes").find().into(new ArrayList<>());
+        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
         DefaultTableModel model = (DefaultTableModel) tblNotes.getModel();
         model.setRowCount(0);
 

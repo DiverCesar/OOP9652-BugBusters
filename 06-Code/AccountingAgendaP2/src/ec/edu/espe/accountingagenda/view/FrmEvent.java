@@ -22,15 +22,15 @@ public class FrmEvent extends javax.swing.JFrame {
 
     private ArrayList<Object[]> savedData;
     private MongoDBConnection mongoDBConnection;
-    
+
     private MongoDBConnection singletonMongoDBConnection;
     private Conection singletonConection;
 
     public FrmEvent() {
         initComponents();
         savedData = new ArrayList<>();
-        singletonMongoDBConnection = MongoDBConnection.getInstance();
-        singletonConection = Conection.getInstance();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Event");
         displaySavedData();
     }
 
@@ -246,7 +246,7 @@ public class FrmEvent extends javax.swing.JFrame {
                 .append("Descripcion del evento", event.getEventDescription())
                 .append("Fecha del evento", event.getEventDate());
 
-        singletonMongoDBConnection.getCollection("Event").insertOne(eventDocument);
+        mongoDBConnection.getCollection().insertOne(eventDocument);
         JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         ((DefaultTableModel) tblEvent.getModel()).addRow(event.toObjectArray());
@@ -257,7 +257,7 @@ public class FrmEvent extends javax.swing.JFrame {
     }
 
     private void displaySavedData() {
-        List<Document> documents = singletonMongoDBConnection.getCollection("Event").find().into(new ArrayList<>());
+        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
         DefaultTableModel model = (DefaultTableModel) tblEvent.getModel();
         model.setRowCount(0);
 
@@ -272,28 +272,28 @@ public class FrmEvent extends javax.swing.JFrame {
     }
 
     private void delete() {
-        String eventName = txtEventName.getText().trim();
+        int selectedRow = tblEvent.getSelectedRow();
 
-        if (eventName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingresa el nombre del evento a eliminar.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona una fila para eliminar.", "Seleccionar fila", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        DefaultTableModel model = (DefaultTableModel) tblEvent.getModel();
+        String eventName = (String) model.getValueAt(selectedRow, 0);
+        int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar el evento '" + eventName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        
+        if (option == JOptionPane.YES_OPTION) {
+            Document eventDocument = mongoDBConnection.getCollection().find(Filters.eq("Nombre del evento", eventName)).first();
 
-        Document eventDocument = singletonMongoDBConnection.getCollection("Event").find(Filters.eq("Event Name", eventName)).first();
-
-        if (eventDocument != null) {
-            int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este evento '" + eventName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-
-            if (option == JOptionPane.YES_OPTION) {
-                singletonMongoDBConnection.getCollection("Event").deleteOne(eventDocument);
-
-                txtEventName.setText("");
-
+            if (eventDocument != null) {
+                mongoDBConnection.getCollection().deleteOne(eventDocument);
+                model.removeRow(selectedRow);
                 JOptionPane.showMessageDialog(this, "Evento eliminado correctamente.", "Eliminado exitoso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "El material con el nombre '" + eventName + "' no fue encontrado.", "Evento no encontrado", JOptionPane.WARNING_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "El evento con el nombre '" + eventName + "' no fue encontrado.", "Evento no encontrado", JOptionPane.WARNING_MESSAGE);
         }
+
     }
 
     /**

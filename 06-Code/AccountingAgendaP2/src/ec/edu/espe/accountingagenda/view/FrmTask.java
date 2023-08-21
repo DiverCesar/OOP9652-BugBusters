@@ -29,8 +29,8 @@ public class FrmTask extends javax.swing.JFrame {
     public FrmTask() {
         initComponents();
         savedData = new ArrayList<>();
-        singletonMongoDBConnection = MongoDBConnection.getInstance();
-        singletonConection = Conection.getInstance();
+        mongoDBConnection = new MongoDBConnection();
+        mongoDBConnection.connection("Task");
         displaySavedData();
     }
 
@@ -268,7 +268,7 @@ public class FrmTask extends javax.swing.JFrame {
                 .append("Fecha de inicio de la tarea", task.getTaskBeginDate())
                 .append("Fecha de entrega", task.getTaskDueDate());
 
-        mongoDBConnection.getCollection("Task").insertOne(taskDocument);
+        mongoDBConnection.getCollection().insertOne(taskDocument);
         JOptionPane.showMessageDialog(rootPane, "Datos guardados", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         ((DefaultTableModel) tblTask.getModel()).addRow(task.toObjectArray());
@@ -284,7 +284,7 @@ public class FrmTask extends javax.swing.JFrame {
     }
 
     private void displaySavedData() {
-        List<Document> documents = mongoDBConnection.getCollection("Task").find().into(new ArrayList<>());
+        List<Document> documents = mongoDBConnection.getCollection().find().into(new ArrayList<>());
         DefaultTableModel model = (DefaultTableModel) tblTask.getModel();
         model.setRowCount(0);
 
@@ -312,13 +312,13 @@ public class FrmTask extends javax.swing.JFrame {
 
         String taskName = (String) tblTask.getValueAt(selectedRow, 0);
 
-        Document taskDocument = mongoDBConnection.getCollection("Task").find(Filters.eq("Nombre de la tarea", taskName)).first();
+        Document taskDocument = mongoDBConnection.getCollection().find(Filters.eq("Nombre de la tarea", taskName)).first();
 
         if (taskDocument != null) {
             int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar la tarea '" + taskName + "'?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
             if (option == JOptionPane.YES_OPTION) {
-                mongoDBConnection.getCollection("Task").deleteOne(taskDocument);
+                mongoDBConnection.getCollection().deleteOne(taskDocument);
 
                 DefaultTableModel model = (DefaultTableModel) tblTask.getModel();
                 model.removeRow(selectedRow);
