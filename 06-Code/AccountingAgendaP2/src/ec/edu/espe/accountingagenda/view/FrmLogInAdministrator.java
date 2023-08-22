@@ -19,7 +19,7 @@ import org.bson.Document;
 public class FrmLogInAdministrator extends javax.swing.JFrame {
 
     private MongoDBConnection mongoDBConnection;
-    
+
     private MongoDBConnection singletonMongoDBConnection;
     private Conection singletonConection;
 
@@ -183,6 +183,8 @@ public class FrmLogInAdministrator extends javax.swing.JFrame {
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+            txtUsername.setText("");
+            txtPasword.setText("");
         }
     }
 

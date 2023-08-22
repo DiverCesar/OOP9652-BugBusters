@@ -178,6 +178,9 @@ public class FrmLogInGuest extends javax.swing.JFrame {
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+            txtUsername.setText("");
+            txtPasword.setText("");
+            
         }
     }
     /**

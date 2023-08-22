@@ -236,7 +236,7 @@ public class FrmRegister extends javax.swing.JFrame {
             frmPrincipalMenu.setVisible(true);
             dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Cuenta creada exitosamente.", "Confirmación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No ha seleccionado el tipo de cuenta que desea crear.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
